@@ -1,0 +1,28 @@
+/*
+	component-list-menu.css used in snippets/flag-sector.liquid
+*/
+.list-menu--right {
+	right: 0;
+}
+
+.list-menu--disclosure {
+	position: absolute;
+	min-width: 100%;
+	background-color: var(--header-flag-dropdown-background-color);
+}
+
+.list-menu--disclosure:focus {
+	outline: none;
+}
+
+
+.list-menu--disclosure.localization-selector {
+	max-height: 18rem;
+	overflow: auto;
+	width: 10rem;
+	padding: 0.5rem;
+}
+
+.list-menu--disclosure .header__menu-item {
+	color: var(--header-flag-dropdown-foreground-color);
+}

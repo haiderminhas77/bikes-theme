@@ -1,0 +1,56 @@
+.page-aside__content .rte table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+    margin: 0;
+}
+
+.page-aside__content .rte table thead {
+    text-align: left;
+}
+
+@media (min-width: 1024px) {
+    .page-aside__content {
+        padding: 50px 78px;
+        width: calc(100% - 212px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-aside__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.page-aside__sidebar {
+    padding-top: 50px;
+    flex: 20% 0 0;
+    order: 1;
+}
+
+.page-aside__content {
+    flex: 80% 0 0;
+    order: 2;
+}
+
+
+@media (min-width: 1024px) {
+    .page-aside__sidebar {
+        height: fit-content;
+        padding: 80px 0px 0px 50px;
+        position: sticky;
+        top: 100px;
+        width: 212px;
+    }
+}
+
+@media screen and (max-width: 749px){
+    aside.page-aside__sidebar {
+        padding: 0px 30px 20px;
+    }
+
+    div.page-aside__sidebar {
+        padding-top: 0px;
+    }
+}

@@ -1,0 +1,21 @@
+{% comment %}
+	Renders dot gallery controls within PDP gallery with arrows, counter is hidden
+
+	Accepts:
+	- product: {Object}
+
+	Usage:
+	{% render 'product-gallery-dots', product: product %} within sections/main-product.liquid
+{% endcomment %}
+
+<div class="gallery__controls gallery-buttons no-js-hidden">
+    <div class="gallery-counter gallery-counter--dots">
+        <div class="gallery__control-wrapper" data-langstring-load="{{ 'sections.slideshow.load_slide' | t }}" data-langstring-of="{{ 'general.slider.of' | t }}">
+            {% for media in product.media %}
+                    <button class="gallery-counter__link gallery-counter__link--dots {% if forloop.index0 == 0 %}gallery-counter__link--active {% endif %} link {% if forloop.length <= 1 %}hidden{% endif %}" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}" aria-controls="Slider-{{ section.id }}">
+                        <span class="dot"></span>
+                    </button>
+            {% endfor %}
+        </div>
+    </div>
+</div>

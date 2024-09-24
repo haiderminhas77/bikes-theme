@@ -1,0 +1,149 @@
+{% comment %}
+	Renders a product card
+
+	Accepts:
+	- product_card_product: {Object} Product Liquid object (optional)
+	- media_size: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+	- show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
+	- add_image_padding: {Boolean} Enables padding on the image to space out the grid
+	- swatch_count: {Integer} Number of swatches to show, optional '+#' to link to PDP
+	- show_vendor: {Boolean} Show the product vendor. Default: false
+	- show_image_outline: {Boolean} Show card outline. Default: true (optional)
+	- show_badges: {Boolean} Show the product info badges
+	- product_card_mode: {Radio choice} Deciding product card mode between none, swatches, and radios and quick add
+	- product_card_mode: {String} Options for none, swatches or radios and quick add (only on PLP)
+	- lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+	- crop_product_title: {Boolean} crop product titles to one line. Default: true
+	- show_quick_view: {Boolean} Determines output of quick view icon 
+
+	Usage:
+	{% render 'product-card' %} in sections/main-collection-product-grid.liquid, sections/main-search.liquid
+{% endcomment %}
+
+{% comment %} {% assign colour_lang_string = 'products.product.color' | t %}
+{% capture hexes %}{% for variant in product_card_product.variants %}{% if variant.metafields.colour_swatches.hex != blank %}{% if product_card_product.options[0] == colour_lang_string %}{{ variant.metafields.colour_swatches.hex }}|{{variant.option1}}|{% unless forloop.last %},{% endunless %}{% endif %}{% endif %}{% endfor %}{% endcapture %}
+{% assign hexes_array = hexes | split: "," | uniq %}
+{% assign subtitle = product_card_product.metafields.product_subtitle.subtitle %}
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
+{%- assign swatch_count = 7 -%} {% endcomment %}
+
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+
+{% assign product_data = product_card_product.metafields.product_data.reference.value %}
+{% assign product_subtitle = product_data.subtitle.value %}
+
+<product-card class="card-wrapper{% if template.name == 'collection' %} product-card__plp{% endif %}" data-product-id="{{ product_card_product.id }}" data-product-title="{{ product_card_product.handle }}" data-product-type="{{ product_card_product.type }}" data-variant-id="{{ product_card_product.variants[0].id }}" data-second-image="{% if product_card_product.media.size > 1 %} {{ product_card_product.media[1] | image_url }}{% endif %}" data-hide-sibling-selector="{{ hide_sibling_selector }}">
+	<div class="card-information">
+		<div class="card-information__wrapper">
+
+			<span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+
+			<div class="hidden card__product-json">
+				{{ product_card_product | json }}
+			</div>
+
+			<div class="title-price__wrapper">
+				<h3 class="card-information__text uppercase{% if crop_product_title %} card__title-cropped{% endif %}">
+					<a class="card__title" href="{{ product_card_product.url | within: collection | default: '#' }}">
+						<span class="lead-title h2{% if crop_product_title %} card__title-cropped{% endif %}">{{ product_card_product.title | escape }}</span>
+						<span class="sub-title">{{ product_subtitle | escape }}</span>
+					</a>
+				</h3>
+				{% unless hide_price %}
+					{% render 'product-card-price', product: product_card_product, price_class: '' %}
+				{% endunless %}
+			</div>
+			{% comment %} Product-sibling-swatch.liquid has been removed from theme, product-card-sibling-selector is section-rendered to circumvent metaObject call limit {% endcomment %}
+		</div>
+	</div>
+	<div class="card card--product{% if product_card_product.featured_media == nil %} card--text-only card--soft{% endif %}{% if product_card_product.featured_media != nil and show_image_outline %} card--outline{% endif %}" tabindex="-1">
+		<div class="card__inner">
+			{% if show_quick_view %}
+				<modal-opener data-modal="#quick-view-plp-modal" data-product-handle="{{ product_card_product.handle }}" class="quick-view__button{% if quick_view_icon != true %} quick-view__text{% endif %}">
+					<button {%  if quick_view_icon != true %}class="button button--underline button--underline-left"{% endif %}>{%-  if quick_view_icon -%}{% render 'icon-quick-view' %}{%- else -%}{{- 'products.product.add_to_cart' | t -}}{%- endif -%}</button>
+				</modal-opener>
+			{% endif %}
+			{%- if product_card_product.featured_media -%}
+				{% if enable_image_selection %}
+					{% assign featured_image_index = featured_image_index | minus: 1 %}
+					{% assign featured_image = product_card_product.images[featured_image_index] %}
+				{% else %}
+					{% assign featured_image = product_card_product.featured_media %}
+				{% endif %}
+
+				{%- liquid
+					assign featured_media_aspect_ratio = featured_image.aspect_ratio
+
+					if featured_image.aspect_ratio == nil
+						assign featured_media_aspect_ratio = 1
+					endif
+				-%}
+
+				<div class="media{% if media_size == 'portrait' %} media--portrait{% else %} media--square{% endif %}{% if transparent_background %} media--transparent{% endif %}">
+					{% if show_badges %}
+						{% render 'badges', product: product_card_product, usage: 'product-card' %}
+					{% endif %} 
+					<a class="card__image-link{%  if featured_media_aspect_ratio > 1.0 %} card--product-portrait-padding{% endif %}" href="{{ product_card_product.url | within: collection }}">
+						<div class="media{% if transparent_background %} media--transparent{% endif %}{% if show_secondary_image %} media--hover-effect{% endif %} {% unless media_size == 'portrait' %} media--contain{% endunless %} media--{{ media_size }}" 
+							{% if media_size == 'adapt' %}style="padding-bottom: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;" {% endif %}>
+							
+							{% if columns_desktop <= 3%}
+								{%- capture sizes -%}(min-width: 750px) calc(100vw / {{ columns_desktop }}), calc((100vw - 10px) / {{ columns_mobile }}){%- endcapture -%}
+								{% if lazy_load == true %}
+									{{ featured_image | image_url: width: 900 | image_tag:
+									loading: 'lazy',
+									sizes: sizes,
+									widths: '300, 900',
+									height: featured_image.height,
+									width: featured_image.width,
+									class: 'motion-reduce card__image' }}
+								{% else %}
+									{{ featured_image | image_url: width: 900 | image_tag:
+									loading: 'eager',
+									preload: true,
+									sizes: sizes,
+									widths: '300, 900',
+									height: featured_image.height,
+									width: featured_image.width,
+									class: 'motion-reduce card__image' }}
+								{% endif %}
+							{% else %}
+								{%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
+								{% if lazy_load == true %}
+									{{ featured_image | image_url: width: 700 | image_tag:
+									loading: 'lazy',
+									sizes: sizes,
+									widths: '300, 500, 700, 900',
+									height: featured_image.height,
+									width: featured_image.width,
+									class: 'motion-reduce card__image' }}
+								{% else %}
+									{{ featured_image | image_url: width: 700 | image_tag:
+									loading: 'eager',
+									preload: true,
+									sizes: sizes,
+									widths: '300, 500, 700, 900',
+									height: featured_image.height,
+									width: featured_image.width,
+									class: 'motion-reduce card__image' }}
+								{% endif %}
+							{% endif %}
+						</div>
+					</a>
+				</div>
+			{%- else -%}
+				<div class="card__content">
+					<h2 class="card__text h3">
+						<a href="{{ product_card_product.url | within: collection | default: '#' }}" class="full-unstyled-link">
+							{{ product_card_product.title }}
+							{{ product_subtitle | strip }}
+						</a>
+					</h2>
+					{% unless hide_price %}
+						{% render 'product-card-price', product: product_card_product, price_class: '' %}
+					{% endunless %}
+				</div>
+			{%- endif -%}
+		</div>
+	</div>
+</product-card>

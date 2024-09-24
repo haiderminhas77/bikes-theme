@@ -1,0 +1,84 @@
+free-shipping-notice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fsn__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-style: var(--font-heading-style);
+    letter-spacing: var(--font-heading-letter-spacing-wide);
+}
+
+.fsn__remainder {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.fsn__message svg {
+    pointer-events: none;
+    align-self: center;
+    fill: currentColor;
+    height: calc(var(--font-heading-scale) * 1.6rem);
+    margin-right: calc(var(--font-heading-scale) * 1rem);
+    width: calc(var(--font-heading-scale) * 1.6rem);
+    flex-shrink: 0;
+}
+
+.fsn__before-message--color a {
+    text-decoration: none;
+    color: currentColor;
+}
+
+.fsn__after-message--color {
+    flex-wrap: unset;
+}
+
+.fsn__after-message--color a {
+    text-decoration: none;
+    color: currentColor;
+}
+
+.fsn__message p, .fsn__message a {
+    margin: 0;
+    padding: 0;
+}
+
+.fsn__progress-outer {
+    margin: 0 auto 1rem;
+    height: 8px;
+    max-width: calc(100% - 40px);
+    width: 100%;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fsn__progress-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    max-width: 100%;
+    transition: width 0.75s;
+    border-radius: 10px;
+}
+
+/* PDP FSN */
+
+.product__info-wrapper .product__info-container free-shipping-notice {
+    align-items: center;
+    min-height: 3rem;
+    text-align: center;
+    padding: .5rem;
+}
+
+.product__info-wrapper .product__info-container free-shipping-notice .fsn__message {
+    padding: 0;
+}

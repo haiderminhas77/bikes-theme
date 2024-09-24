@@ -1,0 +1,33 @@
+{% comment %}
+    Renders text block on PDP and in featured product section
+
+    Accepts:
+    - block: {Object} Block object
+
+    Usage:
+    {% render 'product-text' block: block %} within sections/main-product.liquid
+    {% render 'product-text' block: block %} within sections/featured-product.liquid
+{% endcomment %}
+
+{% style %}
+    .product__text-wrapper {
+        background-color: {{ block.settings.background_color }};
+    }
+
+    .product__text {
+        font-size: {{ block.settings.text_size_desktop | divided_by: 10.0 }}rem;
+        --color-foreground: {{ block.settings.text_color.red }}, {{ block.settings.text_color.green }}, {{ block.settings.text_color.blue }}; 
+    }
+
+    @media screen and (max-width: 749px) {
+        .product__text {
+            font-size: {{ block.settings.text_size_mob | divided_by: 10.0 }}rem;
+        } 
+    }
+{% endstyle %}
+
+<div class="product__text-wrapper">
+    <p class="product__text{% if block.settings.text_style == 'heading' %} h4{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if block.settings.uppercase %} uppercase{% endif %}" {{ block.shopify_attributes }}>
+        {{- block.settings.text -}}
+    </p>
+</div>

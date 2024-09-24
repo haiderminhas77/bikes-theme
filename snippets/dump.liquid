@@ -1,0 +1,14 @@
+{% comment %}
+	Rendered in liquid files as a method to console log on the browser
+
+	Accepts:
+	-
+
+	Usage:
+	{% render 'dump' with 'console log content here' %} anywhere in liquid files
+{% endcomment %}
+
+<script type="text/javascript">
+    console.log("Dumping");
+    console.log({{ dump | json }});
+</script>

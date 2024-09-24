@@ -1,0 +1,221 @@
+{% comment %}
+    Renders HREFlang tags for homepage, collection and product pages
+
+    Accepts:
+    - 
+
+    Usage:
+    {% render 'hreflang-tags' %} in theme.liquid within <head></head>
+{% endcomment %}
+
+{% liquid
+    assign base_url_UK = "www.stance.eu.com"
+    assign base_url_EU = "www.euro.stance.eu.com"
+    assign base_url_DE = "www.de.stance.eu.com"
+    assign base_url_US = "www.stance.com"
+    assign base_url_CA = "www.stance.ca"
+%}
+
+{% case template.name %}
+{% when 'index' %}
+    {%- comment -%}HREFlang tag template for the homepage{%- endcomment -%}
+
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, base_url_US }}"/>
+
+    <link rel="alternate" hreflang="en-us" href="{{ canonical_url | replace: shop.domain, base_url_US }}"/>
+    <link rel="alternate" hreflang="fr-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA }}"/>
+    <link rel="alternate" hreflang="en-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA }} "/>
+    <link rel="alternate" hreflang="en-gb" href="{{ canonical_url | replace: shop.domain, base_url_UK }}"/>
+    <link rel="alternate" hreflang="en-je" href="{{ canonical_url | replace: shop.domain, base_url_UK }}"/>
+    <link rel="alternate" hreflang="en-gg" href="{{ canonical_url | replace: shop.domain, base_url_UK }}"/>
+    <link rel="alternate" hreflang="en-im" href="{{ canonical_url | replace: shop.domain, base_url_UK }}"/>
+    <link rel="alternate" hreflang="en-de" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-fr" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-nl" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-it" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-es" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-be" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-ie" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-at" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-ch" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-hr" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-cz" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-ee" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-hu" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-lv" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-lt" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-lu" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-pl" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-pt" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-sk" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-si" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-se" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-tr" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-no" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-is" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-ru" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-dk" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="en-fi" href="{{ canonical_url | replace: shop.domain, base_url_EU }}"/>
+    <link rel="alternate" hreflang="de-de" href="{{ canonical_url | replace: shop.domain, base_url_DE }}"/>
+    <link rel="alternate" hreflang="de-at" href="{{ canonical_url | replace: shop.domain, base_url_DE }}"/>
+
+{% when 'collection' %}
+    {%- comment -%}
+    HREFlang tag template for collection pages. This utilises metafields which are stored on each collection and contain the corresponding handles for that same collection across language sites.
+
+    Blocks of HREFlang tags are grouped by the language site they point to. e.g. de-at, de-de. Each block is wrapped inside a condition checking if there is a metafield on the current collection that details the corresponding collection on the language site being pointed to by that block of HREFlang tags. If it does exist, the block of HREFlang tags will be rendered with the contents of the metafield e.g. the collection name in German
+    {%- endcomment -%}
+    {% assign uk_eu_collection_handle = collection_handles.uk-eu_handle %}
+    {% assign de_collection_handle = collection_handles.de_handle %}
+
+    {% if uk_eu_collection_handle != null %}
+        <link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: collection.handle, uk_eu_collection_handle | remove: "collections/" }}"/>
+
+        <link rel="alternate" hreflang="en-gb" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-je" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-gg" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-im" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-de" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-fr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-nl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-it" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-es" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-be" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-ie" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-at" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-ch" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-hr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-cz" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-ee" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-hu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-lv" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-lt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-lu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-pl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-pt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-sk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-si" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-se" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-tr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-no" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-is" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-ru" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-dk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-fi" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: collection.handle, uk_eu_collection_handle }}"/>
+        <link rel="alternate" hreflang="en-us" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: collection.handle, uk_eu_collection_handle | remove: "collections/" }}"/>
+        <link rel="alternate" hreflang="fr-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: collection.handle, uk_eu_collection_handle | remove: "collections/" }}"/>
+        <link rel="alternate" hreflang="en-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: collection.handle, uk_eu_collection_handle | remove: "collections/" }}"/>
+    {% endif %}
+
+    {% if de_collection_handle != null %}
+        <link rel="alternate" hreflang="de-de" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: collection.handle, de_collection_handle }}"/>
+        <link rel="alternate" hreflang="de-at" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: collection.handle, de_collection_handle }}"/>
+    {% endif %}
+
+{% when 'product' %}
+    {%- comment -%}
+    HREFlang tag template for product pages. This utilises metafields which are stored on each product and contain the corresponding handles for that same product across language sites.
+
+    Blocks of HREFlang tags are grouped by the language site they point to. e.g. de-at, de-de. Each block is wrapped inside a condition checking if there is a metafield on the current product that details the corresponding product on the language site being pointed to by that block of HREFlang tags. If it does exist, the block of HREFlang tags will be rendered with the contents of the metafield e.g. the product name in German
+    {%- endcomment -%}
+
+    {% assign uk_eu_product_handle = product_handles.uk-eu_handle %}
+    {% assign de_product_handle = product_handles.de_handle %}
+
+    {% if uk_eu_product_handle != null %}
+        <link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: product.handle, uk_eu_product_handle | remove: "products/" }}"/>
+
+        <link rel="alternate" hreflang="en-gb" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-je" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-gg" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-im" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-de" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-fr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-nl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-it" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-es" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-be" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-ie" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-at" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-ch" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-hr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-cz" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-ee" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-hu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-lv" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-lt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-lu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-pl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-pt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-sk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-si" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-se" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-tr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-no" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-is" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-ru" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-dk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-fi" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: product.handle, uk_eu_product_handle }}"/>
+        <link rel="alternate" hreflang="en-us" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: product.handle, uk_eu_product_handle | remove: "products/" }}"/>
+        <link rel="alternate" hreflang="fr-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: product.handle, uk_eu_product_handle | remove: "products/" }}"/>
+        <link rel="alternate" hreflang="en-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: product.handle, uk_eu_product_handle | remove: "products/" }}"/>
+    {% endif %}
+
+    {% if de_product_handle != null %}
+        <link rel="alternate" hreflang="de-de" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: product.handle, de_product_handle }}"/>
+        <link rel="alternate" hreflang="de-at" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: product.handle, de_product_handle }}"/>
+    {% endif %}
+
+{% comment %} {% when 'page' %}
+    {%- comment -%}
+    HREFlang tag template for page pages. This utilises metafields which are stored on each page and contain the corresponding handles for that same page across language sites.
+
+    Blocks of HREFlang tags are grouped by the language site they point to. e.g. de-at, de-de. Each block is wrapped inside a condition checking if there is a metafield on the current page that details the corresponding page on the language site being pointed to by that block of HREFlang tags. If it does exist, the block of HREFlang tags will be rendered with the contents of the metafield e.g. the page name in German
+    {%- endcomment -%}
+    {% assign uk_eu_page_handle = 'UK~EU~page~metafield' %}
+    {% assign de_page_handle = 'DE~page~metafield' %}
+
+    {% if uk_eu_page_handle != null %}
+        <link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: page.handle, uk_eu_page_handle | remove: "pages/" }}"/>
+
+        <link rel="alternate" hreflang="en-gb" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-je" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-gg" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-im" href="{{ canonical_url | replace: shop.domain, base_url_UK | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-de" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-fr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-nl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-it" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-es" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-be" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-ie" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-at" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-ch" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-hr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-cz" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-ee" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-hu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-lv" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-lt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-lu" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-pl" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-pt" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-sk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-si" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-se" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-tr" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-no" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-is" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-ru" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-dk" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-fi" href="{{ canonical_url | replace: shop.domain, base_url_EU | replace: page.handle, uk_eu_page_handle }}"/>
+        <link rel="alternate" hreflang="en-us" href="{{ canonical_url | replace: shop.domain, base_url_US | replace: page.handle, uk_eu_page_handle | remove: "pages/" }}"/>
+        <link rel="alternate" hreflang="fr-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: page.handle, uk_eu_page_handle | remove: "pages/" }}"/>
+        <link rel="alternate" hreflang="en-ca" href="{{ canonical_url | replace: shop.domain, base_url_CA | replace: page.handle, uk_eu_page_handle | remove: "pages/" }}"/>
+    {% endif %}
+
+    {% if de_page_handle != null %}
+        <link rel="alternate" hreflang="de-de" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: page.handle, de_page_handle }}"/>
+        <link rel="alternate" hreflang="de-at" href="{{ canonical_url | replace: shop.domain, base_url_DE | replace: page.handle, de_page_handle }}"/>
+    {% endif %} {% endcomment %}
+{% endcase %}

@@ -1,0 +1,88 @@
+/*
+	component-accordion.css used in sections/ds-collapsible-content, ds-featured-product, footer,
+	main-product, pdp-collapsible-content
+*/
+
+.accordion summary {
+	display: flex;
+	position: relative;
+	line-height: 1;
+	padding: 1rem;
+}
+
+.accordion .summary__title {
+	display: flex;
+	flex: 1;
+}
+
+.accordion .summary__title + .icon-caret {
+	height: calc(var(--font-heading-scale) * 0.6rem);
+}
+
+.accordion .icon-minus, .accordion .icon-plus {
+	height: 1rem;
+}
+
+.accordion + .accordion {
+	margin-top: 0;
+	border-top: none;
+}
+
+.accordion {
+	margin-bottom: 0;
+	border-top: 0.2rem solid rgba(var(--color-foreground), 0.08);
+	border-bottom: 0.2rem solid rgba(var(--color-foreground), 0.08);
+}
+
+.pdp-collapsible-content__wrapper .pdp-collapsible-content__accordion:last-of-type {
+	border-bottom: 0.2rem solid rgba(var(--color-foreground), 0.08);
+}
+
+.accordion__title {
+	display: inline-block;
+	max-width: calc(100% - 6rem);
+	min-height: 1.6rem;
+	margin: 0;
+	word-break: break-word;
+}
+
+.accordion .icon-chevron-down {
+	position: absolute;
+    height: 0.6rem;
+    right: 1.5rem;
+    top: calc(50% - 0.2rem);
+}
+
+.accordion details[open]>summary .icon-chevron-down {
+	transform: rotate(180deg);
+}
+
+.accordion .icon-picker {
+	align-self: center;
+	fill: rgb(var(--color-foreground));
+	height: calc(var(--font-heading-scale) * 1.6rem);
+	/* height of icons has change in dawn v3, but will keep old size for now
+	height: calc(var(--font-heading-scale) * 2rem); */
+	margin-right: calc(var(--font-heading-scale) * 1rem);
+	width: calc(var(--font-heading-scale) * 1.6rem);
+	/* width of icons has change in dawn v3, but will keep old size for now
+	width: calc(var(--font-heading-scale) * 2rem); */
+}
+
+.accordion details[open] > summary .icon-caret {
+	transform: rotate(180deg);
+}
+
+.accordion__content {
+	margin-bottom: 1rem;
+	word-break: break-word;
+	padding: 0 1rem;
+}
+
+.accordion__content img {
+	max-width: 100%;
+}
+
+.accordion--empty {
+	display: none;
+}

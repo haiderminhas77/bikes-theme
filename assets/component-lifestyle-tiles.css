@@ -1,0 +1,34 @@
+.lifestyle-tile {
+    position: relative;
+}
+
+.lifestyle-tile a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.lifestyle-tile__content {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    height: fit-content;
+    padding: 2.4rem 0px 0px;
+}
+
+
+.lifestyle-tile__title {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    text-transform: uppercase;
+}
+
+.lifestyle-tile__cta {
+    margin: 0.6rem 0;
+}
+.lifestyle-tile__cta p {
+    margin: 0;
+}

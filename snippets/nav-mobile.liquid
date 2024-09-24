@@ -1,0 +1,418 @@
+{% comment %}
+Renders mobile nav in header
+
+Accepts:
+-no arguments-
+
+Usage:
+{% render 'nav-mobile' %} in header.liquid
+{% endcomment %}
+
+{% style %}
+	/* mobile nav variables */
+	:root:root .menu-drawer {
+		--color-base-background-1: {{ section.settings.colors_background_1_nav_mob.red }}, {{ section.settings.colors_background_1_nav_mob.green }}, {{ section.settings.colors_background_1_nav_mob.blue }};
+		--gradient-base-background-1: {% if section.settings.gradient_background_1_nav_mob != blank %}{{ section.settings.gradient_background_1_nav_mob }}{% else %}{{ section.settings.colors_background_1_nav_mob }}{% endif %};
+		--color-foreground: {{ section.settings.colors_foreground_1_nav_mob.red }}, {{ section.settings.colors_foreground_1_nav_mob.green }}, {{ section.settings.colors_foreground_1_search_dropdown.blue }};
+	}
+
+	{% if section.settings.highlight_nav_mob_input != blank %}
+		.nav_mob-highlight {
+			--header-nav-mob-foreground-color: {{ section.settings.highlight_nav_mob_color.red }}, {{ section.settings.highlight_nav_mob_color.green }}, {{ section.settings.highlight_nav_mob_color.blue }};
+		}
+	{% endif %}
+{% endstyle %}
+
+<nav class="menu-drawer__navigation{%  if section.settings.menu_mob_display == 'dropdown' %} menu-drawer__navigation--dropdown{% else %} menu-drawer__navigation--slide{% endif %}">
+	<ul class="menu-drawer__menu list-menu menu-drawer__wrapper" role="list">
+		{%- for link in section.settings.menu_mob.links -%}
+			{%- assign highlight_nav_mob_item =  link.title | downcase -%}
+			{%- assign highlight_nav_mob_input =  section.settings.highlight_nav_mob_input | downcase -%}
+			<li>
+			{%- if link.links != blank -%}
+				<details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
+				<summary class="menu-drawer__menu-item list-menu__item link link--text focus-inset menu-drawer__parent{% if highlight_nav_mob_item == highlight_nav_mob_input %} nav_mob-highlight{% endif %}">
+					{%- if link.title contains ':' -%}
+						{% assign menu-drawer__parent_title = link.title | split: ":" | first | strip %}
+						{% assign menu-drawer__parent_badge = link.title | split: ":" | last | strip %}
+						<span class="category-name__decoration">{{ menu-drawer__parent_title }}</span>
+						<span class="category-name__badge">{{ menu-drawer__parent_badge }}</span>
+					{%- else -%}
+						<span class="category-name__decoration">{{ link.title | escape }}</span>
+					{%- endif -%}
+					{% render 'icon-arrow-right' %}
+				</summary>
+				<div id="link-{{ link.title | escape }}" class="menu-drawer__submenu motion-reduce color-background-1 gradient" tabindex="-1">
+					<div class="menu-drawer__inner-submenu color-background-1 gradient">
+						<div class="menu-drawer__inner-wrapper menu-drawer__child-parent">	
+							<button class="menu-drawer__close-button link link--text focus-inset {% if highlight_nav_mob_item == highlight_nav_mob_input %} nav_mob-highlight{% endif %}" aria-expanded="true">	
+							{% render 'icon-arrow-left' %}
+							<span>{{ 'sections.header.back' | t }}</span>
+							</button>	
+							<a href="{{ link.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if highlight_nav_mob_item == highlight_nav_mob_input %} nav_mob-highlight{% endif %}"{% if link.current %} aria-current="page"{% endif %}>	
+								{%- for childlink in link.links limit: 1 -%}
+									{%- if link.title contains ':' -%}
+										{% assign menu-drawer__parent_title = link.title | split: ":" | first | strip %}
+										{% assign menu-drawer__parent_badge = link.title | split: ":" | last | strip %}
+										<span class="category-name__decoration">{{ menu-drawer__parent_title }}</span>
+										<span class="category-name__badge">{{ menu-drawer__parent_badge }}</span>
+									{%- else -%}
+										<span class="category-name__decoration">{{ link.title | escape }}</span>
+									{%- endif -%}
+									{%- if childlink.title != 'hide' -%}
+										<a href="{{ childlink.url }}" class="button button--primary uppercase"{% if childlink.current %} aria-current="page"{% endif %}>
+											<span class="category-name__decoration">{{ childlink.title | escape }}</span>
+										</a>
+									{% endif %}
+								{% endfor %}
+							</a>
+						</div>
+						<ul class="menu-drawer__menu list-menu menu-drawer__child {%- for block in section.blocks -%}{%- assign nav_item =  link.title | downcase -%}{%- assign nav_item_input =  block.settings.nav_mega_item | downcase -%}{% if nav_item == nav_item_input and block.settings.hide_nav_links_mob %} hidden{% endif %}{% endfor %}" role="list" tabindex="-1">
+							{%- for childlink in link.links offset: 1 -%}
+								<li>
+									{%- if childlink.links == blank -%}
+									<a href="{{ childlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset"{% if childlink.current %} aria-current="page"{% endif %}>
+										{%- if childlink.title contains ':' -%}
+											{% assign menu-drawer__child_title = childlink.title | split: ":" | first | strip %}
+											{% assign menu-drawer__child_badge = childlink.title | split: ":" | last | strip %}
+											<span class="category-name__decoration">{{ menu-drawer__child_title }}</span>
+											<span class="category-name__badge">{{ menu-drawer__child_badge }}</span>
+										{%- else -%}
+											<span class="category-name__decoration">{{ childlink.title | escape }}</span>
+										{%- endif -%}
+									</a>
+									{%- else -%}
+									<details id="Details-menu-drawer-submenu-{{ forloop.index }}">
+										<summary class="menu-drawer__menu-item link link--text list-menu__item focus-inset">
+											{%- if childlink.title contains ':' -%}
+												{% assign menu-drawer__child_title = childlink.title | split: ":" | first | strip %}
+												{% assign menu-drawer__child_badge = childlink.title | split: ":" | last | strip %}
+												<span class="category-name__decoration">{{ menu-drawer__child_title }}</span>
+												<span class="category-name__badge">{{ menu-drawer__child_badge }}</span>
+											{%- else -%}
+												<span class="category-name__decoration">{{ childlink.title | escape }}</span>
+											{%- endif -%}
+											{% render 'icon-plus' %}
+											{% render 'icon-minus' %}
+										</summary>
+										<div id="childlink-{{ childlink.title | escape }}" class="menu-drawer__subsubmenu menu-drawer__submenu motion-reduce">
+											<ul class="menu-drawer__menu list-menu menu-drawer__grandchild" role="list" tabindex="-1">
+												{%- for grandchildlink in childlink.links -%}
+												<li>
+													<a href="{{ grandchildlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+														{%- if grandchildlink.title contains ':' -%}
+									
+															{% assign mob_grandchild_title = grandchildlink.title | split: ":" | first | strip %}
+															{% assign mob_grandchild_badge = grandchildlink.title | split: ":" | last | strip %}
+															<span class="category-name__decoration">{{ mob_grandchild_title }}</span>
+															<span class="category-name__badge">{{ mob_grandchild_badge }}</span>
+														{%- else -%}
+															<span class="category-name__decoration">{{ grandchildlink.title | escape }}</span>
+														{%- endif -%}
+													</a>
+												</li>
+												{%- endfor -%}
+											</ul>
+										</div>
+									</details>
+									{%- endif -%}
+								</li>
+							{%- endfor -%}
+						</ul>
+						{% comment %} Nav images {% endcomment %}
+						{%- for block in section.blocks -%}
+                            {%- assign nav_item =  link.title | downcase -%}
+                            {%- assign nav_item_input =  block.settings.nav_mega_item | downcase -%}
+                                {%- if nav_item == nav_item_input and block.settings.image != blank -%}
+                                    <div class="mega-menu__list list-unstyled mega-menu-image__wrapper{% if block.settings.hide_nav_links != true %} mega-menu-image__show_links{% endif %}" {{ block.shopify_attributes }}>
+                                        {%- if nav_item == nav_item_input and block.settings.image != blank and block.settings.hide_nav_image_mobile_2 != true -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center;">
+                                                {%- if block.settings.nav_image_link != blank -%}<a href="{{ block.settings.nav_image_link }}" class="button button--underline button--underline--hover button--underline-left">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link != blank -%}</a>{%- endif -%}     
+												<div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_height_mob }}px; margin: {{ block.settings.image_padding }}px 0;">
+													{%- if block.settings.nav_image_link != blank -%}<a href="{{ block.settings.nav_image_link }}" class="focus-inset full-unstyled-link">{%- endif -%}
+													{%- capture image_width_mob %}{{ block.settings.image_height_mob | divided_by: block.settings.image.aspect_ratio }}{%- endcapture -%}
+													{%- capture image_height_mob %}height: {{ block.settings.image_height_mob }}px{%- endcapture -%}
+														<div class="media media--transparent media--adapt {%  if block.settings.image_cover != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_height_mob }}px; width: {{ block.settings.image_width_mob }}px;">
+															{{ block.settings.image | image_url: height: block.settings.image_height_mob | image_tag:
+																loading: 'lazy',
+																height: block.settings.image_height_mob,
+																width: image_width_mob,
+																class: 'mega-menu-image__image',
+																style: image_height_mob,
+																srcset: nil  }}
+														</div>
+												{%- if block.settings.nav_image_link != blank -%}</a>{%- endif -%}
+												</div>
+                                            </div>
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_2 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_2 != blank -%}<a href="{{ block.settings.nav_image_link_2 }}" class="button button--underline button--underline--hover button--underline--hover button--underline-left">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+														{%- if block.settings.nav_image_heading_2 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_2_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_2 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_2 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_height_2_mob }}px; margin: {{ block.settings.image_padding_2 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_2 != blank -%}<a href="{{ block.settings.nav_image_link_2 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                    {%- capture image_width_2_mob %}{{ block.settings.image_height_2_mob | divided_by: block.settings.image_2.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_2_mob %}height: {{ block.settings.image_height_2_mob }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_2 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_2.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_width_2 }}px; width: {{ block.settings.image_width_2_mob }}px;;">
+                                                            {{ block.settings.image_2 | image_url: height: block.settings.image_height_2_mob | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_height_2_mob,
+                                                                width: image_width_2_mob,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_2_mob,
+                                                                srcset: nil  }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_2 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_3 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_3 != blank -%}<a href="{{ block.settings.nav_image_link_3 }}" class="button button--underline button--underline--hover button--underline-left">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_3 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_3_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_3 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_3 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_height_3_mob }}px; margin: {{ block.settings.image_padding_3 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_3 != blank -%}<a href="{{ block.settings.nav_image_link_3 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                    {%- capture image_width_3_mob %}{{ block.settings.image_height_3_mob | divided_by: block.settings.image_3.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_3_mob %}height: {{ block.settings.image_height_3_mob }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_3 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_3.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_height_3_mob }}px; width: {{ block.settings.image_width_3_mob }}px;;">
+                                                            {{ block.settings.image_3 | image_url: width: block.settings.image_height_3_mob | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_height_3_mob,
+                                                                width: image_width_3_mob,
+                                                                class: 'mega-menu-image__image',
+                                                            style: image_height_3_mob }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_3 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%} 
+                                        {%- if nav_item == nav_item_input and block.settings.image_4 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_4 != blank -%}<a href="{{ block.settings.nav_image_link_4 }}" class="button button--underline button--underline--hover button--underline-left uppercase">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_4 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_4_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_4 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_4 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_height_4_mob }}px; margin: {{ block.settings.image_padding_4 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_4 != blank -%}<a href="{{ block.settings.nav_image_link_4 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                        {%- capture image_width_4_mob %}{{ block.settings.image_height_4_mob | divided_by: block.settings.image_4.aspect_ratio }}{%- endcapture -%}
+                                                        {%- capture image_height_4_mob %}height: {{ block.settings.image_height_4_mob }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_4 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_4.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_height_4_mob }}px; width: {{ block.settings.image_width_4_mob }}px;">
+                                                            {{ block.settings.image_4 | image_url: width: block.settings.image_height_4_mob | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_height_4_mob,
+                                                                width: image_width_4_mob,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_4_mob }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_4 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_5 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_5 != blank -%}<a href="{{ block.settings.nav_image_link_5 }}" class="button button--underline button--underline--hover button--underline-left  uppercase">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_5 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_2_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_5 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_5 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_height_5_mob }}px; margin: {{ block.settings.image_padding_5 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_5 != blank -%}<a href="{{ block.settings.nav_image_link_5 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                    {%- capture image_width_5_mob %}{{ block.settings.image_height_5_mob | divided_by: block.settings.image_5.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_5_mob %}height: {{ block.settings.image_height_5_mob }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_5 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_5.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_height_5_mob }}px; width: {{ block.settings.image_width_5_mob }}px;">
+                                                            {{ block.settings.image_5 | image_url: width: block.settings.image_height_5_mob | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_height_5_mob,
+                                                                width: image_width_5_mob,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_5_mob }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_5 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_6 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_6 != blank -%}<a href="{{ block.settings.nav_image_link_6 }}" class="button button--underline button--underline--hover button--underline-left  uppercase">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_6 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_6_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_6 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_6 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_width_6 }}px; margin: {{ block.settings.image_padding_6 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_6 != blank -%}<a href="{{ block.settings.nav_image_link_6 }}" class="button button--underline button--underline--hover button--underline-left uppercase">{%- endif -%}
+                                                    {%- capture image_width_6 %}{{ block.settings.image_width_6 | divided_by: block.settings.image_6.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_6 %}height: {{ block.settings.image_width_6 }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_6 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_6.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_width_6 }}px; width: 170px;">
+                                                            {{ block.settings.image_6 | image_url: width: block.settings.image_width_6 | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_width_6,
+                                                                width: image_width_6,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_6 }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_6 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_7 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_7 != blank -%}<a href="{{ block.settings.nav_image_link_7 }}" class="button button--underline button--underline--hover button--underline-left uppercase">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_7 != blank -%}
+                                                            <div class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_7_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_7 | escape }}
+                                                            </div>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_7 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_width_7 }}px; margin: {{ block.settings.image_padding_7 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_7 != blank -%}<a href="{{ block.settings.nav_image_link_7 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                    {%- capture image_width_7 %}{{ block.settings.image_width_7 | divided_by: block.settings.image_7.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_7 %}height: {{ block.settings.image_width_7 }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_7 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_7.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_width_7 }}px; width: 170px;">
+                                                            {{ block.settings.image_7 | image_url: width: block.settings.image_width_7 | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_width_7,
+                                                                width: image_width_7,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_7 }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_7 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                        {%- if nav_item == nav_item_input and block.settings.image_8 != blank -%}
+                                            <div class="mega-menu-image" style="display: flex; flex-direction: row-reverse; gap: 1rem; align-items: center; ">
+                                                {%- if block.settings.nav_image_link_8 != blank -%}<a href="{{ block.settings.nav_image_link_8 }}" class="button button--underline button--underline--hover button--underline-left uppercase">{%- endif -%}
+                                                    <div class="mega-menu-image__info">
+                                                        {%- if block.settings.nav_image_heading_8 != blank -%}
+                                                            <h3 class="mega-menu-image__heading" style="font-size: {{ block.settings.nav_image_heading_size_8_mob | divided_by: 10.0 }}rem;">
+                                                                {{ block.settings.nav_image_heading_8 | escape }}
+                                                            </h3>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- if block.settings.nav_image_link_8 != blank -%}</a>{%- endif -%}
+                                                <div class="mega-menu-image__image-wrapper" style="height: {{ block.settings.image_width_7 }}px; margin: {{  block.settings.image_padding_8 }}px 0;">
+                                                    {%- if block.settings.nav_image_link_8 != blank -%}<a href="{{ block.settings.nav_image_link_8 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+                                                    {%- capture image_width_8 %}{{ block.settings.image_width_8 | divided_by: block.settings.image_8.aspect_ratio }}{%- endcapture -%}
+                                                    {%- capture image_height_8 %}height: {{ block.settings.image_width_8 }}px{%- endcapture -%}
+                                                        <div class="media media--transparent media--adapt{%  if block.settings.image_cover_8 != true %} media--contain{% endif %}" style="padding-bottom: {{ 1 | divided_by: block.settings.image_8.aspect_ratio | times: 100 }}%; height: {{ block.settings.image_width_8 }}px; width: 170px;">
+                                                            {{ block.settings.image_8 | image_url: width: block.settings.image_width_8 | image_tag:
+                                                                loading: 'lazy',
+                                                                height: block.settings.image_width_8,
+                                                                width: image_width_8,
+                                                                class: 'mega-menu-image__image',
+                                                                style: image_height_8 }}
+                                                        </div>
+                                                    {%- if block.settings.nav_image_link_8 != blank -%}</a>{%- endif -%}
+                                                </div>
+                                            </div> 
+                                        {%- endif -%}
+                                    </div>
+                                {%- endif -%} 
+                        {%- endfor -%}
+					</div>
+				</div>
+				</details>
+			{%- else -%}
+				<a href="{{ link.url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset menu-drawer__parent{% if highlight_nav_mob_item == highlight_nav_mob_input %} nav_mob-highlight{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+					{%- if link.title contains ':' -%}
+						{% assign menu-drawer__parent_no_kids_title = link.title | split: ":" | first | strip %}
+						{% assign menu-drawer__parent_no_kids_badge = link.title | split: ":" | last | strip %}
+						<span class="category-name__decoration">{{ menu-drawer__parent_no_kids_title }}</span>
+						<span class="category-name__badge">{{ menu-drawer__parent_no_kids_badge }}</span>
+					{%- else -%}
+						<span class="category-name__decoration">{{ link.title | escape }}</span>
+					{%- endif -%}
+				</a>
+			{%- endif -%}
+			</li>
+		{%- endfor -%}
+	</ul>	
+	<div class="menu-drawer__utility-links">
+		{%- if shop.customer_accounts_enabled -%}
+			<a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="button button--icon button--underline button--underline-left button--underline--hover">
+				{% render 'icon-account' %}
+				{%- liquid
+				if customer
+					echo 'customer.account_fallback' | t
+				else
+					echo 'customer.log_in' | t
+				endif
+				-%}
+			</a>
+		{%- endif -%}
+	</div>
+	{% comment %} Nav images {% endcomment %}
+	{%- if section.settings.image != blank -%}
+		<div class="mob-menu-image mob-menu-image__1">
+			{%- if section.settings.nav_image_link != blank -%}<a href="{{ section.settings.nav_image_link }}" class="focus-inset full-unstyled-link">{%- endif -%}
+				<div class="media media--transparent media--adapt" style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;">
+						{{ section.settings.image | image_url: width: section.settings.image_width | image_tag:
+							loading: 'lazy',
+							height: section.settings.image.height,
+							width: section.settings.image_width,
+							class: 'mega-menu-image__image' }}
+				</div>
+				<div class="mega-menu-image__info">
+					{%- if section.settings.nav_image_heading != blank -%}
+						<div class="mob-menu-image__heading">{{ section.settings.nav_image_heading | escape }}</div>
+					{%- endif -%}
+				</div>
+			{%- if section.settings.nav_image_link != blank -%}</a>{%- endif -%}
+		</div>
+	{%- endif -%}
+	{%- if section.settings.image_2 != blank -%}
+		<div class="mob-menu-image mob-menu-image__2">
+			{%- if section.settings.nav_image_link_2 != blank -%}<a href="{{ section.settings.nav_image_link_2 }}" class="focus-inset full-unstyled-link">{%- endif -%}
+				<div class="media media--transparent media--adapt" style="padding-bottom: {{ 1 | divided_by: section.settings.image_2.aspect_ratio | times: 100 }}%;">
+					{{ section.settings.image_2 | image_url: width: section.settings.image_width_2 | image_tag:
+						loading: 'lazy',
+						height: section.settings.image_2.height,
+						width: section.settings.image_2_width,
+						class: 'mega-menu-image__image' }}
+				</div>
+				<div class="mega-menu-image__info">
+					{%- if section.settings.nav_image_heading_2 != blank -%}
+						<div class="mob-menu-image__heading">{{ section.settings.nav_image_heading_2 | escape }}</div>
+					{%- endif -%}
+				</div>
+			{%- if section.settings.nav_image_link_2 != blank -%}</a>{%- endif -%}
+		</div >
+	{%- endif -%}
+</nav>

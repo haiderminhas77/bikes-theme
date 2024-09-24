@@ -1,0 +1,122 @@
+.pagination-wrapper {
+	margin-top: 4rem;
+	margin-bottom: 7rem;
+}
+
+@media screen and (min-width: 990px) {
+	.pagination-wrapper {
+		margin-top: 5rem;
+		margin-bottom: 10rem;
+	}
+}
+
+.pagination__list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.pagination__list > li {
+	flex: 1 0 4.4rem;
+	max-width: 4.4rem;
+}
+
+.pagination__list > li:not(:last-child) {
+	margin-right: 1px;
+}
+
+@media screen and (min-width: 750px){
+	.pagination__list > li:not(:last-child) {
+		margin-right: 7px;
+	}
+}
+
+.pagination__list li:first-child * {
+    border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.pagination__list li:last-child * {
+    border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.pagination__item {
+	color: rgb(var(--color-foreground));
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	height: 4.4rem;
+	width: 100%;
+	padding: 0;
+	text-decoration: none;
+	box-shadow: 0 0 0 1px rgb(var(--color-base-background-4));
+}
+
+@media screen and (min-width: 750px){
+	.pagination__item {
+		height: 5rem;
+		width: 5rem;
+	}
+}
+
+/* a.pagination__item:hover::after {
+	height: 0.1rem;
+} */
+
+.pagination__item .icon-caret {
+	height: 0.6rem;
+}
+
+/* .pagination__item--current::after {
+	height: 0.1rem;
+} */
+
+.pagination__item--current::after {
+	content: '';
+	display: block;
+	width: 4.4rem;
+	height: 4.4rem;
+	position: absolute;
+	z-index: 1;
+	box-shadow: 0 0 0 2px rgb(var(--color-base-text));
+}
+
+@media screen and (min-width: 750px){
+	.pagination__item--current::after {
+		width: 5rem;
+		height: 5rem;
+	}
+}
+
+.pagination__list li:first-child .pagination__item--current::after {
+    border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.pagination__list li:last-child .pagination__item--current::after {
+    border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.pagination__item--next .icon {
+	margin-left: -0.2rem;
+}
+
+.pagination__item--next:hover .icon {
+	transform: scale(1.2);
+}
+
+.pagination__item--prev .icon {
+	margin-right: -0.2rem;
+	transform: rotate(180deg);
+}
+
+.pagination__item--prev:hover .icon {
+	transform: rotate(180deg) scale(1.2);
+}
+
+.pagination__item-arrow:hover::after {
+	display: none;
+}

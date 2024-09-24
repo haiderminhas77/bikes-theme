@@ -1,0 +1,63 @@
+{% comment %}
+Renders cart modal
+
+Accepts:
+- color_scheme: {String} sets the color scheme of the notification (optional)
+
+Scripts:
+Class cart-modal.js
+Styles:
+styles/component-cart-modal.css
+
+Usage:
+{% render 'cart-modal' %} in sections/header.liquid
+{% endcomment %}
+
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+
+<style>
+    .drawer {
+        visibility: hidden;
+    }
+</style>
+{% if settings.cart_show_nosto_empty != true %}
+    {% style %}
+        .cart-modal__empty-wrapper .nosto_element {
+            display: none!important;
+        }
+    {% endstyle %}
+{% endif %}
+
+<cart-modal class="drawer" data-nosto-enabled="{{ settings.cart_show_nosto }}">
+    <div id="cart-modal" class="cart-modal focus-inset" aria-modal="true"
+        aria-label="{{ 'general.cart.item_added' | t }}" role="dialog" tabindex="-1">
+        <div id="CartModal-Overlay" class="cart-modal__overlay"></div>
+        <div id="cart-modal__contents" class="cart-modal__contents drawer__inner">
+            <div class="cart-modal__contents-inner{% if cart == empty %} cart-modal__empty-wrapper{% endif %} hidden">
+                <div class="cart-modal__header">
+                        {% render 'countdown-timer' %}
+                    <button type="button" class="cart-modal__close modal__close-button link link--text focus-inset"
+                        aria-label="{{ 'accessibility.close' | t }}">
+                        {% render 'icon-close' %}
+                    </button>
+                </div>
+                {% if settings.enable_cart_notification_fsn %}
+                    {% render 'free-shipping-notice', margin: "fsn__container-cart-modal-margin", progress_bar: settings.fsn_cart_enable_progress_bar, cart_modal_fsp: "true" %}
+                {% endif %}
+                <div class="cart-modal__scroll">
+                <div id="cart-modal-items"></div>
+                    {%- if settings.cart_show_nosto -%}
+                        {{ settings.cart_nosto_html }}
+                    {%- endif -%}
+                </div>
+
+                <div id="cart-modal__checkout" class="cart-modal__footer {% unless cart.item_count > 0 %}hidden{% endunless %}">
+                    <div id="cart-modal__subtotal--container">
+                        <div id="cart-modal-subtotal"></div>
+                    </div>
+                    <div id="cart-modal-button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</cart-modal>

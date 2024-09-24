@@ -1,0 +1,427 @@
+{% comment %}
+
+    DS-Side-Reveal.liquid renders DS-Side-Reveal in all templates
+    Requires GSAP Core & GSAP Scroll Trigger as a dependency, this can be turned on in theme CMS Settings
+    CMS Options include Content Column contents inc. logo heading,
+    text heading, font families and colours as well as order of
+    content columns and image to reveal.
+{% endcomment %}
+
+{% javascript %}
+class SideReveal extends HTMLElement {
+    constructor(){
+        super();
+        this.revealImageSelector = this.querySelector('.image-reveal__image');
+        this.triggerSelector = this;
+        this.revealImage(this.revealImageSelector, this.triggerSelector);
+    }
+
+    revealImage(image, trigger){
+            gsap.to(image, {
+                scrollTrigger: {
+                    trigger: trigger, 
+                    start: '0% 100%',
+                    end: '20% 20%',
+                    scrub: true,
+                },
+                x: '0%'
+            })
+    }
+}
+
+customElements.define('image-reveal', SideReveal);
+
+{% endjavascript %}
+
+{% style %}
+    #shopify-section-{{ section.id }}.ds-side-reveal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+        background-color: {{section.settings.section_bg_color}};
+        color: {{section.settings.section_font_color}};
+        overflow-x: hidden;
+    }
+
+    .content__column {
+        display: flex;
+        flex-flow: column nowrap;
+        flex: 0 0 50%;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 50px 60px;
+    }
+    @media screen and (max-width: 749px){
+        .content__column {
+            padding: 50px 15px;
+        }
+    }
+
+    #shopify-section-{{ section.id }}.ds-side-reveal .content__column h2 {
+        {% if section.settings.heading_font == 'body' %}
+            font-family: var(--font-body-family);
+            font-weight: var(--font-body-weight);
+            font-style: var(--font-body-style);
+        {% endif %}
+        {% if section.settings.heading_font == 'caption' %}
+            font-family: var(--font-caption-family);
+            font-weight: var(--font-caption-weight);
+            font-style: var(--font-caption-style);
+        {% endif %}
+        {% if section.settings.heading_font == 'bold-italic' %}
+            font-family: var(--font-heading-family);
+            font-weight: var(--font-heading-weight);
+            font-style: var(--font-heading-style-italic);
+        {% endif %}
+        {% if section.settings.heading_font == 'bold-non-italic' %}
+            font-family: var(--font-heading-family-normal);
+            font-weight: 600;
+            font-style: var(--font-heading-style-normal);
+            letter-spacing: var(--font-heading-letter-spacing-normal);
+            line-height: var(--font-heading-line-height-normal);
+        {% endif %}
+        font-size: {{section.settings.heading_font_size}}px;
+        {% if section.settings.heading_uppercase %}
+            text-transform: uppercase;
+        {% endif %}
+        letter-spacing: 0.0em;
+    }
+    
+    @media screen and (min-width: 750px){
+        #shopify-section-{{ section.id }} .content__column p {
+            margin: 50px 0px;
+            {% if section.settings.body_font == 'body' %}
+                font-family: var(--font-body-family);
+                font-weight: var(--font-body-weight);
+                font-style: var(--font-body-style);
+            {% endif %}
+            {% if section.settings.body_font == 'caption' %}
+                font-family: var(--font-caption-family);
+                font-weight: var(--font-caption-weight);
+                font-style: var(--font-caption-style);
+            {% endif %}
+            {% if section.settings.body_font == 'bold-italic' %}
+                font-family: var(--font-heading-family);
+                font-weight: var(--font-heading-weight);
+                font-style: var(--font-heading-style-italic);
+            {% endif %}
+            {% if section.settings.body_font == 'bold-non-italic' %}
+                font-family: var(--font-caption-family);
+                font-weight: var(--font-heading-weight);
+                font-style: var(--font-heading-style-normal);
+            {% endif %}
+            font-size: {{section.settings.body_font_size}}px;
+            {% if section.settings.body_uppercase %}
+                text-transform: uppercase;
+            {% endif %}
+        }
+    }
+
+    @media screen and (max-width: 750px){
+        .content__column p {
+            margin: 20px 0px;
+        }
+    }
+
+    .content__column h2,
+    .content__column p {
+        color: inherit;
+    }
+
+    #shopify-section-{{ section.id }} .image-reveal__button {
+        border: solid 3px {{ section.settings.button_border }};
+        background-color: {{ section.settings.button_background }};
+        color: {{ section.settings.button_text_color }};
+        padding: 15px;
+        font-family: var(--font-caption-family);
+        letter-spacing: 0.3em;
+        font-weight: 900;
+        {% if section.settings.button_uppercase %}
+            text-transform: uppercase;
+        {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .image-reveal__image {
+        flex: 0 0 50%;
+        {% if section.settings.element_order == 'image-first' %}
+            transform: translateX(-100vw);
+        {% else %}
+            transform: translateX(100vw);    
+        {% endif %}
+        max-width: 100vw;
+        object-fit: contain;
+        height: fit-content;
+        max-height: 450px;
+    }
+
+    @media screen and (min-width: 750px){
+        {% if section.settings.element_order == 'image-first' %}
+            #shopify-section-{{ section.id }}.ds-side-reveal {
+                flex-flow: row nowrap;
+                padding-right: {{ section.settings.side_padding }}px;
+            }
+        {% else %}
+            #shopify-section-{{ section.id }}.ds-side-reveal {
+                flex-flow: row-reverse nowrap;
+                padding-left: {{ section.settings.side_padding }}px;
+            }
+        {% endif %}
+        .logo_heading {
+            max-width: 20vw;
+            object-fit: contain;
+            max-height: 150px;
+        }
+    }
+    @media screen and (max-width: 749px){
+        {% if section.settings.element_order == 'image-first' %}
+            #shopify-section-{{ section.id }}.ds-side-reveal {
+                flex-flow: column nowrap;
+            }
+        {% else %}
+            #shopify-section-{{ section.id }}.ds-side-reveal {
+                flex-flow: column-reverse nowrap;
+            }
+        {% endif %}
+        .logo_heading {
+            max-width: 50vw;
+            object-fit: contain;
+            max-height: 150px;
+        }
+    }
+{% endstyle %}
+
+
+        <image-reveal class="image-reveal__container">
+            {{ section.settings.image_reveal | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            class: 'image-reveal__image'
+            }}
+        </image-reveal>
+        <div class="content__column">
+            {% if section.settings.text_heading != blank %}
+                <h2>{{ section.settings.text_heading }}</h2>
+            {% endif %}
+            {% if section.settings.logo_heading != blank %}
+                {{ section.settings.logo_heading | image_url: width: 400 | image_tag:
+                    loading: 'lazy',
+                    class: 'logo_heading'
+                }}
+            {% endif %}
+            {% if section.settings.text_body != blank %}
+                {{ section.settings.text_body }}
+            {% endif %}
+            {% if section.settings.button_text != blank %}
+                <a href="{{ section.settings.button_url }}" {% if section.settings.button_new_tab == 'true' %}target="_blank"{% endif %}>
+                    <button class="image-reveal__button">
+                        {{ section.settings.button_text }}
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+            
+{% schema %}
+    {
+        "name": "DS Side Reveal",
+        "class": "ds-side-reveal",
+        "tag": "section",
+        "disabled_on": {
+            "groups": ["header", "footer"]
+        },
+        "settings":
+        [
+            {
+                "type": "header",
+                "content": "DS Side Reveal"
+            },
+            {
+                "type": "paragraph",
+                "content": "This section requires both GSAP Core and GSAP Scroll Trigger to be turned on in theme settings of the CMS"
+            },
+            {
+                "type": "select",
+                "id": "element_order",
+                "label": "Element Order",
+                "info": "Decide whether the Image or the Text/Logo Column comes first",
+                "options": [
+                    {
+                        "value": "image-first",
+                        "label": "Image First"
+                    },
+                    {
+                        "value": "column-first",
+                        "label": "Column First"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "side_padding",
+                "label": "Side Padding",
+                "min": 0,
+                "max": 100,
+                "default": 0,
+                "step": 1
+            },
+            {
+                "type": "color",
+                "id": "section_bg_color",
+                "label": "Section BG color"
+            },
+            {
+                "type": "color",
+                "id": "section_font_color",
+                "label": "Section font color"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_reveal",
+                "label": "Image to be revealed"
+            },
+            {
+                "type": "header",
+                "content": "Heading Settings"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_heading",
+                "label": "Logo heading"
+            },
+            {
+                "type": "select",
+                "id": "heading_font",
+                "label": "Column heading font",
+                "options":
+                [
+                    {
+                        "value": "body",
+                        "label": "Body"
+                    },
+                    {
+                        "value": "caption",
+                        "label": "captionspace"
+                    },
+                    {
+                        "value": "bold-italic",
+                        "label": "Bold italic"
+                    },
+                    {
+                        "value": "bold-non-italic",
+                        "label": "Bold (Non-italic)"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "heading_font_size",
+                "label": "Heading font size",
+                "min": 10,
+                "max": 60,
+                "step": 1,
+                "default": 14
+            },
+            {
+                "type": "checkbox",
+                "id": "heading_uppercase",
+                "label": "Uppercase the heading"
+            },
+            {
+                "type": "text",
+                "id": "text_heading",
+                "label": "Text heading"
+            },
+            {
+                "type": "header",
+                "content": "Body Settings"
+            },
+            {
+                "type": "select",
+                "id": "body_font",
+                "label": "Body font",
+                "options":
+                [
+                    {
+                        "value": "body",
+                        "label": "Body (Roboto 400 weight)"
+                    },
+                    {
+                        "value": "caption",
+                        "label": "captionspace (Roboto caption)"
+                    },
+                    {
+                        "value": "bold-italic",
+                        "label": "Bold italic (Roboto condensed bold)"
+                    },
+                    {
+                        "value": "bold-non-italic",
+                        "label": "Bold (Non-italic)"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "body_font_size",
+                "label": "Body font size",
+                "min": 10,
+                "max": 60,
+                "step": 1,
+                "default": 14
+            },
+            {
+                "type": "checkbox",
+                "id": "body_uppercase",
+                "label": "Uppercase the body text"
+            },
+            {
+                "type": "richtext",
+                "id": "text_body",
+                "label": "Body"
+            },
+            {
+                "type": "header",
+                "content": "Button Settings"
+            },
+            {
+                "type": "text",
+                "id": "button_text",
+                "label": "Button text"
+            },
+            {
+                "type": "url",
+                "id": "button_url",
+                "label": "Button url"
+            },
+            {
+                "type": "checkbox",
+                "id": "button_new_tab",
+                "label": "Open in new tab"
+            },
+            {
+                "type": "color",
+                "id": "button_border",
+                "label": "Button border"
+            },
+            {
+                "type": "color",
+                "id": "button_background",
+                "label": "Button background"
+            },
+            {
+                "type": "color",
+                "id": "button_text_color",
+                "label": "Button tex color"
+            },
+            {
+                "type": "checkbox",
+                "id": "button_uppercase",
+                "label": "Uppercase the button text"
+            }
+        ],
+        "presets": [
+            {
+                "name": "DS Side Reveal"
+            }
+        ]
+    }
+{% endschema %}

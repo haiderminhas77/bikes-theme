@@ -1,0 +1,66 @@
+{% comment %}
+    Renders flag selector using Header Section blocks
+    Accepts:
+    - media_class: {string} option param used to pass css classes
+    Usage:
+    {% render 'flag-selector' %} in header.liquid (in two separate places, with media query-powered conditional rendering, to account for different locations of flag selector at different screen widths)
+{% endcomment %}
+
+{% style %}
+    .flag-selector .icon-flag {
+        width: 3.2rem;
+        height: 2.2rem;
+    }
+
+	.flag-selector summary span {
+		padding-left: 5px;
+		text-decoration: none;
+        color: var(--header-icons-foreground-color);
+	}
+
+    .flag-selector summary svg {
+        color: var(--header-icons-foreground-color);
+	}
+
+    .flag-selector summary .icon-caret {
+        top: unset;
+        right: unset;
+        margin-left: 1rem;
+        position: relative;
+    }
+
+    /* flag variables */
+	:root {
+		--header-flag-dropdown-background-color: {{ section.settings.header_flag_dropdown_background_color }};
+		--header-flag-dropdown-foreground-color: {{ section.settings.header_flag_dropdown_foreground_color }};
+		--header-flag-mob-dropdown-background-color: {{ section.settings.header_flag_mob_dropdown_background_color }};
+		--header-flag-mob-dropdown-foreground-color: {{ section.settings.header_flag_mob_dropdown_foreground_color }};
+	}
+{% endstyle %}
+
+{% assign flag_blocks = section.blocks | where: 'type', 'flag_item' %}
+{% for flag in flag_blocks %}{% if flag.settings.top_flag %}{% assign top_flag = flag %}{% endif %}{% endfor %}
+
+{% if flag_blocks %}
+    <details-disclosure class="{{ media_class }} flag-selector">
+        <details>
+            <summary class="list-menu__item link focus-inset">
+                {% render 'flag-icon-picker', flag: top_flag.settings.flag_icon %}
+                <span class="visually-hidden">{{ top_flag.settings.country_name | escape }}</span>
+            </summary>
+            <ul class="header__submenu list-menu list-menu--disclosure motion-reduce" role="list" tabindex="-1">
+                {% for flag in flag_blocks %}
+                    {% unless flag.settings.top_flag %}
+                        <li>
+                            <a href="{{ flag.settings.flag_link }}"
+                                class="list-menu__item link link--text focus-inset">
+                                {% render 'flag-icon-picker', flag: flag.settings.flag_icon %}
+                                <span>{{ flag.settings.country_name | escape }}</span>
+                            </a>
+                        </li>
+                    {% endunless %}
+                {% endfor %}
+            </ul>
+        </details>
+    </details-disclosure>
+{% endif %}

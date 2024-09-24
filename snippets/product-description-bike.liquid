@@ -1,0 +1,53 @@
+{% comment %}
+	Renders product description within bike PDP
+	
+	Usage:
+	{% render 'product-description-bike' %} within sections/main-product-bike.liquid
+{% endcomment %}
+
+{% style %}
+	.product__description-bike {
+		padding-top: {{ block.settings.top_padding_desktop | divided_by: 10.0 }}rem;
+		padding-bottom: {{ block.settings.bottom_padding_desktop | divided_by: 10.0 }}rem;
+		text-align: center;
+	}
+
+	.product__description-bike .product__description-subheading {
+		color: {{ block.settings.heading_text_color }};
+		font-size: {{ block.settings.heading_size_desktop | divided_by: 10.0 }}rem;
+	}
+
+	.product__description-bike p {
+		font-size: {{ block.settings.text_size_desktop | divided_by: 10.0 }}rem;
+		color: {{ block.settings.text_color }};
+	}
+
+	@media screen and (max-width: 749px) {
+		.product__description-bike {
+			padding-top: {{ block.settings.top_padding_mobile | divided_by: 10.0 }}rem;
+			padding-bottom: {{ block.settings.bottom_padding_mobile | divided_by: 10.0 }}rem;
+		}
+
+		.product__description-bike .product__description-subheading {
+			font-size: {{ block.settings.heading_size_mobile | divided_by: 10.0 }}rem;
+		}
+
+		.product__description-bike p {
+			font-size: {{ block.settings.text_size_mobile | divided_by: 10.0 }}rem;
+
+		}
+	}
+
+	.product__description-bike p a, .product__description-bike p a:visited {
+		color: {{ block.settings.text_link_color }}!important;
+	}
+{% endstyle %}
+
+{%- if product.description != blank -%}
+	<div class="product__description-bike page-width page-width--narrow" {{ block.shopify_attributes }}>
+		<h2 class="product__description-subheading">
+			{{ block.settings.heading }}
+		</h2>
+		{{ product.description }}
+	</div>
+{%- endif -%}

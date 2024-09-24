@@ -1,0 +1,136 @@
+.ds-hotspots__product-wrapper {
+    position: absolute;
+    /* z-index: 3; */
+    /* Position is set dynamically in Liquid */
+}
+
+.ds-hotspots__dot {
+    position: relative;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 0 0 0 8px rgb(255, 255, 255) inset, 0 1px 5px #00000026;
+    border-color: transparent;
+    z-index: 2;
+}
+
+.ds-hotspots__dot:after {
+    cursor: pointer;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: shopTheLookDotKeyframe 2s ease-in-out infinite;
+}
+
+@keyframes shopTheLookDotKeyframe {
+    0% {
+        opacity: 1;
+        transform: scale(0.4);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.3);
+    }
+}
+
+.ds-hotspots__product-wrapper {
+    margin-top: -12px;
+}
+
+.ds-hotspots__product {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    left: calc(100% + 28px);
+    top: 50%;
+    max-width: 46vw;
+    background: rgb(255, 255, 255);
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(.8) translateY(-50%);
+    transition: visibility .4s cubic-bezier(.75, 0, .175, 1), opacity .4s cubic-bezier(.75, 0, .175, 1), transform .4s cubic-bezier(.75, 0, .175, 1);
+    will-change: transform;
+    box-shadow: 0 1px 5px #0000001a;
+    transform-origin: top left;
+    z-index: 1;
+    border-radius: min(0px, 4px);
+    padding: 1rem;
+    gap: 16px;
+    z-index: 3;
+}
+
+.ds-hotspots__product[open] {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1) translateY(-50%);
+}
+
+.ds-hotspots__product::before {
+    position: absolute;
+    content: '';
+    right: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent rgb(255, 255, 255) transparent transparent;
+    border-width: 8px;
+}
+
+.ds-hotspots__product--reverse {
+    left: auto;
+    right: calc(100% + 28px);
+    transform-origin: top right;
+}
+
+.ds-hotspots__product--reverse::before {
+    right: auto;
+    left: 100%;
+    border-color: transparent transparent transparent rgb(255, 255, 255);
+}
+
+.ds-hotspots__product-vendor {
+    display: block;
+    max-width: max-content;
+    margin-bottom: 1px;
+}
+
+.ds-hotspots__product .card-wrapper {
+    flex-direction: row;
+    min-width: 200px;
+}
+
+.ds-hotspots__product .card-wrapper .card--product {
+    min-width: 90px;
+}
+
+@media screen and (min-width: 750px) {
+    .ds-hotspots__product .card-wrapper .swatch-circle {
+        height: 2rem;
+        width: 2rem;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    .ds-hotspots__product .card-information+.card {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 749px){
+	modal-opener.hotspot-quick-view-button.quick-view__button {
+		background: none;
+		width: unset;
+        height: unset;
+	}
+}

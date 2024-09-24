@@ -1,0 +1,475 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "breadcrumbs_L6TRCw": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": true,
+        "full_width": false,
+        "page_title_custom": "",
+        "page_title_uppercase": false,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": true,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 20,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_hero_7K97qB": {
+      "type": "ds-hero",
+      "blocks": {
+        "heading_qLJrHT": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>WARRANTY, RETURNS & CANCELLATIONS<\/p>",
+            "custom_liquid": "",
+            "heading_uppercase": true,
+            "icon": "none",
+            "heading_color": "#ffffff",
+            "heading_below_color": "#1c1c1c",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "text_YyUtRd": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Super73 B.V. warrants to the original owner of each of its Super73 electric motorbike, when purchased directly from Super73 B.V., or an authorized retailer, that the Product is complete and that the functional parts will be free of defects for the periods and under the terms indicated below.<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_paragraph_spacing": 24,
+            "text_paragraph_spacing_mob": 16,
+            "text_color": "#ffffff",
+            "text_link_color": "#ffffff",
+            "text_below_color": "#1c1c1c",
+            "text_link_below_color": "#1c1c1c",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_qLJrHT",
+        "text_YyUtRd"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "lazy_load": false,
+        "image": "shopify:\/\/shop_images\/Super73-Side_Racks-S2_1.jpg",
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "link": "",
+        "link_new_tab": false,
+        "overlay": "#1c1c1c",
+        "overlay_gradient": "",
+        "image_overlay_opacity": 30,
+        "video_url": "",
+        "banner_background": "rgba(0,0,0,0)",
+        "banner_background_gradient": "",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 50,
+        "banner_content_page_width": false,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-left",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "show_text_below": false,
+        "mob_below_overlay": "rgba(0,0,0,0)",
+        "mob_below_overlay_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_YWJkbP": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "heading_XMJg3z": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>warranty<\/p>",
+            "heading_uppercase": true,
+            "heading_color": "#1a1a1a",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_center": false,
+            "heading_font_family": "heading-font",
+            "padding_top": 0,
+            "padding_bottom": 34,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 26
+          }
+        },
+        "text_MfRwRb": {
+          "type": "text",
+          "settings": {
+            "text": "<p>1. Twenty-four (24) month or 500 life cycles, whichever comes first, for the Super73 battery from the date of purchase by the original owner. Like any rechargeable battery, your Super73 rechargeable battery pack will experience a decrease in capacity over time as it is subjected to charge and discharge cycles. Super73 warranties that your battery pack will maintain 70% or higher capacity for at least 500 charge cycles or two years, whichever comes first. The battery warranty does not include damage from power surges, use of an improper charger, water damage, improper maintenance, or such other misuse or normal wear.<br\/><br\/>2. Twenty- four (24) month, from date of delivery to the original owner, on all manufacturing defects. This excludes damage from power surges, water damage, improper maintenance, or such other misuse or normal wear and tear for any mechanical part of the bike, including but not limited to tires, tubes, rims, spokes, brake pads, cables, chain, wheels, grips, suspension and saddle.<\/p><p><strong><br\/>Terms and Conditions of Warranty:<br\/><br\/><\/strong>1. The Warranty is made to the original owner only and is nontransferable. It is only effective with a valid proof of purchase consisting of the original purchase document or receipt indicating the date of purchase, the serial number, the dealer’s name (if applicable) and the designation of the model. Super73 reserves the right to reject the coverage of this Warranty if the accompanying documentation of the Super73 components is not accurate or complete.<br\/><br\/>2. The Warranty becomes effective from the date of delivery and expires at the end of the applicable warranty period.<br\/><br\/>3. This Warranty is void if the care instructions in the owner’s manual (whether provided with the sale or posted on the Super73 website), and any amendments thereto, are not followed.<br\/><br\/>4. This Warranty does not apply to rental or commercial use of the products.<br\/><br\/>5. This Warranty exclusively covers systems and components provided by Super73. <br\/><br\/>6. The use of parts from unknown sources, for example, replacement parts from third parties will void the warranty.<br\/><br\/>7. Photo and \/or video will be required for warranty inspection by a Super73 Customer care agent.<br\/><br\/>8. If you purchased a bike and had it then shipped to another country or outlying island territories (ex: DOM-TOM, Netherlands Antilles), parts will only be sent to the country and mainland European territory in which the bike was originally sent. <br\/><br\/>9. This Warranty only covers defective materials and manufacturing defects. In the case of a warranty claim, Super73 undertakes to either repair faulty system components and\/or to replace such components, at the discretion of Super73. Upon identifying a fault with a Super73 bike, the owner must contact the Company or a local authorized Super73 dealer to initiate the warranty process. Any component to be repaired under this Warranty must be transported to the dealer at the owner’s own expense and risk, and, after the completion of such repair, must be picked up at the dealer. Costs for repair work performed in advance by persons who have not been authorized by Super73 will not be reimbursed. In such a case, any warranty claim will cease and any remaining warranty period will be voided. Repair work and\/ or replacement of components during the warranty period does not lead to an extension and\/or a new start of the warranty period. Repair work and direct replacement during the warranty period may be performed with functionally equivalent replacement components. This Warranty excludes any claims as to the reimbursement of property damages, downtimes, travel expenses, lost profit, or any other claims. Super73 maximum liability in connection with this Warranty is limited to the purchase price of the Product.<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_XMJg3z",
+        "text_MfRwRb"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 100,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_Hh4AkX": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "heading_FxgGeC": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>EXCLUSIONS – ITEMS NOT COVERED UNDER WARRANTY<\/p>",
+            "heading_uppercase": true,
+            "heading_color": "#1a1a1a",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_center": false,
+            "heading_font_family": "heading-font",
+            "padding_top": 0,
+            "padding_bottom": 34,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 26
+          }
+        },
+        "text_qGeReJ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>1. External influences, mainly falling rocks, collision, accident, and other external events with an immediate external effect due to mechanical power.<br\/><br\/>2. Warranty on replaced bike parts expires at the moment of bike warranty expiration.<br\/><br\/>3. Purposeful and\/or malevolent acts, theft, and robbery as well as natural hazard events and\/or acts of mischief. Inappropriate use, e.g., the Product was exposed to liquids, chemicals of any type and\/or extreme temperatures, wetness and humidity and\/or if the battery suffers damages due to non-compliance with the special instructions outlined in the chapter “Handling and Charging of the Battery.“ Inappropriate use includes the use of the Product for stunts, jumps and\/or riding with more than one person.<br\/><br\/>4. Overcharging the battery or not adhering to the Battery Care Instructions (whether provided with the sale or posted on the Super73 website), and any amendments thereto.<br\/><br\/>5. In the case of test, maintenance, repair, and replacement work due to normal use.<br\/><br\/>6. If the model, serial or product number on Super73 product has been changed, deleted, blurred, or removed. The seal and\/or the serial number decal on the battery housing has been broken or obviously manipulated.<br\/><br\/>7. In the case of use of the battery in systems that are not approved for such use with this particular Product. <br\/><br\/>8. In the case of the operation of the Super73 system with batteries other than the batteries designed for the Super73 system (refer to owner’s manual).<br\/><br\/>9. If one or more than one Super73 part has been opened, altered or repainted.<br\/><br\/>10. If Super73 concludes that there has been a case of modification or tampering with firmware.<br\/><br\/>11. If the Product is sold, gifted, or rented.<br\/><br\/>LABOUR COST OF REPAIRS: Under Warranty, we will repair or replace defective components and parts only. This Warranty does not cover the required labor cost of repairs from non-authorized parties and Super73 reserves the right to withhold coverage of labor costs at its sole discretion.<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_FxgGeC",
+        "text_qGeReJ"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 100,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_EM3B4m": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "heading_UxCQB3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>CLAIMS FOR SHIPPING DAMAGE AND\/OR MISSING PARTS<\/p>",
+            "heading_uppercase": true,
+            "heading_color": "#1a1a1a",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_center": false,
+            "heading_font_family": "heading-font",
+            "padding_top": 0,
+            "padding_bottom": 34,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 28
+          }
+        },
+        "text_rLe7Y9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>IMMEDIATELY inspect your product(s) for damage  and\/or missing parts. Freight  claims are super time-sensitive. We will not accept shipping claims later than 10 days from receipt of the  product. Note any damage to your product(s) on the Bill of Lading before you and the driver sign-off on the shipment. Take pictures of any damage that is found, and date the images when possible. Keep all packaging and paperwork until the inspection process is complete.<br\/><br\/>Whenever possible, report damage claims within 10 days of delivery to a Super73 customer service representative. Please contact our Technical Support department at customercare-eu@super73.com for return\/replacement instructions.<\/p><p>No agent, employee, dealer, representative or reseller is authorized to modify or extend this Limited Warranty or to make binding representations or claims, whether in advertising, presentations or otherwise, on behalf of SUPER73 regarding the Products or this Limited Warranty.<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_UxCQB3",
+        "text_rLe7Y9"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 100,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_collapsible_content_MWHm9U": {
+      "type": "ds-collapsible-content",
+      "blocks": {
+        "collapsible_row_qtGRX3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "disclaimer",
+            "heading_uppercase": true,
+            "heading_color": "#00486f",
+            "heading_background_color": "#ffffff",
+            "heading_color_active": "#00486f",
+            "heading_background_color_active": "#ffffff",
+            "heading_size_custom": 25,
+            "heading_size_mobile_custom": 18,
+            "icon": "none",
+            "row_content": "<p>THIS LIMITED WARRANTY SETS OUT THE FULL EXTENT OF SUPER73’S RESPONSIBILITIES, AND THE EXCLUSIVE REMEDY REGARDING THE PRODUCTS. ALL IMPLIED WARRANTIES, INCLUDING WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, ARE LIMITED TO THE DURATION OF THIS LIMITED WARRANTY. IN NO EVENT SHALL super73 BE LIABLE FOR DAMAGES ABOVE THE PURCHASE PRICE OF THE PRODUCT. SUPER73 MAKES NO WARRANTIES OR REPRESENTATIONS, EXPRESS OR IMPLIED, STATUTORY OR OTHERWISE, AS TO THE QUALITY, CAPABILITIES, OPERATIONS, PERFORMANCE OR SUITABILITY OF ANY THIRD PARTY SOFTWARE OR EQUIPMENT USED IN CONJUNCTION WITH THE PRODUCT, OR THE ABILITY TO INTEGRATE ANY SUCH SOFTWARE OR EQUIPMENT WITH THE PRODUCT, WHETHER SUCH THIRD-PARTY SOFTWARE OR EQUIPMENT IS INCLUDED WITH THE PRODUCT SOLD BY super73 OR OTHERWISE. SUPER73 IS NOT RESPONSIBLE FOR DIRECT, CONSEQUENTIAL OR INCIDENTAL DAMAGES, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR PERSONAL INJURY, PROPERTY DAMAGE OR ECONOMIC LOSSES BASED ON CONTRACT, NEGLIGENCE, OR PRODUCT LIABILITY IN ALL STATES THAT ALLOW EXCLUSION OF LIMITATION OF DAMAGES. THIS WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS AND THOSE RIGHTS MAY VARY FROM PLACE TO PLACE. THIS WARRANTY DOES NOT AFFECT YOUR STATUTORY RIGHTS. WARRANTY DOES NOT COVER NORMAL WEAR AND TEAR, SHIPPING DAMAGE, UNAUTHORISED ALTERATIONS, MODIFICATIONS, ACCIDENTAL DAMAGE AND DAMAGE FROM MISUSE OR NEGLECT<\/p>",
+            "custom_liquid": "",
+            "page": "",
+            "text_color": "#00486f",
+            "text_link_color": "#ffffff",
+            "background_color": "#ffffff",
+            "border_color": "#ffffff",
+            "hide_borders": false,
+            "enable_strong_styling": true,
+            "text_size_custom": 18,
+            "text_size_mobile_custom": 16
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_qtGRX3"
+      ],
+      "settings": {
+        "page_width": "full",
+        "text_page_width": "narrow",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "background_color": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "border_color": "rgba(0,0,0,0)",
+        "icon_color": "#000000",
+        "enable_border_bottom": true,
+        "caption": "",
+        "caption_color": "#000000",
+        "caption_size_custom": 24,
+        "caption_size_mobile_custom": 18,
+        "heading": "",
+        "heading_uppercase": true,
+        "heading_color": "#000000",
+        "heading_size_custom": 48,
+        "heading_size_mobile_custom": 24,
+        "heading_alignment": "left",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs_L6TRCw",
+    "main",
+    "ds_hero_7K97qB",
+    "ds_rich_text_YWJkbP",
+    "ds_rich_text_Hh4AkX",
+    "ds_rich_text_EM3B4m",
+    "ds_collapsible_content_MWHm9U"
+  ]
+}

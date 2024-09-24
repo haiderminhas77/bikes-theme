@@ -1,0 +1,450 @@
+{% comment %}
+'Main section' rendering content on search page
+Usage:
+"main": {
+"type": "main-search"
+} Listed in templates/search.json
+{% endcomment %}
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-badges.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-variant-radios.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-badges.css' | asset_url | stylesheet_tag }}
+{{ 'component-search.css' | asset_url | stylesheet_tag }}
+
+{% capture size_label %}{{ 'products.product.size' | t }}{% endcapture %}
+
+
+{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+	{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+	<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
+
+<style>
+	.template-search__header {
+		margin-bottom: 3rem;
+	}
+	.template-search__search {
+		margin: 0 auto 3.5rem;
+		max-width: 74.1rem;
+	}
+	.template-search__search .search {
+		{% comment %} margin-top: 3rem; {% endcomment %}
+		position: relative;
+	}
+	.template-search--empty {
+		padding-bottom: 18rem;
+	}
+	@media screen and (min-width: 750px) {
+		.template-search__header {
+			margin-bottom: 5rem;
+		}
+	}
+	.search__button .icon {
+		height: 1.8rem;
+	}
+	.template-search__search .field__label {
+		left: 1.8rem;
+	}
+	.template-search__header h1 {;
+	}
+</style>
+
+{%- liquid
+	assign sort_by = search.sort_by | default: search.default_sort_by
+	assign terms = search.terms | escape
+	assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+-%}
+
+{%- style -%}
+	.section-{{ section.id }}-padding {
+		padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+		padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+	}
+
+	@media screen and (min-width: 750px) {
+		.section-{{ section.id }}-padding {
+				padding-top: {{ section.settings.padding_top }}px;
+				padding-bottom: {{ section.settings.padding_bottom }}px;
+		}
+	}
+{%- endstyle -%}
+
+{% paginate search.results by 24 %}
+	<div class="template-search {% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
+		<div class="template-search__header page-width center">
+			<h1 class="h2 center uppercase">
+				{%- if search.performed -%}
+					{{- 'templates.search.title' | t -}}
+				{%- else -%}
+					{{- 'general.search.search' | t -}}
+				{%- endif -%}
+			</h1>
+			<div class="template-search__search">
+				{%- if settings.predictive_search_enabled -%}
+					<predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
+				{%- endif -%}
+					<form action="{{ routes.search_url }}" method="get" role="search" class="search">
+						<div class="field">
+							<input
+								class="search__input field__input"
+								id="Search-In-Template"
+								type="search"
+								name="q"
+								value="{{ search.terms | escape }}"
+								placeholder="{{ 'general.search.search' | t }}"
+								{%- if settings.predictive_search_enabled -%}
+									role="combobox"
+									aria-expanded="false"
+									aria-owns="predictive-search-results"
+									aria-controls="predictive-search-results"
+									aria-haspopup="listbox"
+									aria-autocomplete="list"
+									autocorrect="off"
+									autocomplete="off"
+									autocapitalize="off"
+									spellcheck="false"
+								{%- endif -%}
+							>
+							<label class="field__label" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
+							<input name="options[prefix]" type="hidden" value="last">
+
+							{%- if settings.predictive_search_enabled -%}
+								<div class="predictive-search predictive-search--search-template" tabindex="-1" data-predictive-search>
+									{%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+								</div>
+
+								<span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+							{%- endif -%}
+							<button
+								type="reset"
+								class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
+								aria-label="{{ 'general.search.reset' | t }}"
+							>
+								<svg class="icon icon-close" aria-hidden="true" focusable="false">
+									<use xlink:href="#icon-reset">
+								</svg>
+							</button>
+							<button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+								<svg class="icon icon-search">
+									<use xlink:href="#icon-search">
+								</svg>
+							</button>
+						</div>
+					</form>
+				{%- if settings.predictive_search_enabled -%}
+					</predictive-search>
+				{%- endif -%}
+
+			</div>
+			{%- if search.performed -%}
+				{%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
+					{%- if search.results_count > 0 -%}
+						<p role="status">{{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}</p>
+					{%- endif -%}
+				{%- endunless -%}
+				{%- if search.results_count == 0 and search.filters == empty -%}
+					<p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+				{%- endif -%}
+			{%- endif -%}
+		</div>
+		{%- if search.performed -%}
+			{%- if search.filters != empty -%}
+				{% comment %}
+					Hidden Card Logic for Out of Stock Filters follows, while this logic doesn't dictate which cards to hide, it is required to pass an accurate product count to facets.liquid
+				{% endcomment %}
+				{% assign shown_cards = search.results.size %}
+				{%- for product in search.results -%}
+					{% comment %}
+						Begin hidden card logic, where if a product card's lead sibling has the filtered size variant out of stock, the entire card isn't rendered
+					{% endcomment %}
+					{% for option in product.options_with_values %}
+						{% if option.name == size_label %}
+							{% comment %} product card has size as an option {% endcomment %}
+							{% for value in option.values %}
+								{% assign optionValue = value | downcase %}
+								{% for filter in search.filters %}
+									{% comment %}collection is being filtered {% endcomment %}
+									{% if filter.label == size_label %}
+										{% for active_value in filter.active_values %}
+											{% assign filterValue = active_value.value | downcase %}
+											{% if filterValue == optionValue %}
+												{% comment %}Product Card Features Size we've filtered by {% endcomment %}
+												{% for variant in product.variants %}
+													{% assign variantSize = variant.option2 | downcase %}
+													{% if variantSize == optionValue %}
+														{% if variant.available == false %}
+															{% assign shown_cards = shown_cards | minus: 1 %}
+														{% endif %}
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+					{% endfor %}
+					{% comment %}
+						End hidden card logic
+					{% endcomment %}
+				{% endfor %}
+				{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+					{% render 'facets', results: search, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, collapse_on_larger_devices: section.settings.collapse_on_larger_devices, shown_cards: shown_cards %}
+				{%- endif -%}
+			{%- endif -%}
+			<div id="ProductGridContainer">
+				{%- if search.results.size == 0 and search.filters != empty -%}
+					<div class="template-search__results collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+						<div class="loading-overlay gradient"></div>
+						<div class="title-wrapper center">
+							<h2 class="title title--primary">
+								{{ 'sections.collection_template.empty' | t }}<br>
+								{{ 'sections.collection_template.use_fewer_filters_html' | t: link: search_url, class: "underlined-link link" }}
+							</h2>
+						</div>
+					</div>
+				{%- else -%}
+						<div class="template-search__results collection page-width">
+							<div class="loading-overlay gradient"></div>
+							<ul id="product-grid" data-id="{{ section.id }}" class="grid grid--{{ section.settings.products_per_row_mobile }}-col product-grid grid--{{ section.settings.products_per_row_tablet }}-col-tablet grid--{{ section.settings.products_per_row_desktop }}-col-desktop" role="list">
+								{%- for item in search.results -%}
+
+									{% assign lazy_load = false %}
+									{%- if forloop.index > 2 -%}
+									{%- assign lazy_load = true -%}
+									{%- endif -%}
+
+									{%- case item.object_type -%}
+										{%- when 'product' -%}
+											{% assign hide_card = false %}
+											{% comment %}
+												Begin hidden card logic, where if a product card's lead sibling has the filtered size variant out of stock, the entire card isn't rendered
+											{% endcomment %}
+											{% for option in item.options_with_values %}
+												{% if option.name == size_label %}
+													{% comment %} product card has size as an option {% endcomment %}
+													{% for value in option.values %}
+														{% assign optionValue = value | downcase %}
+														{% for filter in search.filters %}
+															{% comment %}collection is being filtered {% endcomment %}
+															{% if filter.label == size_label %}
+																{% for active_value in filter.active_values %}
+																	{% assign filterValue = active_value.value | downcase %}
+																	{% if filterValue == optionValue %}
+																		{% comment %}Product Card Features Size we've filtered by {% endcomment %}
+																		{% for variant in item.variants %}
+																			{% assign variantSize = variant.option2 | downcase %}
+																			{% if variantSize == optionValue %}
+																				{% if variant.available == false %}
+																					{% assign hide_card = true %}
+																				{% endif %}
+																			{% endif %}
+																		{% endfor %}
+																	{% endif %}
+																{% endfor %}
+															{% endif %}
+														{% endfor %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+											{% comment %}
+												End hidden card logic
+											{% endcomment %}
+											{%- capture product_settings -%}title,price{%- endcapture -%}
+											{% if hide_card == false %}
+												<li class="grid__item">
+													{% render 'product-card',
+														product_card_product: item,
+														media_size: 'adapt',
+														show_secondary_image: true,
+														add_image_padding: false,
+														show_vendor: false,
+														show_image_outline: false,
+														product_card_index: forloop.index0,
+														show_badges: true,
+														crop_product_title: false,
+														lazy_load: false,
+														quick_view_icon: true,
+														show_quick_view: settings.show_quick_view
+													%}
+												</li>
+											{% endif %}
+										{%- when 'article' -%}
+											<li class="grid__item">
+												<a href="{{ item.url }}" class="card-wrapper">
+													<div class="card card--search card--soft{% unless item.image %} card--text-only{% endunless %}">
+														<div class="card__inner">
+															{%- if item.image -%}
+																<div class="media media--cropped">
+																	{%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
+																	{%- capture image_alt -%}{{item.image.src.alt | escape }}{%- endcapture -%}
+																	{{ item.image.src | image_url: width: 940 | image_tag:
+																	loading: 'lazy',
+																	sizes: sizes,
+																	height: item.image.src.height,
+																	width: item.image.src.width,
+																	alt: image_alt }}
+																</div>
+															{%- endif -%}
+															<div class="card__content">
+																<h2 class="card__text h2">{{ item.title | truncate: 50 | escape }}</h2>
+																<div class="card-article-info h4">
+																	{%- if section.settings.article_show_date -%}
+																		<span class="circle-divider">{{ item.published_at | time_tag: format: 'date' }}</span>
+																	{%- endif -%}
+																	{%- if section.settings.article_show_author -%}
+																		<span>{{ item.author }}</span>
+																	{%- endif -%}
+																</div>
+															</div>
+															<div class="card__badge">
+																<span class="badge color-background-1">{{ 'blogs.article.blog' | t }}</span>
+															</div>
+														</div>
+													</div>
+												</a>
+											</li>
+										{%- when 'page' -%}
+											<li class="grid__item">
+												<a href="{{ item.url }}" class="card-wrapper">
+													<div class="card card--search card--soft card--text-only">
+														<div class="card__inner">
+															<div class="card__content"><h2 class="card__text h2">{{ item.title | truncate: 50 | escape }}</h2></div>
+															<div class="card__badge">
+																<span class="badge color-background-1">{{ 'templates.search.page' | t }}</span>
+															</div>
+														</div>
+													</div>
+												</a>
+											</li>
+										{%- endcase -%}
+									</li>
+								{%- endfor -%}
+							</ul>
+							{%- if paginate.pages > 1 -%}
+								{% render 'pagination', paginate: paginate %}
+							{%- endif -%}
+						</div>
+				{%- endif -%}
+			</div>
+		{%- endif -%}
+	</div>
+{% endpaginate %}
+
+{% schema %}
+{
+	"name": "t:sections.main-search.name",
+	"tag": "section",
+	"class": "section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "t:sections.main-search.settings.header__1.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_quick_view",
+			"default": false,
+			"label": "Enable quick view modal"
+		},
+		{
+			"type": "header",
+			"content": "t:sections.main-collection-product-grid.settings.header__1.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_filtering",
+			"default": true,
+			"label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+			"info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_sorting",
+			"default": true,
+			"label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "collapse_on_larger_devices",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.collapse_on_larger_devices.label"
+		},
+		{
+			"type": "header",
+			"content": "Results"
+		},
+		{
+			"type": "header",
+			"content": "t:sections.main-search.settings.header__2.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "article_show_date",
+			"default": true,
+			"label": "t:sections.main-search.settings.article_show_date.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "article_show_author",
+			"default": false,
+			"label": "t:sections.main-search.settings.article_show_author.label"
+		},
+		{
+			"type": "select",
+			"id": "products_per_row_desktop",
+			"options": [
+				{
+					"value": "3",
+					"label": "Three"
+				},
+				{
+					"value": "4",
+					"label": "Four"
+				}
+			],
+			"default": "4",
+			"label": "Products Per Row Desktop"
+		},
+		{
+		"type": "select",
+			"id": "products_per_row_tablet",
+			"options": [
+				{
+					"value": "2",
+					"label": "Two"
+				},
+				{
+					"value": "3",
+					"label": "Three"
+				}
+			],
+			"default": "3",
+			"label": "Products Per Row Tablet"
+		},
+		{
+		"type": "select",
+			"id": "products_per_row_mobile",
+			"options": [
+				{
+					"value": "1",
+					"label": "One"
+				},
+				{
+					"value": "2",
+					"label": "Two"
+				}
+			],
+			"default": "2",
+			"label": "Products Per Row Mobile"
+		}
+	]
+}
+{% endschema %}

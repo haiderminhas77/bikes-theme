@@ -1,0 +1,17 @@
+{% comment %}
+    Size-modal content go in this snippet, you also must render size-guide-opener.liquid in the DOM location where you wish the opening button to display.
+{% endcomment %}
+
+<modal-dialog class="product-popup-modal no-js-hidden" id="pdp-size-guide">
+    <div class="product-popup-modal__content" role="dialog">
+        <span id="ModalClose-pdp-size-guide" class="product-popup-modal__toggle">{% render 'icon-close' %}</span>
+        <h2 class="h1 product-popup-modal__heading">{{ size_guide_heading }}</h2>
+        <div class="size-guide__tip">
+            {{ size_tip }}
+        </div>
+        <div class="table-scroll product-popup-modal__content-info">
+            {{ pages[size_guide_content].content }}
+        </div>
+    </div>
+</modal-dialog>
+

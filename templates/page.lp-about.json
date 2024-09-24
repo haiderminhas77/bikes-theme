@@ -1,0 +1,185 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": false,
+        "full_width": true,
+        "page_title_custom": "",
+        "page_title_uppercase": true,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_hero_BUWdzX": {
+      "type": "ds-hero",
+      "blocks": {
+        "heading_8RfJBw": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>About super73<\/p>",
+            "custom_liquid": "",
+            "heading_uppercase": true,
+            "icon": "none",
+            "heading_color": "#ffffff",
+            "heading_below_color": "#1c1c1c",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_8RfJBw"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "lazy_load": false,
+        "image": "shopify:\/\/shop_images\/Super73_HP_Gallery_UGC_07_1920x1080px.jpg",
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "link": "",
+        "link_new_tab": false,
+        "overlay": "#1c1c1c",
+        "overlay_gradient": "",
+        "image_overlay_opacity": 30,
+        "video_url": "",
+        "banner_background": "rgba(0,0,0,0)",
+        "banner_background_gradient": "",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "width": 50,
+        "banner_content_page_width": false,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 0,
+        "banner__box_padding_bottom": 65,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "bottom-left",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 20,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "show_text_below": false,
+        "mob_below_overlay": "rgba(0,0,0,0)",
+        "mob_below_overlay_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_cqwRH9": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "text_3rMkQw": {
+          "type": "text",
+          "settings": {
+            "text": "<p>SUPER73® is an American lifestyle adventure brand based in Orange County, CA that develops products to help fuse motorcycle heritage with youth culture. Founded in 2016, SUPER73 has quickly grown into one of the most recognizable electric vehicle brands in the world with a passionate customer base including A-list celebrities, professional athletes, and many more. <br\/><br\/>For more information, visit super73.com or on social media @super73.<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_3rMkQw"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "width": 50,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ds_hero_BUWdzX",
+    "ds_rich_text_cqwRH9"
+  ]
+}

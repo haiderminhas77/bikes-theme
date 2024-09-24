@@ -1,0 +1,226 @@
+{% comment %}
+    Component of cart modal, fetched using section rendering API
+{% endcomment %}
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- if cart != empty -%}
+	<div class="cart-modal_header-wrapper">
+		<h2 class="cart__header-text uppercase">{{ 'sections.cart.title' | t }}</h2>
+		{% render 'cart-modal-product-count' %}
+	</div>
+	{%- for item in cart.items -%}
+		<div id="cart-modal-product-{{ item.id }}-{{ forloop.index }}" class="cart-item" data-cart-item-index={{ forloop.index }} data-handle="{{ item.product.handle }}">
+			<div class="cart-modal-product__details">
+				<div class="cart-modal-product__image-wrapper">
+					{% if item.image %}
+						{{ item.image | image_url: width: 110 | image_tag:
+							width: 110,
+							loading: 'lazy'
+						}}
+					{% endif %}
+				</div>
+
+				<cart-remove-button id="Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
+					<a href="{{ item.url_to_remove }}" class="button cart-remove-button"
+						aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+						{% render 'icon-close' %}
+					</a>
+				</cart-remove-button>
+
+				<div class="cart-modal-product__info-wrapper">
+					<div class="cart-modal__name-details_wrapper">
+						<h3 class="cart-modal-product__name h4 uppercase"><a class="full-unstyled-link" href="{{ item.product.url }}">{{ item.product.title | escape }}</a></h3>
+						<dl>
+							{%- unless item.product.has_only_default_variant -%}
+								{%- for option in item.options_with_values -%}
+									<div class="product-option uppercase" data-option-name="{{ option.name | downcase }}">
+										<dt>{{ option.name }}: </dt>
+										<dd>{{ option.value }}</dd>
+									</div>
+								{%- endfor -%}
+							{%- endunless -%}
+							<ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+							{%- for discount in item.discount_allocations -%}
+								<li class="discounts__discount">
+								{%- render 'icon-discount' -%}
+								{{ discount.discount_application.title }}
+								</li>
+							{% endfor %}
+							</ul>
+							{%- for property in item.properties -%}
+								{%- assign property_first_char = property.first | slice: 0 -%}
+								{%- if property.last != blank and property_first_char != '_' -%}
+									<div class="product-option">
+										<dt>{{ property.first }}: </dt>
+										<dd>
+											{%- if property.last contains '/uploads/' -%}
+												<a href="{{ property.last }}" class="link" target="_blank">
+													{{ property.last | split: '/' | last }}
+												</a>
+											{%- else -%}
+												{{ property.last }}
+											{%- endif -%}
+										</dd>
+									</div>
+								{%- endif -%}
+							{%- endfor -%}
+						</dl>
+					</div>
+					<div class="cart-modal__error-quantity-price_wrapper">
+						{%- comment -%}CART MODAL PRODUCT LIST FEATURES{%- endcomment -%}
+							<div class="product-form__error-message-wrapper hidden" role="alert">
+								<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-error" viewBox="0 0 13 13"><circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"></circle><circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"></circle><path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"></path><path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7"></path></svg>
+								<span class="product-form__error-message">
+								</span>
+							</div>
+							<div class="cart-modal-product__quantity_price_wrapper">
+								<quantity-input class="quantity cart-modal__quantity">
+									<button class="quantity__button no-js-hidden" name="minus" type="button">
+										<span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape
+											}}</span>
+										{% render 'icon-minus' %}
+									</button>
+									<input class="quantity__input" type="number" name="updates[]" value="{{ item.quantity }}" min="0"
+										aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+										id="Quantity-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
+									<button class="quantity__button no-js-hidden" name="plus" type="button">
+										<span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape
+											}}</span>
+										{% render 'icon-plus' %}
+									</button>
+								</quantity-input>
+
+								<div class="cart-modal-product__price h4">
+									{% for variant in item.product.variants %}
+										{% if item.id == variant.id and variant.price != variant.compare_at_price %}
+											<span class="product-price__original">{{ variant.compare_at_price | money }}</span>
+										{% endif %}
+									{% endfor %}
+									<span class="product-price__current">{{ item.price | money }}</span>
+									{%- if item.selling_plan_allocation != nil -%}
+										<span class="product-option product-option__subs">{{ item.selling_plan_allocation.selling_plan.name }}</span>
+									{%- endif -%}
+								</div>
+							</div>
+						{%- comment -%}END CART MODAL PRODUCT LIST FEATURES{%- endcomment -%}
+					</div>
+				</div>
+			</div>
+		</div>
+	{%- endfor -%}
+{%- else -%}
+	<div id="cart-modal__empty-message-container" class="cart-modal__empty-message-container">
+		<div class="cart-modal_header-wrapper">
+			<h2 class="cart__empty-text cart__header-text uppercase">{{ 'sections.cart.empty' | t }}</h2>
+		</div>
+		<div class="cart__subheading uppercase">{{ settings.subheading }}</div>
+		<a href="{% if settings.empty_cart_button_link %}{{ settings.empty_cart_button_link }}{% else %}{{ page.url }}{% endif %}" class="empty-cart__button button button--primary {% if settings.hide_empty_cart_button %} hidden{% endif %}">
+			{{ 'general.continue_shopping' | t }}
+		</a>
+	</div>
+	{% comment %} cart image 1 {% endcomment %}
+	<div class="cart-modal_empty-image banner banner--content-align-center banner--content-align-mobile-center banner--height-custom {% if settings.image != blank %} banner--adapt{% endif %}">
+		{%- if settings.image != blank -%}
+			<div id="cart-modal__banner-media" class="banner__media media{% if settings.image == blank %} placeholder{% endif %}">
+				{%- capture sizes -%}(max-width: 749px) 200px, (min-width: 751px) 1500px{%- endcapture -%}
+				{%- capture image_height %}{{ settings.image.width | divided_by: settings.image.aspect_ratio }}{%- endcapture -%}
+					{{ settings.image | image_url: width: 1920 | image_tag:
+						loading: 'lazy',
+						height: image_height,
+						widths: '900, 1200, 1920',
+						sizes: sizes }}
+			</div>
+			{% if settings.link != blank %}
+				<a href="{{ settings.link }}"><div class="banner__full-link"></div></a>
+			{% endif %}
+			<div class="banner__content banner__content--middle-center banner__content--mobile-middle-center">
+				<div id="cart-modal__banner-box" class="banner__box">
+					<h2 class="banner__heading custom-desktop custom-mobile uppercase">{{ settings.heading }}</h2>
+				{% if settings.link != blank %}
+					<a href="{{ settings.link }}"><div class="banner__full-link"></div></a>
+				{% endif %}
+				</div>
+			</div>
+		{%- endif -%}
+	</div>
+	{% comment %} cart image 1 end {% endcomment %}
+	{% comment %} cart image 2 {% endcomment %}
+	<div class="cart-modal_empty-image banner banner--content-align-center banner--content-align-mobile-center banner--height-custom {% if settings.image_2 != blank %} banner--adapt{% endif %}">
+		{%- if settings.image_2 != blank -%}
+			<div id="cart-modal__banner-media" class="banner__media media{% if settings.image_2 == blank %} placeholder{% endif %}">
+				{%- capture sizes_2 -%}(max-width: 749px) 200px, (min-width: 751px) 1500px{%- endcapture -%}
+				{%- capture image_height_2 %}{{ settings.image_2.width | divided_by: settings.image_2.aspect_ratio }}{%- endcapture -%}
+					{{ settings.image_2 | image_url: width: 1920 | image_tag:
+						loading: 'lazy',
+						height: image_height_2,
+						widths: '900, 1200, 1920',
+						sizes_2: sizes_2 }}
+			</div>
+			{% if settings.link_2 != blank %}
+				<a href="{{ settings.link_2 }}"><div class="banner__full-link"></div></a>
+			{% endif %}
+		
+			<div class="banner__content banner__content--middle-center banner__content--mobile-middle-center">
+				<div id="cart-modal__banner-box" class="banner__box">
+					<h2 class="banner__heading custom-desktop custom-mobile uppercase">{{ settings.heading_2 }}</h2>
+				{% if settings.link_2 != blank %}
+					<a href="{{ settings.link_2 }}"><div class="banner__full-link"></div></a>
+				{% endif %}
+				</div>
+			</div>
+		{%- endif -%}
+	</div>
+	{% comment %} cart image 2 end {% endcomment %}
+	{% comment %} cart image 3 {% endcomment %}
+	<div class="cart-modal_empty-image banner banner--content-align-center banner--content-align-mobile-center banner--height-custom {% if settings.image_3 != blank %} banner--adapt{% endif %}">
+		{%- if settings.image_3 != blank -%}
+			<div id="cart-modal__banner-media" class="banner__media media{% if settings.image_3 == blank %} placeholder{% endif %}">
+				{%- capture sizes_3 -%}(max-width: 749px) 200px, (min-width: 751px) 1500px{%- endcapture -%}
+				{%- capture image_height_3 %}{{ settings.image_3.width | divided_by: settings.image_3.aspect_ratio }}{%- endcapture -%}
+					{{ settings.image_3 | image_url: width: 1920 | image_tag:
+						loading: 'lazy',
+						height: image_height_3,
+						widths: '900, 1200, 1920',
+						sizes_3: sizes_3 }}
+			</div>
+			{% if settings.link_3 != blank %}
+				<a href="{{ settings.link_3 }}"><div class="banner__full-link"></div></a>
+			{% endif %}
+			<div class="banner__content banner__content--middle-center banner__content--mobile-middle-center">
+				<div id="cart-modal__banner-box" class="banner__box">
+					<h2 class="banner__heading custom-desktop custom-mobile uppercase">{{ settings.heading_3 }}</h2>
+				{% if settings.link_3 != blank %}
+					<a href="{{ settings.link_3 }}"><div class="banner__full-link"></div></a>
+				{% endif %}
+				</div>
+			</div>
+		{%- endif -%}
+	</div>
+	{% comment %} cart image 3 end {% endcomment %}
+	{% comment %} cart image 4 {% endcomment %}
+	<div class="cart-modal_empty-image banner banner--content-align-center banner--content-align-mobile-center banner--height-custom {% if settings.image_4 != blank %} banner--adapt{% endif %}">
+		{%- if settings.image_4 != blank -%}
+			<div id="cart-modal__banner-media" class="banner__media media{% if settings.image_4 == blank %} placeholder{% endif %}">
+				{%- capture sizes_4 -%}(max-width: 749px) 200px, (min-width: 751px) 1500px{%- endcapture -%}
+				{%- capture image_height_4 %}{{ settings.image_4.width | divided_by: settings.image_4.aspect_ratio }}{%- endcapture -%}
+					{{ settings.image_4 | image_url: width: 1920 | image_tag:
+						loading: 'lazy',
+						height: image_height_4,
+						widths: '900, 1200, 1920',
+						sizes_4: sizes_4 }}
+			</div>
+			{% if settings.link_4 != blank %}
+				<a href="{{ settings.link_4 }}"><div class="banner__full-link"></div></a>
+			{% endif %}
+			<div class="banner__content banner__content--middle-center banner__content--mobile-middle-center">
+				<div id="cart-modal__banner-box" class="banner__box">
+					<h2 class="banner__heading custom-desktop custom-mobile uppercase">{{ settings.heading_4 }}</h2>
+				{% if settings.link_4 != blank %}
+					<a href="{{ settings.link_4 }}"><div class="banner__full-link"></div></a>
+				{% endif %}
+				</div>
+			</div>
+		{%- endif -%}
+	</div>
+	{% comment %} cart image 4 end {% endcomment %}
+{% endif %}

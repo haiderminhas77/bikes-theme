@@ -1,0 +1,72 @@
+{% comment %}
+    Renders breadcrumbs on all page types excluding homepage
+    Usage:
+    {% section 'breadcrumbs' %}
+{% endcomment %}
+
+{{ 'section-breadcrumbs.css' | asset_url | stylesheet_tag }}
+
+<nav class="breadcrumbs-nav page-width" role="navigation" aria-label="breadcrumbs">
+    <a href="{{ shop.url }}" class="breadcrumbs__home breadcrumb">
+        {{ 'general.breadcrumbs.index' | t }}
+    </a>
+    {% case template.name %}
+    {% when 'collection' %}
+        <p class="breadcrumb breadcrumbs__collection">
+            {{ routes.root_url }}&nbsp;{{ collection.title }}
+        </p>
+        
+    {% when 'product' %}
+        {% if collection %}
+            <a href="{{ collection.url }}" class="breadcrumb breadcrumbs__collection">
+                {{ routes.root_url }}&nbsp;{{ collection.title }} 
+            </a>
+        {% endif %}
+        <p class="breadcrumb breadcrumbs__product">
+            {{ routes.root_url }}&nbsp;{{ product.title }}
+        </p>
+
+    {% when 'blog' or 'article' %}
+            <a {% if template.name == 'article' %}href="{{ blog.url }}" {% endif %}class="breadcrumb breadcrumbs__blog">
+                {{ routes.root_url }}&nbsp;{{ blog.title }}
+            </a>
+        {% if template.name == 'article' %}
+            <p class="breadcrumb breadcrumbs__article">
+                {{ routes.root_url }}&nbsp;{{ article.title }}
+            </p>
+        {% endif %}
+
+
+    {% else %}
+        {%- comment -%}To include 404, article, blog, contact, page, password, search{%- endcomment -%}
+        <a class="breadcrumb breadcrumbs__other-pages">
+            {% if page.title != null %}
+                {{ routes.root_url }}&nbsp;{{ page.title }}
+            {% elsif template.name == 'blog' %}
+                {{ routes.root_url }}&nbsp;{{ template.name }}&nbsp;{{ blog.title }}
+            {% else %}
+                {{ routes.root_url }}&nbsp;{{ template.name | capitalize }}
+            {% endif %} 
+        </a>
+    {% endcase %}
+</nav>
+{% schema %}
+    {
+        "name": "Breadcrumbs",
+        "tag": "section",
+        "disabled_on": {
+            "groups": ["header", "footer"]
+        },
+        "settings": [
+            {
+                "type": "header",
+                "content": "Add breadcrumbs"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Breadcrumbs"
+            }
+        ]
+    }
+{% endschema %}

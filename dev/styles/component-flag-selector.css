@@ -1,0 +1,46 @@
+
+.flag-selector [open="true"] summary, .flag-selector [open="true"] summary .icon-caret, .flag-selector [open="true"] summary svg  {
+    color: var(--header-icons-hover-foreground-color);
+}
+
+.flag-selector ul li {
+    color: var(--header-flag-dropdown-foreground-color);
+    border-bottom: 1px solid #e9e7e4;
+}
+
+.flag-selector ul li:last-child {
+    border-bottom: none;
+}
+
+.flag-selector ul li .icon-flag {
+    margin-right: 5px;
+}
+
+.flag-selector .list-menu--disclosure {
+    z-index: 1;
+}
+
+.flag-selector .header__submenu.list-menu {
+    padding: 1rem;
+}
+.flag-selector .header__submenu .list-menu__item {
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+    text-decoration: none;
+}
+
+.flag-selector .header__submenu .list-menu__item:hover {
+    text-decoration: underline;
+    color: var(--header-flag-dropdown-foreground-color);
+}
+
+.flag-selector .header__submenu .list-menu__item span {
+    margin-left: .5rem;
+}
+
+.flag-selector .header__submenu svg {
+    color: #000000;
+}

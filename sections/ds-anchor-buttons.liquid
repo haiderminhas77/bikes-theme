@@ -1,0 +1,836 @@
+{% comment %}
+	Renders 'ds-anchor-button' in sections everywhere. To be used with 'ds-anchor'.
+{% endcomment %}
+
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+    @media screen and (max-width: 749px) {
+        /* mob primary 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--primary {
+            --color-button: {{ section.settings.button_color.red }}, {{ section.settings.button_color.green }}, {{ section.settings.button_color.blue }};
+            --color-button-text: {{ section.settings.button_text_color.red }}, {{ section.settings.button_text_color.green }}, {{ section.settings.button_text_color.blue }};
+        }
+
+        /* mob primary 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--primary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_color_hover.red }}, {{ section.settings.button_color_hover.green }}, {{ section.settings.button_color_hover.blue }};
+            --color-button-text: {{ section.settings.button_text_color_hover.red }}, {{ section.settings.button_text_color_hover.green }}, {{ section.settings.button_text_color_hover.blue }};
+        }
+
+        /* mob arrow 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.link-with-icon {
+            --color-link: {{ section.settings.button_arrow_color.red }}, {{ section.settings.button_arrow_color.green }}, {{ section.settings.button_arrow_color.blue }};
+        }
+
+        /* mob arrow 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.link-with-icon:not([disabled]):hover {
+            --color-link: {{ section.settings.button_arrow_color_hover.red }}, {{ section.settings.button_arrow_color_hover.green }}, {{ section.settings.button_arrow_color_hover.blue }};
+        }
+
+        /* mob underline 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--underline {
+            --color-button-text: {{ section.settings.button_arrow_color.red }}, {{ section.settings.button_arrow_color.green }}, {{ section.settings.button_arrow_color.blue }};
+        }
+
+        /* mob underline 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--underline:not([disabled]):hover {
+            --color-button-text: {{ section.settings.button_arrow_color_hover.red }}, {{ section.settings.button_arrow_color_hover.green }}, {{ section.settings.button_arrow_color_hover.blue }};
+        }
+
+        /* mob outline 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--secondary {
+            --color-button: {{ section.settings.button_outline_color.red }}, {{ section.settings.button_outline_color.green }}, {{ section.settings.button_outline_color.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color.red }}, {{ section.settings.button_outline_text_color.green }}, {{ section.settings.button_outline_text_color.blue }};
+        }
+
+        /* mob outline 1 [hover] */
+            #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--secondary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_outline_color_hover.red }}, {{ section.settings.button_outline_color_hover.green }}, {{ section.settings.button_outline_color_hover.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_hover.red }}, {{ section.settings.button_outline_text_color_hover.green }}, {{ section.settings.button_outline_text_color_hover.blue }};
+            --alpha-button-background: 1;
+        }
+
+        /* mob arrow without text */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.slider-button {
+            --color-base-background-2: {{ section.settings.button_arrow_no_text_color.red }}, {{ section.settings.button_arrow_no_text_color.green }}, {{ section.settings.button_arrow_no_text_color.blue }};
+            --color-base-background-1: {{ section.settings.button_arrow_no_text_icon_color.red }}, {{ section.settings.button_arrow_no_text_icon_color.green }}, {{ section.settings.button_arrow_no_text_icon_color.blue }};
+        }
+        
+        /* mob primary 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--primary {
+            --color-button: {{ section.settings.button_color_2.red }}, {{ section.settings.button_color_2.green }}, {{ section.settings.button_color_2.blue }};
+            --color-button-text: {{ section.settings.button_text_color_2.red }}, {{ section.settings.button_text_color_2.green }}, {{ section.settings.button_text_color_2.blue }};
+        }
+
+        /* mob primary 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--primary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_color_2_hover.red }}, {{ section.settings.button_color_2_hover.green }}, {{ section.settings.button_color_2_hover.blue }};
+            --color-button-text: {{ section.settings.button_text_color_2_hover.red }}, {{ section.settings.button_text_color_2_hover.green }}, {{ section.settings.button_text_color_2_hover.blue }};
+        }
+
+        /* mob arrow 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).link-with-icon {
+            --color-link: {{ section.settings.button_arrow_color_2.red }}, {{ section.settings.button_arrow_color_2.green }}, {{ section.settings.button_arrow_color_2.blue }};
+        }
+
+        /* mob arrow 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).link-with-icon:not([disabled]):hover {
+            --color-link: {{ section.settings.button_arrow_color_hover_2.red }}, {{ section.settings.button_arrow_color_hover_2.green }}, {{ section.settings.button_arrow_color_hover_2.blue }};
+        }
+
+        /* mob underline 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--underline {
+            --color-button-text: {{ section.settings.button_arrow_color_2.red }}, {{ section.settings.button_arrow_color_2.green }}, {{ section.settings.button_arrow_color_2.blue }};
+        }
+
+        /* mob underline 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--underline:not([disabled]):hover {
+            --color-button-text: {{ section.settings.button_arrow_color_hover_2.red }}, {{ section.settings.button_arrow_color_hover_2.green }}, {{ section.settings.button_arrow_color_hover_2.blue }};
+        }
+        
+        /* mob outline 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--secondary {
+            --color-button: {{ section.settings.button_outline_color_2.red }}, {{ section.settings.button_outline_color_2.green }}, {{ section.settings.button_outline_color_2.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_2.red }}, {{ section.settings.button_outline_text_color_2.green }}, {{ section.settings.button_outline_text_color_2.blue }};
+        }
+
+        /* mob outline 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--secondary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_outline_color_2_hover.red }}, {{ section.settings.button_outline_color_2_hover.green }}, {{ section.settings.button_outline_color_2_hover.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_2_hover.red }}, {{ section.settings.button_outline_text_color_2_hover.green }}, {{ section.settings.button_outline_text_color_2_hover.blue }};
+            --alpha-button-background: 1;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        /* desk primary 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--primary {
+            --color-button: {{ section.settings.button_color.red }}, {{ section.settings.button_color.green }}, {{ section.settings.button_color.blue }};
+            --color-button-text: {{ section.settings.button_text_color.red }}, {{ section.settings.button_text_color.green }}, {{ section.settings.button_text_color.blue }};
+        }
+
+        /* desk primary 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--primary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_color_hover.red }}, {{ section.settings.button_color_hover.green }}, {{ section.settings.button_color_hover.blue }};
+            --color-button-text: {{ section.settings.button_text_color_hover.red }}, {{ section.settings.button_text_color_hover.green }}, {{ section.settings.button_text_color_hover.blue }};
+        }
+
+        /* desk arrow 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.link-with-icon {
+            --color-link: {{ section.settings.button_arrow_color.red }}, {{ section.settings.button_arrow_color.green }}, {{ section.settings.button_arrow_color.blue }};
+        }
+
+        /* desk arrow 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.link-with-icon:not([disabled]):hover {
+            --color-link: {{ section.settings.button_arrow_color_hover.red }}, {{ section.settings.button_arrow_color_hover.green }}, {{ section.settings.button_arrow_color_hover.blue }};
+        }
+
+        /* desk underline 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--underline {
+            --color-button-text: {{ section.settings.button_arrow_color.red }}, {{ section.settings.button_arrow_color.green }}, {{ section.settings.button_arrow_color.blue }};
+        }
+
+        /* desk underline 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--underline:not([disabled]):hover {
+            --color-button-text: {{ section.settings.button_arrow_color_hover.red }}, {{ section.settings.button_arrow_color_hover.green }}, {{ section.settings.button_arrow_color_hover.blue }};
+        }
+
+        /* desk outline 1 */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--secondary {
+            --color-button: {{ section.settings.button_outline_color.red }}, {{ section.settings.button_outline_color.green }}, {{ section.settings.button_outline_color.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color.red }}, {{ section.settings.button_outline_text_color.green }}, {{ section.settings.button_outline_text_color.blue }};
+        }  
+
+        /* desk outline 1 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.button--secondary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_outline_color_hover.red }}, {{ section.settings.button_outline_color_hover.green }}, {{ section.settings.button_outline_color_hover.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_hover.red }}, {{ section.settings.button_outline_text_color_hover.green }}, {{ section.settings.button_outline_text_color_hover.blue }};
+            --alpha-button-background: 1;
+        }
+
+        /* desk arrow without text */
+        #shopify-section-{{ section.id }} .banner__buttons a:first-of-type.slider-button {
+            --color-base-background-2: {{ section.settings.button_arrow_no_text_color.red }}, {{ section.settings.button_arrow_no_text_color.green }}, {{ section.settings.button_arrow_no_text_color.blue }};
+            --color-base-background-1: {{ section.settings.button_arrow_no_text_icon_color.red }}, {{ section.settings.button_arrow_no_text_icon_color.green }}, {{ section.settings.button_arrow_no_text_icon_color.blue }};
+        }
+        
+        /* desk primary 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--primary {
+            --color-button: {{ section.settings.button_color_2.red }}, {{ section.settings.button_color_2.green }}, {{ section.settings.button_color_2.blue }};
+            --color-button-text: {{ section.settings.button_text_color_2.red }}, {{ section.settings.button_text_color_2.green }}, {{ section.settings.button_text_color_2.blue }};
+        }
+
+        /* desk primary 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--primary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_color_2_hover.red }}, {{ section.settings.button_color_2_hover.green }}, {{ section.settings.button_color_2_hover.blue }};
+            --color-button-text: {{ section.settings.button_text_color_2_hover.red }}, {{ section.settings.button_text_color_2_hover.green }}, {{ section.settings.button_text_color_2_hover.blue }};
+        }
+
+        /* desk arrow 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).link-with-icon {
+            --color-link: {{ section.settings.button_arrow_color_2.red }}, {{ section.settings.button_arrow_color_2.green }}, {{ section.settings.button_arrow_color_2.blue }};
+        }
+
+        /* desk arrow 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).link-with-icon:not([disabled]):hover {
+            --color-link: {{ section.settings.button_arrow_color_hover_2.red }}, {{ section.settings.button_arrow_color_hover_2.green }}, {{ section.settings.button_arrow_color_hover_2.blue }};
+        }
+
+        /* desk underline 2 */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--underline {
+            --color-button-text: {{ section.settings.button_arrow_color_2.red }}, {{ section.settings.button_arrow_color_2.green }}, {{ section.settings.button_arrow_color_2.blue }};
+        }
+
+        /* desk underline 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--underline:not([disabled]):hover {
+            --color-button-text: {{ section.settings.button_arrow_color_hover_2.red }}, {{ section.settings.button_arrow_color_hover_2.green }}, {{ section.settings.button_arrow_color_hover_2.blue }};
+        }
+
+        /* desk outline 2 */
+        #shopify-section-{{ section.id }} .anchor_buttons a:nth-of-type(2).button--secondary {
+            --color-button: {{ section.settings.button_outline_color_2.red }}, {{ section.settings.button_outline_color_2.green }}, {{ section.settings.button_outline_color_2.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_2.red }}, {{ section.settings.button_outline_text_color_2.green }}, {{ section.settings.button_outline_text_color_2.blue }};
+        }
+
+        /* desk outline 2 [hover] */
+        #shopify-section-{{ section.id }} .banner__buttons a:nth-of-type(2).button--secondary:not([disabled]):hover {
+            --color-button: {{ section.settings.button_outline_color_2_hover.red }}, {{ section.settings.button_outline_color_2_hover.green }}, {{ section.settings.button_outline_color_2_hover.blue }};
+            --color-button-text: {{ section.settings.button_outline_text_color_2_hover.red }}, {{ section.settings.button_outline_text_color_2_hover.green }}, {{ section.settings.button_outline_text_color_2_hover.blue }};
+            --alpha-button-background: 1;
+        }
+    }
+
+    #shopify-section-{{ section.id }} .banner__buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Desktop custom font size */
+    @media only screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} .banner__buttons .custom-desktop {
+            font-size: {{ section.settings.button_size_custom | divided_by: 10.0 }}rem;
+        }
+        #shopify-section-{{ section.id }} .banner__buttons {
+            gap: {{ section.settings.buttons_gap }}rem;
+        }
+    }
+    /* Mobile custom font size */
+    @media screen and (max-width: 750px) {
+        #shopify-section-{{ section.id }} .banner__buttons .custom-mobile {
+            font-size: {{ section.settings.button_size_mobile_custom | divided_by: 10.0 }}rem;
+        }
+        #shopify-section-{{ section.id }} .banner__buttons {
+            gap: {{ section.settings.buttons_gap_mob }}rem;
+        }
+    }
+
+    #shopify-section-{{ section.id }} .banner__buttons a {
+        z-index: 1;
+    }
+
+    #shopify-section-{{ section.id }} {
+        --color-base-background-1: {{ section.settings.background_color.red }}, {{ section.settings.background_color.green }}, {{ section.settings.background_color.blue }};
+		--gradient-base-background-1: {% if section.settings.background_gradient != blank %}{{ section.settings.background_gradient }}{% else %}{{ section.settings.background_color }}{% endif %};
+    }
+
+    @media screen and (max-width: 749px) {
+        #shopify-section-{{ section.id }} .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top_mobile  | divided_by: 10.0 }}rem;
+            padding-bottom: {{ section.settings.padding_bottom_mobile  | divided_by: 10.0 }}rem;
+            margin-top: {{ section.settings.margin_top_mobile  | divided_by: 10.0 }}rem;
+            margin-bottom: {{ section.settings.margin_bottom_mobile  | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top  | divided_by: 10.0 }}rem;
+            padding-bottom: {{ section.settings.padding_bottom  | divided_by: 10.0 }}rem;
+            margin-top: {{ section.settings.margin_top  | divided_by: 10.0 }}rem;
+            margin-bottom: {{ section.settings.margin_bottom  | divided_by: 10.0 }}rem;
+        }
+    }
+{% endstyle %}
+
+<div class="page-width color-background-1 gradient section-{{ section.id }}-padding{% if section.settings.hide_desktop %} medium-hide large-up-hide{% endif %}{% if section.settings.hide_mobile %} small-hide{% endif %}">
+    <div class="banner__buttons {% if section.settings.button_label_1 != blank and section.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %} {% if section.settings.buttons_mobile_position == 'stacked' %} banner__buttons--stacked-mobile{% elsif section.settings.buttons_mobile_position == 'full_width' %} banner__buttons--full-width{% endif %}" {{ section.shopify_attributes }}>
+        <a{% if section.settings.button_link_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.button_link_1 }}"{% endif %} class="{% unless section.settings.button_style_1 == 'arrow' or section.settings.button_style_1 == 'arrow_no_text' %}button{% endunless %}{% if section.settings.button_style_1 == 'arrow' %} link link-with-icon{% endif %}{% if section.settings.button_style_1 == 'outline' %} button--secondary{% elsif section.settings.button_style_1 == 'primary' %} button--primary{% elsif section.settings.button_style_1 == 'primary_arrow' %} button--primary button--icon{% elsif section.settings.button_style_1 == 'underline' %} button--underline{% elsif section.settings.button_style_1 == 'arrow_no_text' %} slider-button{% endif %}{% if section.settings.button_uppercase_1 %} uppercase{% endif %} {{ section.settings.button_size }}-desktop {{ section.settings.button_size_mobile }}-mobile{% if section.settings.button_wide_1 %} button--wide{% endif %}">
+            {% unless section.settings.button_style_1 == 'arrow_no_text' %}{{ section.settings.button_label_1 | escape }}{% endunless %}{% if section.settings.button_style_1 == 'arrow' or section.settings.button_style_1 == 'primary_arrow'or section.settings.button_style_1 == 'arrow_no_text' %}{%- render 'icon-arrow-down' -%}{% endif %}
+        </a>
+        {%- if section.settings.button_label_2 != blank -%}
+            <a{% if section.settings.button_link_2 == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.button_link_2 }}"{% endif %} class="{% if section.settings.button_style_2 != 'arrow' %}button{% endif %}{% if section.settings.button_style_2 == 'arrow' %} link link-with-icon{% endif %}{% if section.settings.button_style_2 == 'outline' %} button--secondary{% elsif section.settings.button_style_2 == 'primary' %} button--primary{% elsif section.settings.button_style_1 == 'primary_arrow' %} button--primary button--icon{% elsif section.settings.button_style_2 == 'underline' %} button--underline{% endif %}{% if section.settings.button_uppercase_2 %} uppercase{% endif %} {{ section.settings.button_size }}-desktop {{ section.settings.button_size_mobile }}-mobile{% if section.settings.button_wide_2 %} button--wide{% endif %}">
+                {{ section.settings.button_label_2 | escape }}{% if section.settings.button_style_2 == 'arrow' or section.settings.button_style_2 == 'primary_arrow' %}{%- render 'icon-arrow-down' -%}{% endif %}
+            </a>
+        {%- endif -%}
+    </div>
+</div>
+
+{% schema %}
+{
+	"name": "DS Anchor Buttons",
+	"tag": "section",
+    "disabled_on": {
+        "groups": ["header", "footer"]
+    },
+	"settings": [
+        {
+            "type": "checkbox",
+            "id": "hide_desktop",
+            "default": false,
+            "label": "Hide on desktop"
+        },
+        {
+            "type": "checkbox",
+            "id": "hide_mobile",
+            "default": false,
+            "label": "Hide on mobile"
+        },
+        {
+            "type": "header",
+            "content": "Background Colour"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "default": "rgba(0,0,0,0)",
+            "label": "Background"
+        },
+        {
+            "id": "background_gradient",
+            "type": "color_background",
+            "label": "Background gradient"
+        },
+        {
+            "type": "header",
+            "content": "Buttons"
+        },
+        {
+            "type": "select",
+            "id": "buttons_mobile_position",
+            "options": [
+                {
+                    "value": "inline",
+                    "label": "inline"
+                },
+                {
+                    "value": "stacked",
+                    "label": "stacked"
+                },
+                {
+                    "value": "full_width",
+                    "label": "full width + stacked"
+                }
+            ],
+            "default": "inline",
+            "label": "Button arrangement on mobile",
+            "info": "if button text is too big, buttons will stack even if set to inline - decrease font size to allow buttons to sit inline"
+        },
+        {
+            "type": "range",
+            "id": "buttons_gap",
+            "min": 0,
+            "max": 3,
+            "step": 0.2,
+            "unit": "rem",
+            "label": "Gap between buttons",
+            "default": 1.2
+        },
+        {
+            "type": "range",
+            "id": "buttons_gap_mob",
+            "min": 0,
+            "max": 3,
+            "step": 0.2,
+            "unit": "rem",
+            "label": "Mob Gap between buttons",
+            "default": 1.2
+        },
+        {
+            "type": "header",
+            "content": "Font Size",
+            "info": "applies to both buttons"
+        },
+        {
+            "type": "select",
+            "id": "button_size",
+            "options": [
+                {
+                    "value": "h3",
+                    "label": "X small"
+                },
+                {
+                    "value": "h2",
+                    "label": "Small"
+                },
+                {
+                    "value": "h1",
+                    "label": "medium"
+                },
+                {
+                    "value": "h0",
+                    "label": "large"
+                },
+                {
+                    "value": "custom",
+                    "label": "custom"
+                }
+            ],
+            "default": "custom",
+            "label": "Desktop Button Size"
+        },
+        {
+            "type": "paragraph",
+            "content": "above must be set to custom to enable"
+        },
+        {
+            "type": "range",
+            "id": "button_size_custom",
+            "min": 6,
+            "max": 50,
+            "step": 1,
+            "unit": "px",
+            "label": "Custom size",
+            "default": 18
+        },
+        {
+            "type": "select",
+            "id": "button_size_mobile",
+            "options": [
+                {
+                    "value": "h3",
+                    "label": "X small"
+                },
+                {
+                    "value": "h2",
+                    "label": "Small"
+                },
+                {
+                    "value": "h1",
+                    "label": "medium"
+                },
+                {
+                    "value": "h0",
+                    "label": "large"
+                },
+                {
+                    "value": "custom",
+                    "label": "custom"
+                }
+            ],
+            "default": "custom",
+            "label": "Mobile Button Size"
+        },
+        {
+            "type": "paragraph",
+            "content": "above must be set to custom to enable"
+        },
+        {
+            "type": "range",
+            "id": "button_size_mobile_custom",
+            "min": 6,
+            "max": 36,
+            "step": 1,
+            "unit": "px",
+            "label": "Custom size",
+            "default": 16
+        },
+        {
+            "type": "header",
+            "content": "Button 1"
+        },
+        {
+            "type": "text",
+            "id": "button_label_1",
+            "default": "Button label",
+            "label": "t:sections.image-banner.blocks.buttons.settings.button_label_1.label",
+            "info": "t:sections.image-banner.blocks.buttons.settings.button_label_1.info"
+        },
+        {
+            "type": "checkbox",
+            "id": "button_uppercase_1",
+            "default": true,
+            "label": "Uppercase"
+        },
+        {
+            "type": "url",
+            "id": "button_link_1",
+            "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label",
+            "info": "Add DS Anchor above the section you want to link to. The ID in DS Anchor must match this link, e.g. anchor_subscribe on DS Anchor and #anchor_subscribe for the button link. The button link must have a # at the start."
+        },
+        {
+            "type": "select",
+            "id": "button_style_1",
+            "options": [
+                {
+                    "value": "primary",
+                    "label": "solid"
+                },
+                {
+                    "value": "primary_arrow",
+                    "label": "solid with arrow"
+                },
+                {
+                    "value": "outline",
+                    "label": "outline"
+                },
+                {
+                    "value": "arrow",
+                    "label": "arrow"
+                },
+                {
+                    "value": "underline",
+                    "label": "underline"
+                },
+                {
+                    "value": "arrow_no_text",
+                    "label": "arrow without text"
+                }
+            ],
+            "default": "primary_arrow",
+            "label": "Button style"
+        },
+        {
+            "type": "checkbox",
+            "id": "button_wide_1",
+            "default": true,
+            "label": "Button wide"
+        },
+        {
+            "type": "header",
+            "content": "Button 1 Colours"
+        },
+        {
+            "type": "paragraph",
+            "content": "Solid button:"
+        },
+        {
+            "type": "color",
+            "id": "button_color",
+            "default": "#4d4d4d",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_text_color",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Hover:"
+        },
+        {
+            "type": "color",
+            "id": "button_color_hover",
+            "default": "#4d4d4d",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_text_color_hover",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Outline button:"
+        },
+        {	
+            "type": "color",	
+            "id": "button_outline_color",	
+            "default": "#000000",	
+            "label": "Border"	
+        },	
+        {	
+            "type": "color",	
+            "id": "button_outline_text_color",	
+            "default": "#000000",	
+            "label": "Text"	
+        },	
+        {	
+            "type": "paragraph",	
+            "content": "Hover:"	
+        },	
+        {	
+            "type": "color",	
+            "id": "button_outline_color_hover",	
+            "default": "#000000",	
+            "label": "Button"	
+        },
+        {
+            "type": "color",
+            "id": "button_outline_text_color_hover",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Arrow and Underline link:"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_color",
+            "default": "#000000",
+            "label": "Text"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_color_hover",
+            "default": "#BF811D",
+            "label": "Hover text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Arrow without text:"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_no_text_color",
+            "default": "#4d4d4d",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_no_text_icon_color",
+            "default": "#ffffff",
+            "label": "Icon"
+        },
+        {
+            "type": "header",
+            "content": "Button 2"
+        },
+        {
+            "type": "text",
+            "id": "button_label_2",
+            "label": "t:sections.image-banner.blocks.buttons.settings.button_label_2.label",
+            "info": "t:sections.image-banner.blocks.buttons.settings.button_label_2.info"
+        },
+        {
+            "type": "checkbox",
+            "id": "button_uppercase_2",
+            "default": true,
+            "label": "Uppercase"
+        },
+        {
+            "type": "url",
+            "id": "button_link_2",
+            "label": "t:sections.image-banner.blocks.buttons.settings.button_link_2.label",
+            "info": "Add DS Anchor above the section you want to link to. The ID in DS Anchor must match this link, e.g. anchor_subscribe on DS Anchor and #anchor_subscribe for the button link. The button link must have a # at the start."
+
+        },
+        {
+            "type": "header",
+            "content": "Button 2 Colours"
+        },
+        {
+            "type": "select",
+            "id": "button_style_2",
+            "options": [
+                {
+                    "value": "primary",
+                    "label": "solid"
+                },
+                {
+                    "value": "primary_arrow",
+                    "label": "solid with arrow"
+                },
+                {
+                    "value": "outline",
+                    "label": "outline"
+                },
+                {
+                    "value": "arrow",
+                    "label": "arrow"
+                },
+                {
+                    "value": "underline",
+                    "label": "underline"
+                }
+            ],
+            "default": "primary_arrow",
+            "label": "Button style"
+        },
+        {
+            "type": "checkbox",
+            "id": "button_wide_2",
+            "default": true,
+            "label": "Button wide"
+        },
+        {
+            "type": "paragraph",
+            "content": "Solid button:"
+        },
+        {
+            "type": "color",
+            "id": "button_color_2",
+            "default": "#4d4d4d",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_text_color_2",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "hover"
+        },
+        {
+            "type": "color",
+            "id": "button_color_2_hover",
+            "default": "#4d4d4d",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_text_color_2_hover",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Outline button:"
+        },
+        {
+            "type": "color",
+            "id": "button_outline_color_2",
+            "default": "#000000",
+            "label": "Border"
+        },
+        {
+            "type": "color",
+            "id": "button_outline_text_color_2",
+            "default": "#000000",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Hover:"
+        },
+        {
+            "type": "color",
+            "id": "button_outline_color_2_hover",
+            "default": "#000000",
+            "label": "Button"
+        },
+        {
+            "type": "color",
+            "id": "button_outline_text_color_2_hover",
+            "default": "#ffffff",
+            "label": "Text"
+        },
+        {
+            "type": "paragraph",
+            "content": "Arrow and Underline link:"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_color_2",
+            "default": "#000000",
+            "label": "Text"
+        },
+        {
+            "type": "color",
+            "id": "button_arrow_color_hover_2",
+            "default": "#BF811D",
+            "label": "Hover text"
+        },
+        {
+            "type": "header",
+            "content": "Padding",
+            "info": "Top/bottom padding for inside section"
+        },
+        {	
+            "type": "range",	
+            "id": "padding_top",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_top",	
+            "default": 0
+        },	
+        {	
+            "type": "range",	
+            "id": "padding_bottom",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_bottom",	
+            "default": 0
+        },	
+        {	
+            "type": "range",	
+            "id": "padding_top_mobile",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_top_mobile",	
+            "default": 20	
+        },	
+        {	
+            "type": "range",	
+            "id": "padding_bottom_mobile",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_bottom_mobile",	
+            "default": 20
+        },
+        {
+            "type": "paragraph",
+            "content": "Top/bottom padding for outside section"
+        },
+        {	
+            "type": "range",	
+            "id": "margin_top",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_top",	
+            "default": 0
+        },	
+        {	
+            "type": "range",	
+            "id": "margin_bottom",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_bottom",	
+            "default": 0	
+        },	
+        {	
+            "type": "range",	
+            "id": "margin_top_mobile",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_top_mobile",	
+            "default": 0
+        },	
+        {	
+            "type": "range",	
+            "id": "margin_bottom_mobile",	
+            "min": 0,	
+            "max": 100,	
+            "step": 2,	
+            "unit": "px",	
+            "label": "t:sections.all.padding.padding_bottom_mobile",	
+            "default": 0	
+        }
+	],
+	"presets": [
+		{
+			"name": "DS Anchor Buttons"
+		}
+	]
+}
+{% endschema %}

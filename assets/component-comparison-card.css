@@ -1,0 +1,41 @@
+.product-comparison-card__key-differences .key-differences__title {
+    margin: 0px;
+}
+
+@media screen and (min-width: 750px) {
+    .product-comparison-card__key-differences .key-differences__title {
+        padding-left: 1.3rem;
+    }
+}
+
+.product-comparison-card__key-differences ul.key-difference__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+@media screen and (min-width: 750px) {
+    .product-comparison-card__key-differences ul.key-difference__wrapper {
+        padding-left: 1.3rem;
+    }
+}
+
+.product-comparison-card__key-differences li.key-differences-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 5px;
+    margin-left: 5px;
+    line-height: 1.5;
+}
+
+.product-comparison-card__key-differences li.key-differences-item svg {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 5px;
+    flex-shrink: 0;
+}

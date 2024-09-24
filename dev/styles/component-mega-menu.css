@@ -1,0 +1,371 @@
+/* component-mega-menu.css used in snippet/nav-desktop-mega/section/header
+	nav variables:
+	.mega-menu
+	- normal drop down - stacked menus - not full width
+
+	.mega-menu.mega-menu__full-width
+	- full width drop down nav - child menus inline
+
+	.mega-menu.mega-menu__full-width.mega-menu__align-center
+*/
+
+
+.mega-menu {
+	position: static;
+	/* to fill hover gap */
+	height: 100%;
+}
+
+.mega-menu__content {
+	background-color: rgb(var(--color-background));
+	border-left: 0;
+	border-radius: 0;
+	border-right: 0;
+	/* left: 0; */
+	max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+	overflow-y: auto;
+	padding-bottom: 2.4rem;
+	padding-top: 2.4rem;
+	position: absolute;
+	/* right: 0; */
+	top: calc(100%);
+	z-index: -1;
+    box-shadow: 0 2px 2px rgba(26,26,26,.2);
+}
+
+/* .header-wrapper--border-bottom .mega-menu__content {
+	border-top: 0;
+} */
+
+.js .mega-menu__content {
+	opacity: 0;
+	transform: translateY(-4rem);
+}
+
+@media (prefers-reduced-motion) {
+	.mega-menu[open] .mega-menu__content {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* replaced by flex */
+/* .mega-menu__list {
+	display: grid;
+	gap: 2.4rem 4rem;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	list-style: none;
+} */
+
+
+.mega-menu__link {
+	color: rgba(var(--color-foreground), 0.75);
+	display: block;
+	line-height: calc(1 + 0.3 / var(--font-body-scale));
+	padding-bottom: 0.6rem;
+	padding-top: 0.6rem;
+	text-decoration: none;
+	transition: text-decoration var(--duration-short) ease;
+	font-size: 1.4rem;
+}
+
+.mega-menu__list {
+	display: flex;
+	justify-content: left;
+	flex-wrap: wrap;
+	column-gap: 0;
+	list-style: none;
+	text-align: left;
+	white-space: nowrap;
+	gap: 5rem;
+}
+
+.mega-menu__link--level-2 {
+	font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+	letter-spacing: 0.01em;
+	font-size: 1.8rem;
+}
+
+/* active state not used */
+/* .mega-menu__link:hover,
+.mega-menu__link--active {
+	color: rgb(var(--color-foreground));
+	text-decoration: underline;
+}
+
+.mega-menu__link--active:hover {
+	text-decoration-thickness: 0.2rem;
+} */
+
+/* stacked child menus not full width */
+.mega-menu:not(.mega-menu__full-width) .mega-menu__list {
+	display: block;
+}
+
+/* child menus [not full width] padding */
+.mega-menu:not(.mega-menu.mega-menu__full-width) .mega-menu__list {
+	padding: 0 1.8rem;
+}
+
+/* child menus [not full width] border left/right */
+.mega-menu:not(.mega-menu.mega-menu__full-width) .mega-menu__content {
+	border-right: 0.1rem solid #eee;
+    border-left: 0.1rem solid #eee;
+}
+
+/* child menus [not full width] border left/right */
+.mega-menu:not(.mega-menu.mega-menu__full-width) .mega-menu__content .mega-menu__link--level-2 {
+	/* font-size: 1.6rem;
+	font-family: var(--font-body-family);
+	font-weight: var(--font-body-weight);
+	font-style: var(--font-body-style); 
+	text-transform: unset;
+	color: var(--header-nav-grandchild-foreground-color);
+	letter-spacing: var(--font-body-letter-spacing); */
+}
+
+/* .mega-menu.mega-menu__full-width .mega-menu__content:not(.mega-menu__content.mega-menu__content-with-images) {
+	padding-bottom: 0rem;
+	padding-top: 0rem;
+} */
+
+.mega-menu__full-width .mega-menu__content {
+	left: 0;
+	right: 0;
+}
+
+/* mega menu with images */
+.mega-menu__content-with-images {
+	display: flex;
+}
+
+.mega-menu__content-with-images .multicolumn-list {
+	flex: auto;
+}
+
+/* .mega-menu__content-with-images .multicolumn-card-spacing {
+	padding-top: 0;
+	margin-left: 1.25rem;
+	margin-right: 1.25rem;
+} */
+
+/* mega-menu__align-left */
+/* .mega-menu__align-left .mega-menu__list {
+	justify-content: left;
+} */
+
+/* .mega-menu__align-center .mega-menu__content:not(.mega-menu__content.mega-menu__content-with-images) .mega-menu__list > li {
+	padding: 2rem;
+} */
+
+
+.mega-menu-image__wrapper {
+	justify-content: flex-start;
+	margin: auto;
+	margin-top: 1.2rem;
+	width: 100%;
+	display: grid;
+	gap: 5rem;
+	justify-content: stretch;
+}
+
+@media (min-width: 990px) {
+	.mega-menu-image__wrapper {
+		grid-auto-flow: column;
+	}
+}
+
+@media (max-width: 989px) {
+	.mega-menu-image__wrapper .mega-menu-image {
+		padding: 1rem;
+	}
+}
+
+.mega-menu-image__show_links .mega-menu-image {
+	align-items: center;
+}
+
+/* .mega-menu__full-width .mega-menu__list:not(.mega-menu__shopall) li {
+	min-width: 21rem;
+} */
+
+/* taken from nav-desktop-mega */
+.category-name {
+    display: flex;
+    order: 1;
+}
+
+@media (min-width: 990px) {
+	.category-name__decoration {
+		position: relative;
+	}
+}
+
+@media (min-width: 990px) {
+	.category-name__decoration:after {
+		content: "";
+		display: block;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		height: 3px;
+		width: 0;
+		opacity: 0;
+		background: #000000;
+		transition: width .2s cubic-bezier(.37,0,.63,1),opacity .2s cubic-bezier(.37,0,.63,1);
+	}
+}
+
+@media (min-width: 990px) {
+	.mega-menu__full-width .menu-column details.mega-menu__submenu[open="true"] > summary .category-name__decoration:after {
+		width: 100%;
+		opacity: 1;
+	}
+}
+
+.category-name__badge {
+    border: 1px solid #000000;
+	background:  #000000;
+	color: #ffffff;
+    align-self: center;
+    padding: 0 5px;
+    line-height: 1.3;
+    margin-left: 10px;
+	font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+	letter-spacing: var(--font-heading-letter-spacing-narrow);
+	text-transform: uppercase;
+}
+
+
+.mega-menu__link--level-2 {
+	color: var(--header-nav-child-foreground-color);
+	text-transform: uppercase;
+}
+
+.mega-menu__link--level-2:hover {
+	color: var(--header-nav-child-hover-foreground-color);
+}
+
+.mega-menu__link--level-3 {
+	color: var(--header-nav-grandchild-foreground-color);
+}
+
+.mega-menu__link--level-3:hover {
+	color: var(--header-nav-grandchild-hover-foreground-color);
+}
+
+.mega-menu__shopall {
+	align-items: center;
+	border-bottom: 2px solid var(--header-nav-child-foreground-color);
+	padding-bottom: 2.4rem;
+	position: relative;
+	gap: 1rem;
+}
+
+.mega-menu__shopall:after {
+	width: 50%;
+	height: 2px;
+	background-color: rgba(var(--color-foreground), 1);
+	content: "";
+	position: absolute;
+	bottom: -4px;
+	left: 0;
+}
+
+.mega-menu__shopall-title {
+	font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+	letter-spacing: var(--font-heading-letter-spacing);
+	font-size: 3.2rem;
+}
+
+.mega-menu__content:not(.mega-menu__content-with-images) .mega-menu__links__wrapper {
+	width: 100%;
+}
+
+/* .mega-menu__content-with-images .mega-menu__links__wrapper {
+	width: 70%;
+} */
+/* 
+.mega-menu__content-with-images .mega-menu-image__wrapper {
+	width: 30%;
+} */
+
+.mega-menu-image__wrapper {
+	gap: 1.2rem;
+	text-align: center;
+}
+
+
+.mega-menu-image {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-content: flex-start;
+}
+
+.mega-menu-image__heading {
+	margin-top: 1.2rem;
+	font-size: 1.8rem;
+	font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	line-height: 1.2;
+	text-align: left;
+}
+
+h3.mega-menu-image__heading {
+	margin-top: 0;
+	font-size: 3.6rem;
+	font-family: var(--font-heading-family);
+	font-weight: var(--font-heading-weight);
+	font-style: var(--font-heading-style); 
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	line-height: 1.2;
+	margin-bottom: 0;
+}
+
+@media (min-width: 990px) {
+	h3.mega-menu-image__heading {
+		white-space: normal;
+	}
+}
+
+@media (max-width: 989px) {
+	h3.mega-menu-image__heading {
+		white-space: nowrap;
+	}
+}
+
+.mega-menu-image__buttons {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.mega-menu-image__image-wrapper {
+	width: 100%;
+}
+
+.mega-menu-image .button.button--underline-left {
+	padding-left: unset;
+}
+
+.button.button--underline.button--underline--hover:before {
+	left: -1rem;
+}
+
+.mega-menu-image__image {
+	/* background-color: red; */
+	/* object-fit: contain!important; */
+}

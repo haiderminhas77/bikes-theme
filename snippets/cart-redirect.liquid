@@ -1,0 +1,24 @@
+{% comment %}
+Set a redirect for any /cart navigation onsite. Calls initial method on cart modal, after redirection, populating and
+then opening cart modal
+
+Usage:
+{% render 'cart-redirect' %} in theme.liquid site head
+{% endcomment %}
+
+{% if template == 'cart' %}
+    <!-- Cart Redirect -->
+    <script>
+        (function () {
+            window.location.href = '/?view_cart=true';
+        })();
+    </script>
+{% endif %}
+    
+<script>
+    window.addEventListener('DOMContentLoaded', (e) => {
+        if (window.location.search.includes('view_cart=true')) {
+            document.querySelector('cart-modal').handleCartLinkClick(e);
+        }
+    })
+</script>

@@ -1,0 +1,16 @@
+{% comment %}
+    Renders breadcrumbs on main collection banner
+    Usage:
+    {% section 'collection-breadcrumbs' %} in main-collection-banner.liquid
+{% endcomment %}
+
+{{ 'section-breadcrumbs.css' | asset_url | stylesheet_tag }}
+
+<nav class="breadcrumbs-nav breadcrumbs-collection page-width small-hide" role="navigation" aria-label="breadcrumbs">
+    <a href="{{ shop.url }}" class="breadcrumbs__home breadcrumb">
+        {{ 'general.breadcrumbs.index' | t }}
+    </a>
+    <p class="breadcrumb breadcrumbs__collection">
+        {{ routes.root_url }}&nbsp;{{ collection.title }}
+    </p>
+</nav>

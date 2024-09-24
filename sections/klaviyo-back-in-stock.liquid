@@ -1,0 +1,236 @@
+{% comment %}
+	'Fixed section' managing Klaviyo BIS across all usages - main product and quick add. Mutation Observer applied to ATC 
+    excluded main product ATC so as not to conflict with Klaviyo onsite JS.
+	Usage:
+	{% section 'klaviyo-back-in-stock' %} in templates/product.json
+
+{% endcomment %}
+
+{% if settings.enable_klaviyo_bis %}
+
+    <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script> 
+    <script>
+        var klaviyo = klaviyo || [];
+
+        var initObj = {
+            account: "{{ settings.klaviyo_store_code }}",
+            list: '{% if section.settings.enable_newsletter_signup %}{{ settings.klaviyo_newsletter_code }}{% endif %}',
+            platform: "shopify",
+            collection_urls: ["/collections/"]
+        }
+        klaviyo.init(initObj);
+
+        var enableObj = {
+            trigger: {
+
+                replace_anchor: true,
+                product_page_text: "{{ section.settings.bis_button_text }}",
+                product_page_class: "button button--full-width button--primary uppercase",
+                product_page_text_align: "center",
+                product_page_margin: "0px",
+                collection_page_text: "{{ section.settings.bis_button_text }}",
+                collection_page_class: "button button--full-width button--primary uppercase",
+                collection_page_margin: "0px"
+            },
+            modal: {
+                headline: "{product_name}",
+                body_content: "{{ section.settings.bis_modal_body_text }}",
+                email_field_label: "Email",
+                newsletter_subscribe_label: "{{ section.settings.newsletter_subscribe_text }}",
+                button_label: "{{ section.settings.bis_modal_button_text }}",
+                subscription_success_label: "{{ section.settings.newsletter_success_text }}",
+                footer_content: '',
+                additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
+                drop_background_color: "#000",
+                background_color: "{{ section.settings.modal_background_color }}",
+                text_color: "{{ section.settings.modal_text_color }}",
+                button_text_color: "{{ section.settings.modal_button_text_color }}",
+                button_background_color: "{{ section.settings.modal_button_background_color }}",
+                close_button_color: "{{ section.settings.modal_close_button_color }}",
+                error_background_color: "#fcd6d7",
+                error_text_color: "#C72E2F",
+                success_background_color: "{{ section.settings.newsletter_success_background_color }}",
+                success_text_color: "{{ section.settings.newsletter_success_text_color }}",
+                subscribe_checked: false
+            }
+        }
+        klaviyo.enable("backinstock", enableObj);
+
+    </script>
+    
+    <script>
+
+        class KlaviyoContainer extends HTMLElement {
+            
+            constructor() {
+                super();   
+                this.product = this.dataset.product;
+                this.productHandle = this.dataset.productHandle;
+                this.associatedATC = this.querySelector(`#AddToCart--${this.product}`);
+                this.klaviyoButtonContainer = this.querySelector(`#klaviyo-button-container--${this.product}`) || this;
+
+                this.observer = new MutationObserver(this.handleVariantChange.bind(this));
+                this.observer.observe(this.associatedATC, { attributes: true, attributeOldValue: true })
+
+                if (this.dataset.usage != 'main-product') {
+                    setTimeout(() => {
+                        this.trigger = this.querySelector('.klaviyo-bis-trigger');
+                        if (!this.trigger) this.insertButton();
+                    }, 500);
+                }
+            }
+
+            handleVariantChange(event) {
+                this.observer.disconnect();
+                this.observer.takeRecords();
+ 
+                 if (this.associatedATC.hasAttribute('disabled') && this.associatedATC.textContent.trim() === this.associatedATC.dataset.soldoutLangstring) {
+                    if(this.dataset.usage === 'main-product' && this.klaviyoButtonContainer.querySelector('.klaviyo-bis-container')){
+                        this.associatedATC.classList.add('hidden');
+                    }
+                     if (this.dataset.usage === 'main-product') {
+                         if(this.klaviyoButtonContainer.querySelector('.klaviyo-bis-trigger')){
+                             this.klaviyoButtonContainer.querySelector('.klaviyo-bis-trigger').classList.remove('hidden');
+                         }
+                     } else {
+                         if(this.klaviyoButtonContainer.querySelector('.klaviyo-bis-trigger') && this.dataset.usage != 'quick-view'){
+                             this.klaviyoButtonContainer.classList.remove('hidden');
+                         }
+                     }
+                     
+                 } else {
+                     this.associatedATC.classList.remove('hidden');
+                     if (this.dataset.usage === 'main-product') {
+                         this.associatedATC.style.display = 'block';
+                         if(this.klaviyoButtonContainer.querySelector('.klaviyo-bis-trigger')){
+                             this.klaviyoButtonContainer.querySelector('.klaviyo-bis-trigger').classList.add('hidden');
+                         }
+                     } else {
+                         if(this.klaviyoButtonContainer){
+                             this.klaviyoButtonContainer.classList.add('hidden');
+                         }
+                     }
+                 }
+ 
+                 this.observer.observe(this.associatedATC, { attributes: true, attributeOldValue: true })       
+             }
+
+            insertButton() {
+                let parser = new DOMParser();
+                let newKlaviyoBisButton = parser.parseFromString('<a class="button button--full-width button--primary klaviyo-bis-trigger" data-klaviyo-handle="" href="#" style="text-align: center; margin: 0px; width: auto;">Notify me</a>', 'text/html').querySelector('a');
+                newKlaviyoBisButton.dataset.klaviyoHandle = this.productHandle;
+                this.klaviyoButtonContainer.insertAdjacentHTML('afterbegin', newKlaviyoBisButton.outerHTML);
+            }
+        }
+        customElements.define('klaviyo-container', KlaviyoContainer);
+
+    </script>
+
+    <style>
+
+        klaviyo-container {
+            position: initial !important;
+        }
+
+        .klaviyo-button-container {
+            width: 100% !important;
+            margin-left: 0 !important;
+            left: 0 !important;
+            opacity: 1 !important;
+        }
+
+        .klaviyo-bis-trigger {
+            margin-bottom: 1rem !important;
+        }
+    </style>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Klaviyo Back in Stock",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Settings:",
+            "info": "NB: Klaviyo Back in Stock will not function properly in CMS view and must be checked/tested through preview"
+        },
+        {
+            "type": "text",
+            "id": "bis_button_text",
+            "label": "Button Text",
+            "default": "Notify me"
+        },
+        {
+            "type": "text",
+            "id": "bis_modal_body_text",
+            "label": "Modal Body Text",
+            "default": "This is the modal body text"
+        },
+        {
+            "type": "text",
+            "id": "bis_modal_button_text",
+            "label": "Modal Button Text",
+            "default": "Modal button"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_newsletter_signup",
+            "default": false,
+            "label": "Enable Newsletter Signup"
+        },
+        {
+            "type": "text",
+            "id": "newsletter_subscribe_text",
+            "label": "Newsletter Subscribe Text"
+        },
+        {
+            "type": "text",
+            "id": "newsletter_success_text",
+            "label": "Newsletter Success Text"
+        },
+        {
+            "type": "color",
+            "id": "modal_background_color",
+            "default": "#fff",
+            "label": "Modal Background Color"
+        },
+        {
+            "type": "color",
+            "id": "modal_text_color",
+            "default": "#222",
+            "label": "Modal Text Color"
+        },
+        {
+            "type": "color",
+            "id": "modal_button_text_color",
+            "default": "#fff",
+            "label": "Modal Button Text Color"
+        },
+        {
+            "type": "color",
+            "id": "modal_button_background_color",
+            "default": "#439fdb",
+            "label": "Modal Button Background Color"
+        },
+        {
+            "type": "color",
+            "id": "modal_close_button_color",
+            "default": "#ccc",
+            "label": "Modal Close Button Color"
+        },
+        {
+            "type": "color",
+            "id": "newsletter_success_background_color",
+            "default": "#d3efcd",
+            "label": "Newsletter Success Background Color "
+        },
+        {
+            "type": "color",
+            "id": "newsletter_success_text_color",
+            "default": "#1B9500",
+            "label": "Newsletter Success Text Color "
+        }
+    ]
+}
+
+{% endschema %}

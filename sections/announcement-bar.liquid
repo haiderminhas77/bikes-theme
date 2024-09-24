@@ -1,0 +1,520 @@
+{% style %}
+    .announcement.color-background-custom {
+		--color-custom-background: {{ section.settings.colors_background_1_announcement.red }}, {{ section.settings.colors_background_1_announcement.green }}, {{ section.settings.colors_background_1_announcement.blue }};
+		--gradient-custom-background: {% if section.settings.gradient_background_1_announcement != blank %}{{ section.settings.gradient_background_1_announcement }}{% else %}{{ section.settings.colors_background_1_announcement }}{% endif %};
+    }
+{% endstyle %}
+
+<div class="announcement color-background-custom gradient{% if section.settings.text_style_upcase_announcement %} uppercase{% endif %}">
+    <slideshow-component role="region" aria-roledescription="{{ 'sections.slideshow.carousel' | t }}" aria-label="{{ section.settings.accessibility_info | escape }}">
+        <div class="grid grid--1-col slider slider--everywhere"
+        id="Slider-{{ section.id }}"
+        aria-live="polite"
+        aria-atomic="true"
+        data-autoplay="{{ section.settings.auto_rotate }}"
+        data-speed="{{ section.settings.change_slides_speed }}"
+        >
+            {% assign announcement_blocks = section.blocks | where: 'type', 'announcement' %}
+                {% for block in announcement_blocks %}
+                {% assign announcement_count = forloop.length %}
+                {% assign announcement_index = forloop.index %}
+                            {% style %}
+                                {% if block.settings.announcement-text-mob != blank %}
+                                    @media screen and (max-width: 749px) {
+                                        .announcement-bar__message-{{ block.id }} p:first-of-type {
+                                            display: none !important;
+                                        }
+                                    }
+
+                                    @media screen and (min-width: 750px) and (max-width: 989px) {
+                                        .announcement-bar__message-{{ block.id }} p:nth-of-type(2) {
+                                            display: none !important;
+                                        }
+                                    }
+
+                                    @media screen and (min-width: 990px) {
+                                        .announcement-bar__message-{{ block.id }} p:nth-of-type(2) {
+                                            display: none !important;
+                                        }
+                                    }
+                                {% endif %}
+                                    .announcement-bar__message-{{ block.id }} {
+                                        color: {{ block.settings.colors_foreground_announcement }};
+                                    }
+                                {% comment %}
+                                    /* uncomment for fullbleed */
+                                    {% if request.page_type == 'index' %}
+                                        .shopify-section-header-transparent .announcement-bar__message {
+                                            color: var(--header-icons-foreground-color);
+                                        }
+                                        .announcement-bar__message-{{ block.id }} {
+                                            color: {{ block.settings.colors_foreground_announcement }};
+                                        }
+                                    {% else %}
+                                        .announcement-bar__message-{{ block.id }} {
+                                            color: {{ block.settings.colors_foreground_announcement }};
+                                        }
+                                    {% endif %}
+                                {% endcomment %}
+                            {% endstyle %}
+                        <div class="slideshow__slide grid__item grid--1-col slider__slide" id="Slide-{{ section.id }}-{{ forloop.index }}"
+                        {{ block.shopify_attributes }}
+                        role="group"
+                        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+                        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                        tabindex="-1">
+                            <div class="page-width page-width--full-width">
+                                <div class="slideshow__text">
+                                    {%- if block.settings.text != blank -%}
+                                        <div class="banner__text announcement-bar__message announcement-bar__message-{{ block.id }}">
+                                            <span class="announcement-bar__icon">
+                                                {{ block.settings.announcement-svg }}
+                                                {% render 'icon-picker', icon: block.settings.announcement-icon %}  
+                                            </span>
+                                            {{ block.settings.text }}
+                                            {% if block.settings.announcement-text-mob != blank %}
+                                                {{ block.settings.announcement-text-mob }}
+                                            {% endif %}
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                {%- endfor -%}
+            {% assign countdown_blocks = section.blocks | where: 'type', 'countdown' %}
+                {% for block in countdown_blocks %}
+                {% assign countdown_count = forloop.length %}
+                {% assign countdown_index = forloop.index %}
+                    {% style %}
+                    .announcement-countdown__message-{{ block.id }} {
+                        color: {{ block.settings.announcement_countdown_foreground_color }};
+                    }
+                    {% comment %}
+                        /* uncomment for fullbleed */
+                        {% if request.page_type == 'index' %}
+                            .shopify-section-header-transparent .announcement-countdown__message {
+                                color: var(--header-icons-foreground-color);
+                            }
+                        {% else %}
+                            .announcement-countdown__message-{{ block.id }} {
+                                color: {{ block.settings.announcement_countdown_foreground_color }};
+                            }
+                        {% endif %}
+                    {% endcomment %}
+                    {% endstyle %}
+                        <div class="slideshow__slide grid__item grid--1-col slider__slide" id="Slide-{{ section.id }}-{{ forloop.index }}"
+                            {{ block.shopify_attributes }}
+                            role="group"
+                            aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+                            aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                            tabindex="-1">
+                            <div class="page-width page-width--full-width">
+                                <div class="slideshow__text">
+                                    <div class="banner__text announcement-bar__message announcement-countdown__message announcement-countdown__message-{{ block.id }}">
+                                        {% render 'countdown-timer' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            {%- endfor -%}
+        </div>
+        {% assign slider_visual = 'none' %}
+        <div class="slideshow__controls slider-buttons no-js-hidden visually-hidden">
+            <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+            <div class="slider-counter slider-counter--{{ slider_visual }}{% if slider_visual == 'counter' or slider_visual == 'numbers' %} caption{% endif %}">
+                {%- if slider_visual == 'counter' -%}
+                    <span class="slider-counter--current">1</span>
+                    <span aria-hidden="true"> / </span>
+                    <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+                    <span class="slider-counter--total">{{ announcement_count }}</span>
+                {%- else -%}
+                    <div class="slideshow__control-wrapper">
+                        {% for block in announcement_blocks %}
+                            <button class="slider-counter__link slider-counter__link--{{ slider_visual }} link" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}" aria-controls="Slider-{{ section.id }}">
+                                {%- if slider_visual == 'numbers' -%}{{ forloop.index }}{% else %}<span class="dot"></span>{%- endif -%}
+                            </button>
+                        {%- endfor -%}
+                    </div>
+                {%- endif -%}
+            </div>
+            <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'sections.slideshow.next_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+            {%- if section.settings.auto_rotate -%}
+                <button type="button" class="slideshow__autoplay slider-button no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}" aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}">
+                    {%- render 'icon-pause' -%}
+                    {%- render 'icon-play' -%}
+                </button>
+            {%- endif -%}
+        </div>
+    </slideshow-component>
+</div>
+{% schema %}
+{
+	"name": "t:sections.announcement-bar.name",
+	"max_blocks": 12,
+	"class": "announcement-bar-section",
+	"enabled_on": {
+		"groups": ["header"]
+	},
+	"settings": [
+		{
+			"type": "header",
+			"content": "Announcement Bar"
+		},
+		{
+            "type": "color",
+            "id": "colors_background_1_announcement",
+            "default": "#232121",
+            "label": "Banner background"
+        },
+        {
+            "id": "gradient_background_1_announcement",
+            "type": "color_background",
+            "label": "Banner gradient"
+        },
+        {
+            "type": "checkbox",
+            "id": "auto_rotate",
+            "label": "t:sections.slideshow.settings.auto_rotate.label",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "change_slides_speed",
+            "min": 3,
+            "max": 9,
+            "step": 2,
+            "unit": "s",
+            "label": "t:sections.slideshow.settings.change_slides_speed.label",
+            "default": 5
+        },
+		{
+			"type": "checkbox",
+			"id": "text_style_upcase_announcement",
+			"default": false,
+			"label": "enable uppercase"
+		},
+        {
+            "type": "header",
+            "content": "t:sections.slideshow.settings.accessibility.content"
+        },
+        {
+            "type": "text",
+            "id": "accessibility_info",
+            "label": "t:sections.slideshow.settings.accessibility.label",
+            "info": "t:sections.slideshow.settings.accessibility.info",
+            "default": "Slideshow about our brand"
+        }
+	],
+	"blocks": [
+		{
+			"type": "announcement",
+			"name": "t:sections.announcement-bar.blocks.announcement.name",
+            "settings": [
+				{
+					"type": "select",
+					"id": "announcement-icon",
+					"options": [
+					{
+						"value": "none",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__1.label"
+					},
+					{
+						"value": "apple",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__2.label"
+					},
+					{
+						"value": "banana",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__3.label"
+					},
+					{
+						"value": "bottle",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__4.label"
+					},
+					{
+						"value": "box",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__5.label"
+					},
+					{
+						"value": "carrot",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__6.label"
+					},
+					{
+						"value": "chat_bubble",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__7.label"
+					},
+					{
+						"value": "check_mark",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__8.label"
+					},
+					{
+						"value": "clipboard",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__9.label"
+					},
+					{
+						"value": "dairy",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__10.label"
+					},
+					{
+						"value": "dairy_free",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__11.label"
+					},
+					{
+						"value": "dryer",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__12.label"
+					},
+					{
+						"value": "eye",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__13.label"
+					},
+					{
+						"value": "fire",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__14.label"
+					},
+					{
+						"value": "gluten_free",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__15.label"
+					},
+					{
+						"value": "heart",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__16.label"
+					},
+					{
+						"value": "iron",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__17.label"
+					},
+					{
+						"value": "leaf",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__18.label"
+					},
+					{
+						"value": "leather",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__19.label"
+					},
+					{
+						"value": "lightning_bolt",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__20.label"
+					},
+					{
+						"value": "lipstick",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__21.label"
+					},
+					{
+						"value": "lock",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__22.label"
+					},
+					{
+						"value": "map_pin",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__23.label"
+					},
+					{
+						"value": "nut_free",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__24.label"
+					},
+					{
+						"value": "pants",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__25.label"
+					},
+					{
+						"value": "paw_print",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__26.label"
+					},
+					{
+						"value": "pepper",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__27.label"
+					},
+					{
+						"value": "perfume",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__28.label"
+					},
+					{
+						"value": "plane",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__29.label"
+					},
+					{
+						"value": "plant",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__30.label"
+					},
+					{
+						"value": "price_tag",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__31.label"
+					},
+					{
+						"value": "question_mark",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__32.label"
+					},
+					{
+						"value": "recycle",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__33.label"
+					},
+					{
+						"value": "return",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__34.label"
+					},
+					{
+						"value": "ruler",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__35.label"
+					},
+					{
+						"value": "serving_dish",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__36.label"
+					},
+					{
+						"value": "shirt",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__37.label"
+					},
+					{
+						"value": "shoe",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__38.label"
+					},
+					{
+						"value": "silhouette",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__39.label"
+					},
+					{
+						"value": "snowflake",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__40.label"
+					},
+					{
+						"value": "star",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__41.label"
+					},
+					{
+						"value": "stopwatch",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__42.label"
+					},
+					{
+						"value": "truck",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__43.label"
+					},
+					{
+						"value": "washing",
+						"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__44.label"
+					},
+					{
+						"value": "super73-lightning",
+						"label": "super73-lightning"
+					},
+					{
+						"value": "super73-display",
+						"label": "super73-display"
+					},
+					{
+						"value": "super73-battery",
+						"label": "super73-battery"
+					},
+					{
+						"value": "super73-throttle",
+						"label": "super73-throttle"
+					},
+					{
+						"value": "super73-accessories",
+						"label": "super73-accessories"
+					},
+					{
+						"value": "super73-accessories-sale",
+						"label": "super73-accessories-sale"
+					},
+					{
+						"value": "super73-accessories-apparel",
+						"label": "super73-accessories-apparel"
+					},
+					{
+						"value": "super73-accessories-parts",
+						"label": "super73-accessories-parts"
+					},
+					{
+						"value": "super73-accessories-marketplace",
+						"label": "super73-accessories-marketplace"
+					},
+					{
+						"value": "super73-community-customs",
+						"label": "super73-community-customs"
+					},
+					{
+						"value": "super73-community-guides",
+						"label": "super73-community-guides"
+					},
+					{
+						"value": "super73-community-aboutus",
+						"label": "super73-community-aboutus"
+					},
+					{
+						"value": "super73-community-press",
+						"label": "super73-community-press"
+					},
+					{
+						"value": "super73-community-calendar",
+						"label": "super73-community-calendar"
+					},
+					{
+						"value": "super73-community-blogs",
+						"label": "super73-community-blogs"
+					},
+					{
+						"value": "super73-bike-discover",
+						"label": "super73-bike-discover"
+					}
+					],
+					"default": "check_mark",
+					"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.label"
+				},
+				{
+					"type": "html",
+					"id": "announcement-svg",
+					"label": "SVG Icon",
+					"info": "remove width and height, add fill='currentColor' to match text"
+				},
+				{
+					"type": "richtext",
+					"id": "text",
+					"default": "<p>Welcome to our store</p>",
+					"label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+				},
+				{
+					"type": "richtext",
+					"id": "announcement-text-mob",
+					"default": "<p>Welcome to our store</p>",
+					"label": "Add mob only message",
+					"info": "[shift] + [enter] to add line break"
+				},
+				{
+					"type": "color",
+					"id": "colors_foreground_announcement",
+					"default": "#ffffff",
+					"label": "Announcement foreground"
+				}
+            ]
+		},
+		{
+            "type": "countdown",
+            "name": "Countdown",
+            "settings": [
+				{
+					"type": "paragraph",
+					"content": "Settings for countdown banner can be found in theme settings/countdown timer"
+				},
+				{
+					"type": "paragraph",
+					"content": "This block must be present for countdown timer to be included in the announcement banner. The text colour affects ONLY the timer in the announcement banner"
+				},
+				{
+					"type": "color",
+					"id": "announcement_countdown_foreground_color",
+					"default": "#FFFFFF",
+					"label": "text"
+				}
+            ]
+        }
+	],
+	"presets": [
+		{
+			"name": "t:sections.announcement-bar.presets.name",
+			"blocks": [
+				{
+					"type": "announcement"
+				}
+			]
+		}
+	]
+}
+{% endschema %}

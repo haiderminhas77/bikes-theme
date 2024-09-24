@@ -1,0 +1,265 @@
+#quick-view-plp-modal {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}
+
+#quick-view-plp-modal .full-details__link .icon-caret {
+    height: 10px;
+    width: 10px;
+    transform: rotate(-90deg);
+}
+
+quick-view.quick-view__container {
+    --modal-height-offset: 5rem;
+    display: block;
+    background-color: rgb(var(--color-base-background-1));
+    position: relative;
+    top: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    margin: var(--modal-height-offset) auto 0;
+    overflow: hidden;
+    width: calc(100% - 16px);
+    min-height: 50rem;
+    box-shadow: 5px 7px 20px 5px rgba(var(--color-base-text), .4);
+}
+
+@media screen and (max-width: 989px){
+    quick-view.quick-view__container {
+        overflow-y: auto;
+        height: calc(100vh - var(--modal-top-offset));
+        padding: 0 1rem 2.4rem;
+        bottom: var(--modal-height-offset);
+    }
+}
+
+@media screen and (min-width: 990px){
+    quick-view.quick-view__container {
+        max-height: calc(100% - var(--modal-top-offset)* 2);
+        margin-top: calc(var(--modal-top-offset));
+        padding: 2rem;
+        padding-left: 0;
+        overflow-y: auto;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    quick-view.quick-view__container {
+        max-width: 1000px;
+    }
+}
+
+@media screen and (max-width: 989px){
+    quick-view.quick-view__container .quick-view__content-wrapper {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (min-width: 2200px) {
+    modal-dialog#quick-view-plp-modal .quick-view__container .quick-view__content-wrapper {
+        height: 65vh;
+    }
+}
+
+.quick-view__container>.loading-overlay__spinner {
+    height: 100%;
+    width: 100%;
+    opacity: 1.0;
+    transition: opacity 0s 2s ease-in;
+    background-color: #e9e7e4;
+    pointer-events: none;
+    z-index: 102;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.quick-view__container>.loading-overlay__spinner .spinner {
+        height: 40px;
+		width: 40px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+    }
+
+.quick-view__container>.loading-overlay__spinner.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+quick-view .quick-view__gallery-wrapper {
+    position: relative;
+}
+
+@media screen and (min-width: 990px) {
+    quick-view .quick-view__content-wrapper .quick-view__gallery-wrapper {
+        max-width: 70%;
+    }
+}
+
+#quick-view-plp-modal .quick-view__gallery-wrapper .quick-view__gallery {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 0px 10px;
+    overflow-y: hidden;
+}
+
+#quick-view-plp-modal .quick-view__gallery-wrapper .quick-view__gallery.quick-view__gallery--left-align {
+    justify-content: flex-start;
+}
+
+#quick-view-plp-modal .quick-view__gallery .quick-view__gallery--item {
+    object-fit: contain;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 989px){
+    #quick-view-plp-modal .quick-view__gallery .quick-view__gallery--item {
+        height: 60px;
+        width: auto;
+    }
+}
+
+#quick-view-plp-modal .quick-view__gallery .quick-view__gallery--item.active-image {
+    border: solid 2px #000000;
+}
+
+quick-view .slider-button {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+quick-view .slider-button--next {
+    right: 20px;
+}
+
+quick-view .slider-button--prev {
+    left: 20px;
+}
+
+@media screen and (max-width: 989px){
+    quick-view .slider-button--next {
+        right: 5px;
+    }
+    
+    quick-view .slider-button--prev {
+        left: 5px;
+    }
+}
+
+#quick-view-plp-modal .quick-view-gallery__item-container {
+    width: 50px;
+}
+
+#quick-view-plp-modal .quick-view__featured-image {
+    mix-blend-mode: multiply;
+}
+
+#quick-view-plp-modal .quick-view__gallery .quick-view__gallery__item-container {
+    width: 50px;
+}
+
+#quick-view-plp-modal .quick-view__gallery .quick-view__gallery--item {
+    mix-blend-mode: multiply;
+}
+
+#quick-view-plp-modal .quick-view__gallery {
+    margin-top: 30px;
+}
+
+@media screen and (min-width: 990px){
+    #quick-view-plp-modal .product__media-item {
+        width: 100%;
+        max-width: none;
+    }
+
+    #quick-view-plp-modal .product__media-list {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    #quick-view-plp-modal .quick-view__product-info-wrapper {
+        max-width: 30%;
+    }
+}
+
+#quick-view-plp-modal .quick-view__product-info-wrapper .title-price__wrapper {
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgb(var(--color-base-text));
+    position: relative;
+}
+
+#quick-view-plp-modal .quick-view__product-info-wrapper .title-price__wrapper::after {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: -4px;
+	width: 50%;
+	height: 2px;
+	background: rgb(var(--color-base-text));
+}
+
+@media (min-width: 1024px) {
+    .quick-view__product-info-wrapper .title-price__wrapper .price {
+        font-size: 2rem;
+    }
+}
+
+.quick-view__product-info-wrapper .product-sibling-swatch-container {
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 989px) {
+    .quick-view__product-info-wrapper .product-sibling-swatch-container {
+        margin: .5rem auto 0 0
+    }
+}
+
+.quick-view__product-info-wrapper .variant__wrapper {
+    margin-top: 1rem;
+}
+
+.quick-view__product-info-wrapper .product__quantity-buy-buttons {
+    margin: 2rem 0 1rem 0;
+}
+
+.quick-view__product-info-wrapper .product-form__buttons klaviyo-container .button {
+    margin-bottom: 0;
+}
+
+#quick-view-plp-modal .quick-view__product-info-wrapper .full-details__link {
+    gap: .5rem;
+    margin-top: 1.5rem
+}
+
+@media screen and (max-width: 989px) {
+    #quick-view-plp-modal .quick-view__product-info-wrapper .full-details__link {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    #quick-view-plp-modal .quick-view__product-info-wrapper .full-details__link {
+        font-size: 1.8rem;
+    }
+}
+
+#quick-view-plp-modal .quick-view__product-info-wrapper .full-details__link .icon {
+    transform: rotate(180deg);
+}

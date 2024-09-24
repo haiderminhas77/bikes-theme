@@ -1,0 +1,68 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": false,
+        "full_width": true,
+        "page_title_custom": "",
+        "page_title_uppercase": false,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_html_7qFUrk": {
+      "type": "ds-html",
+      "settings": {
+        "custom_liquid": "<center><iframe src=\"https:\/\/forms.monday.com\/forms\/embed\/bbdd8ce23ccef7231c0e640915627ce7?r=use1\" style=\"border: 0; box-shadow: 5px 5px 56px 0px rgba(0,0,0,0.25); max-width: 650px;\" width=\"100%\" height=\"800\" title=\"Daily Paper Form\"><\/iframe><\/center>",
+        "page_width": "full",
+        "text_page_width": "normal",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "background_color": "#34514b",
+        "background_gradient": "",
+        "caption": "",
+        "caption_color": "#000000",
+        "caption_size_custom": 24,
+        "caption_size_mobile_custom": 18,
+        "heading": "",
+        "heading_uppercase": true,
+        "heading_color": "#000000",
+        "heading_size_custom": 60,
+        "heading_size_mobile_custom": 36,
+        "heading_alignment": "left",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ds_html_7qFUrk"
+  ]
+}

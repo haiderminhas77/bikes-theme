@@ -1,0 +1,47 @@
+{% comment %}
+	Parameters
+	linklist: link list object from settings
+{% endcomment %}
+
+{{ 'component-sidebar-menu.css' | asset_url | stylesheet_tag }}
+
+{% assign list_items = '' %}
+
+{% for link in linklist.links %}
+	{% liquid
+		assign link_title = link.object.title | downcase
+		assign page_title = page.title | downcase
+		assign is_active = false
+		if request.path contains '/account'
+			if request.page_type == 'customers/order' and link.url contains 'view=orders'
+				assign is_active = true
+			elsif request.page_type == 'customers/account'
+				if template.suffix
+					assign param = template.suffix | prepend: 'view='
+					if link.url contains param
+						assign is_active = true
+					endif
+				elsif link.url == routes.account_url and link.url != routes.account_logout_url and link.url != routes.account_addresses_url
+					assign is_active = true
+				endif
+			elsif request.page_type == 'customers/addresses' and request.path == link.url
+				assign is_active = true
+			endif
+		else
+			if link_title == page_title
+				assign is_active = true
+			endif
+		endif
+	%}
+
+	{% capture list_items %}
+		{{- list_items -}}<li class="{% if is_active == true %}active{% endif %}"><a href="{{ link.url }}" class="button button--underline button--underline-left button--underline--hover">{{ link.title }}</a></li>
+	{% endcapture %}
+{% endfor %}
+
+
+<div class="customer-sidebar__wrapper grid__item grid__item--one-quarter grid__item--small--one-whole {{ media_class }}">
+	<ul class="list-unstyled">
+		{{ list_items }}
+	</ul>
+</div>

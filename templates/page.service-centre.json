@@ -1,0 +1,213 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "breadcrumbs_L6TRCw": {
+      "type": "breadcrumbs",
+      "settings": {
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": true,
+        "full_width": false,
+        "page_title_custom": "",
+        "page_title_uppercase": false,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": true,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 20,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_hero_LYHLVb": {
+      "type": "ds-hero",
+      "blocks": {
+        "heading_CCrA7q": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>SERVICE CENTRE<\/p>",
+            "heading_uppercase": true,
+            "icon": "none",
+            "heading_color": "#FFFFFF",
+            "heading_below_color": "#1C1C1C",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "text_nc7pxG": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Elevating your riding experience with our professional care<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_paragraph_spacing": 24,
+            "text_paragraph_spacing_mob": 16,
+            "text_color": "#FFFFFF",
+            "text_link_color": "#FFFFFF",
+            "text_below_color": "#1C1C1C",
+            "text_link_below_color": "#1C1C1C",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_CCrA7q",
+        "text_nc7pxG"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "lazy_load": false,
+        "image": "shopify:\/\/shop_images\/Super73-S2-Bone_White-Lifestyle-Hero_38543921-495e-45de-a162-052f2ba1453c.jpg",
+        "image_height": "large",
+        "adapt_height_first_image": false,
+        "link": "",
+        "link_new_tab": false,
+        "overlay": "#1c1c1c",
+        "overlay_gradient": "",
+        "image_overlay_opacity": 0,
+        "banner_background": "rgba(0,0,0,0)",
+        "banner_background_gradient": "",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 50,
+        "banner_content_page_width": false,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-left",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "show_text_below": false,
+        "mob_below_overlay": "rgba(0,0,0,0)",
+        "mob_below_overlay_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_eBjrTb": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "text_ppxhyp": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our Service Centre operates by appointment only. To schedule an appointment, please submit your service request using our <a href=\"https:\/\/eusupport.super73.com\/hc\/en-us\/requests\/new\" title=\"https:\/\/eusupport.super73.com\/hc\/en-us\/requests\/new\">web form.<\/a><br\/><br\/><strong>Important<\/strong>: Our Service Center exclusively handles warranty repairs and services. For all other repairs or services, please contact one of our authorised service centers. You can find the nearest location using our <a href=\"https:\/\/eu.super73.com\/pages\/store-locator\" title=\"https:\/\/eu.super73.com\/pages\/store-locator\">Service Center Locator.<\/a><\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#00486f",
+            "text_size": "custom",
+            "text_size_custom": 24,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_ppxhyp"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "width": 100,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 30,
+        "desktop_content_position_right": 30,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "center",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs_L6TRCw",
+    "main",
+    "ds_hero_LYHLVb",
+    "ds_rich_text_eBjrTb"
+  ]
+}

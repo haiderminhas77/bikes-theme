@@ -1,0 +1,37 @@
+{% comment %}
+	Renders icon modal on PDP - not in use (To be removed?)
+
+	Accepts:
+	- block: {Object} Block object
+
+	Usage:
+	{% render 'product-value-propositions', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% assign proposition_count = 0 %}
+{% for setting in block.settings %}
+    {% assign proposition_count = proposition_count | plus: 1 %}
+{% endfor %}
+{% assign proposition_count = proposition_count | divided_by: 3 %}
+
+<div class="value-propositions">
+    {% for proposition in (1..proposition_count) %}
+        {% assign title = 'title_' | append: forloop.index %}
+        {% assign modal = 'modal_content_' | append: forloop.index %}
+        {% assign icon = 'icon_' | append: forloop.index %}
+
+        <modal-opener class="product-popup-modal__opener value-propositions-modal__opener no-js-hidden" data-modal="#PopupModal-{{ block.id }}-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            {% render 'icon-picker', icon: block.settings[icon] %}
+            <button id="ProductPopup-{{ block.id }}-{{ forloop.index }}" class="product-popup-modal__button link" type="button" aria-haspopup="dialog">{{ block.settings[title] }}</button>
+        </modal-opener>
+
+        <modal-dialog id="PopupModal-{{ block.id }}-{{ forloop.index }}" class="product-popup-modal product-popup-modal--value-propositions" {{ block.shopify_attributes }}>
+            <div role="dialog" aria-label="{{ block.setting }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+                <button id="ModalClose-{{ block.id }}-{{ forloop.index }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+                <div class="product-popup-modal__content-info">
+                    {{ block.settings[modal].content }}
+                </div>
+            </div>
+        </modal-dialog>
+    {% endfor %}
+</div>

@@ -1,0 +1,60 @@
+{% comment %}
+	Renders collection navigation on eligible collections within Beta
+
+	Accepts:
+	-
+
+	Usage:
+	{% render 'collection-nav' %} within sections/main-collection-banner.liquid
+{% endcomment %}
+
+{% for link in linklists['collection-nav'].links %}
+    {% if collection.title == link.title %}
+        <div class="collection-nav__container">
+            {% for child_link in link.links %}
+                <a href="{{ child_link.url }}" class="collection-nav__item">{{ child_link.title }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+{% style %}
+.collection-nav__container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+@media (min-width: 750px) {
+    .collection-nav__container {
+        justify-content: center;
+    }
+}
+
+.collection-nav__item {
+    margin: 0 1rem;
+    text-transform: uppercase;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.collection-nav__item,
+.collection-nav__item:visited {
+    text-decoration: none;
+    color: #000;
+}
+
+@media (max-width: 989px) {
+    .collection-nav__container {
+        overflow-x: scroll;
+        padding-bottom: .5rem;
+    }
+
+    .collection-nav__item {
+        border: 1px solid #000;
+        border-radius: 20px;
+        padding: .5rem 1rem;
+        margin: 0 .8rem;
+    }
+}
+{% endstyle %}

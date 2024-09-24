@@ -1,0 +1,82 @@
+{% comment %}
+		Renders the main product image and detail image on bike PDP
+
+		Accepts:
+		- media: {Object} Product Media object
+        - usage: 'main-image' or 'detail-image'
+        - transparent_background: true or false
+
+		Usage:
+		{% render 'product-images-bike',
+			media: media,
+            usage: 'main-image' or 'detail-image',
+            transparent_background: section.settings.transparent_background
+		%}                        in sections/main-product-bike.liquid
+{% endcomment %}
+
+{%- if usage == 'main-image' -%}
+    {% style %}
+        @media screen and (min-width: 750px) {
+            .gallery-component__bike .product__media {
+                padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;
+            }
+        }
+    {% endstyle %}
+
+    {%- capture sizes -%}
+        (min-width: 750px) calc((100vw - 2.4rem)), 100vw
+    {%- endcapture -%}
+
+    <div class="product__media media{% if transparent_background %} media--transparent{% endif %}">
+        {{ media.preview_image | image_url: width: 1600 | image_tag:
+            loading: 'eager',
+            preload: true,
+            sizes: sizes,
+            widths: '516, 600, 713, 823, 1100, 1206, 1346, 1576, 1646, 1946, 2000, 2500, 3000, 3840'
+        }}
+    </div>
+
+    <script type="text/javascript" class="visually-hidden">
+        let imageContainer = document.querySelector('.gallery-component__bike .product__media');
+        let imageElement = document.querySelector('.gallery-component__bike .product__media img');
+
+        function scroll() {
+            let horizontal_shift = imageElement.offsetWidth / 3;
+            imageContainer.scrollTo(horizontal_shift, 0)
+        }
+
+        scroll();
+    </script>
+{%- elsif usage == 'detail-image' -%}
+    {% style %}
+        :root:root .gallery-component__bike-detail.banner::after  {
+            --color-base-background-1: {{ block.settings.overlay.red }}, {{ block.settings.overlay.green }}, {{ block.settings.overlay.blue }};
+            --gradient-base-background-1: {% if block.settings.overlay_gradient != blank %}{{ block.settings.overlay_gradient }}{% else %}{{ block.settings.overlay }}{% endif %};
+        }
+
+        .gallery-component__bike-detail.banner::after {
+            opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
+            background: var(--gradient-base-background-1);
+        }
+    {% endstyle %}
+
+    <div class="banner__media product__media media{% if transparent_background %} media--transparent{% endif %}">
+        <picture>
+            <source srcset="
+                {{ media.preview_image | image_url: crop: 'region', crop_left: 1000, crop_top: 300, crop_width: 750, crop_height: 900  }} {{ media.preview_image.width }}w"
+                media="(max-width: 749px)"
+                sizes='100vw'
+            >
+            <source srcset="
+                {{ media.preview_image | image_url: crop: 'region', crop_left: 100, crop_top: 300, crop_width: 2000, crop_height: 1000 }} {{ media.preview_image.width }}w"
+                media="(min-width: 750px)"
+                sizes="100vw"
+            >
+
+            {{ media.preview_image | image_url: width: 2200 | image_tag:
+                loading: 'lazy',
+                sizes: '100vw',
+                widths: '550, 750, 1100, 1500, 1780, 2000, 3000, 3840' }}
+        </picture>
+    </div>
+{%- endif -%}

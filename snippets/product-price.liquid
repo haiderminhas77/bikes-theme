@@ -1,0 +1,32 @@
+{% comment %}
+	Renders product price within PDP and within featured product section
+
+	Accepts:
+	- block: {Object} Block object
+	- product: {Object} Object from CMS (for featured product only)
+
+	Usage:
+	{% render 'product-price', block: block %} within sections/main-product.liquid
+	{% render 'product-price', product: product, block: block %} within sections/featured-product.liquid
+{% endcomment %}
+
+<div class="no-js-hidden product-price__container" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+	{%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+</div>
+
+{% comment %} Added class 'hidden' as this form isn't working. Relates to express pay buttons {% endcomment %}
+{% if section.id contains 'main' or product != blank %}
+	<div {{ block.shopify_attributes }} class="hidden">
+		{% if section.id contains 'main' %}
+			{%- form 'product', product, id: 'product-form-installment', class: 'installment caption-large' -%}
+				<input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+				{{ form | payment_terms }}
+			{%- endform -%}
+		{% else %}
+			{%- form 'product', product -%}
+				<input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+				{{ form | payment_terms }}
+			{%- endform -%}
+		{% endif %}
+	</div>
+{% endif %}

@@ -1,0 +1,8 @@
+{% comment %}
+    Updates the cart modal item count in the heading
+
+    Usage:
+    {% render 'cart-modal-product-count' %} in sections/cart-modal-items.liquid
+{% endcomment %}
+
+<span class="cart__header-count">({{ cart.item_count }})</span>

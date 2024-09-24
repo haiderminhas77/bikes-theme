@@ -1,0 +1,55 @@
+{% comment %}
+	Renders 'ds-page' in sections everywhere
+{% endcomment %}
+
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+	<h2 class="page-title">
+		{% if section.settings.show_title %}
+			{%- if section.settings.page.title != blank -%}
+				{{ section.settings.page.title | escape }}
+			{%- else -%}
+				Page title
+			{%- endif -%}
+		{% endif %}
+	</h2>
+	<div class="rte">
+		{%- if section.settings.page.content != blank -%}
+			{{ section.settings.page.content }}
+		{%- else -%}
+			<div class='page-placeholder-wrapper placeholder'>
+				{{ 'page' | placeholder_svg_tag: 'page-placeholder' }}
+			</div>
+		{%- endif -%}
+	</div>
+</div>
+
+{% schema %}
+{
+	"name": "t:sections.page.name",
+	"tag": "section",
+	"class": "spaced-section",
+	"disabled_on": {
+        "groups": ["header", "footer"]
+    },
+	"settings": [
+		{
+			"type": "page",
+			"id": "page",
+			"label": "t:sections.page.settings.page.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_title",
+			"default": false,
+			"label": "Show page title, can be found in [the static page editor](/admin/pages)"
+		},
+	],
+	"presets": [
+		{
+			"name": "t:sections.page.presets.name"
+		}
+	]
+}
+{% endschema %}

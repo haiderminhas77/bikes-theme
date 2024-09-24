@@ -1,0 +1,134 @@
+{% comment %}
+    Countodwn Timer with fallback message.
+    
+    All date/time and message settings are in theme wide, as well as cart appearance options
+
+    Styles included for cart modal and announcement bar
+
+    render with {% render 'cart-countdown-timer.liquid' %}
+
+{% endcomment %}
+
+
+{% style %}
+    .time-wrapper, .timer-string-prefix, .timer-string-suffix {
+        display: inline-block;
+    }
+
+    .cart-modal__header {
+        background-color: {{ settings.countdown_bg_color }};
+    }
+
+    .cart-modal__header .countdown-timer__wrapper countdown-timer, .cart-modal__header .countdown-timer__wrapper .cart-modal__message {
+        background-color: {{ settings.countdown_bg_color }};
+        color: {{ settings.countdown_fg_color }};
+        font-family: var(--font-heading-family);
+        font-style: var(--font-heading-style);
+        font-weight: var(--font-heading-weight);
+        letter-spacing: var(--font-heading-letter-spacing-narrow);
+        text-transform: uppercase;
+        font-size: {{ settings.countdown_size_mobile | divided_by: 10.0 }}rem;
+    }
+    
+    @media screen and (min-width: 750px) {
+        .cart-modal__header .countdown-timer__wrapper countdown-timer, .cart-modal__header .countdown-timer__wrapper .cart-modal__message {
+            font-size: {{ settings.countdown_size | divided_by: 10.0 }}rem;
+        }
+    }
+
+    .cart-modal__header .countdown-timer__wrapper countdown-timer p, .cart-modal__header .countdown-timer__wrapper countdown-timer a, .cart-modal__header .countdown-timer__wrapper .cart-modal__message p, .cart-modal__header .countdown-timer__wrapper .cart-modal__message a {
+        color: {{ settings.countdown_fg_color }};
+    }
+
+    .countdown-timer__wrapper countdown-timer p, .countdown-timer__wrapper countdown-timer a {
+        padding: 0px;
+        margin: 0px;
+        text-decoration: none;
+    }
+
+    /* if no countdown time */
+	{% if settings.include_cart_countdown or settings.cart_message != blank %}
+		.cart-modal__header {
+			justify-content: space-between;
+		}
+	{% endif %}
+
+    .announcement-bar__icon {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cart-modal__header .countdown-timer__wrapper countdown-timer svg, .cart-modal__header .countdown-timer__wrapper .cart-modal__message svg {
+        pointer-events: none;
+        align-self: center;
+        fill: currentColor;
+        height: calc(var(--font-heading-scale) * {{ settings.countdown_size | divided_by: 10.0 }}rem);
+        margin-right: calc(var(--font-heading-scale) * 1rem);
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .countdown-timer__wrapper countdown-timer, .countdown-timer__wrapper .cart-modal__message {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 0;
+    }
+
+    .active-timer, .inactive-timer {
+        margin: 0;
+    }
+
+    .cart-modal__header .countdown-timer__wrapper {
+        margin: 0;
+    }
+
+{% endstyle %}
+
+<div class="countdown-timer__wrapper">
+    {% if settings.include_cart_countdown %}
+        <countdown-timer data-exp-date="{{ settings.date_of_countdown_end }}" data-exp-time="{{ settings.time_of_countdown_end }}">
+            <span class="announcement-bar__icon">
+                {{ settings.countdown_svg }}
+                {% render 'icon-picker', icon: settings.countdown_icon %}
+            </span>
+            <div class="active-timer">
+                {% if settings.countdown_string_prefix != blank %}
+                    <span class="timer-string-prefix">{{ settings.countdown_string_prefix }}</span>
+                {% endif %}
+                <div class="days-wrapper time-wrapper">
+                    <span class="days-remaining"></span>
+                    <span class="day-string">{{ 'general.countdown.day' | t }}</span>
+                    <span class="days-string">{{ 'general.countdown.days' | t }}</span>
+                </div>
+                <div class="hours-wrapper time-wrapper">
+                    <span class="hours-remaining"></span>
+                    <span class="hours-string">{{ 'general.countdown.hours' | t }}</span>
+                </div>
+                <div class="mins-wrapper time-wrapper">
+                    <span class="minutes-remaining"></span>
+                    <span class="minutes-string">{{ 'general.countdown.minutes' | t }}</span>
+                </div>
+                <div class="secs-wrapper time-wrapper">
+                    <span class="seconds-remaining"></span>
+                    <span class="seconds-string">{{ 'general.countdown.seconds' | t }}</span>
+                </div>
+                {% if settings.countdown_string_suffix != blank %}
+                    <span class="timer-string-suffix">{{ settings.countdown_string_suffix }}</span>
+                {% endif %}
+            </div>
+            <div class="inactive-timer" style="display: none;">
+                {{ settings.countdown_fallback_message}}
+            </div>
+        </countdown-timer>
+    {% endif %}
+    {% if settings.cart_message != blank and settings.include_cart_countdown != true %}
+        <div class="cart-modal__message">
+            <span class="announcement-bar__icon">
+                {{ settings.cart_svg }}
+                {% render 'icon-picker', icon: settings.cart_icon %}
+            </span>
+            {{ settings.cart_message }}
+        </div>
+    {% endif %}
+</div>

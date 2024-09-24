@@ -1,0 +1,344 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": false,
+        "full_width": true,
+        "page_title_custom": "",
+        "page_title_uppercase": true,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": false,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_hero_KFn9zj": {
+      "type": "ds-hero",
+      "blocks": {
+        "heading_y6J7mf": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Compare e-bikes<\/p>",
+            "custom_liquid": "",
+            "heading_uppercase": true,
+            "icon": "none",
+            "heading_color": "#ffffff",
+            "heading_below_color": "#1c1c1c",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_y6J7mf"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "lazy_load": false,
+        "image": "shopify:\/\/shop_images\/Super73_HP_Gallery_UGC_05_1920x1080px.jpg",
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "link": "",
+        "link_new_tab": false,
+        "overlay": "#1c1c1c",
+        "overlay_gradient": "",
+        "image_overlay_opacity": 30,
+        "video_url": "",
+        "banner_background": "rgba(0,0,0,0)",
+        "banner_background_gradient": "",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "width": 50,
+        "banner_content_page_width": false,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 0,
+        "banner__box_padding_bottom": 65,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "bottom-left",
+        "mobile_content_alignment": "left",
+        "width_mob": 70,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "show_text_below": false,
+        "mob_below_overlay": "rgba(0,0,0,0)",
+        "mob_below_overlay_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_comparison_table_7AqMwP": {
+      "type": "ds-comparison-table",
+      "blocks": {
+        "product_LFyz7F": {
+          "type": "product",
+          "settings": {
+            "product": "super73-s2-bone-white",
+            "first_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_range.value }}",
+            "first_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_charge.value }}",
+            "first_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_battery.value }}",
+            "first_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_motor.value }}",
+            "first_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_sensor.value }}",
+            "first_block_sixth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_gearing.value }}",
+            "second_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight | metafield_text }}",
+            "second_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_bike.value }}",
+            "second_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight_limit | metafield_text }}",
+            "second_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_seat_height | metafield_text }}",
+            "third_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_material.value }}",
+            "third_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_suspension.value }}",
+            "third_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_brakes.value }}",
+            "third_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_tyres.value }}",
+            "third_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_inner_tubes.value }}",
+            "fourth_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.headlight.value }}",
+            "fourth_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.taillight.value }}",
+            "fourth_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.horn.value }}"
+          }
+        },
+        "product_Twnw9b": {
+          "type": "product",
+          "settings": {
+            "product": "super73-s-adventure-series-corsetti-se",
+            "first_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_range.value }}",
+            "first_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_charge.value }}",
+            "first_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_battery.value }}",
+            "first_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_motor.value }}",
+            "first_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_sensor.value }}",
+            "first_block_sixth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_gearing.value }}",
+            "second_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight | metafield_text }}",
+            "second_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_bike.value }}",
+            "second_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight_limit | metafield_text }}",
+            "second_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_seat_height | metafield_text }}",
+            "third_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_material.value }}",
+            "third_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_suspension.value }}",
+            "third_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_brakes.value }}",
+            "third_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_tyres.value }}",
+            "third_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_inner_tubes.value }}",
+            "fourth_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.headlight.value }}",
+            "fourth_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.taillight.value }}",
+            "fourth_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.horn.value }}"
+          }
+        },
+        "product_dqW3HE": {
+          "type": "product",
+          "settings": {
+            "product": "super73-z-adventure-series-snowshadow-se",
+            "first_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_range.value }}",
+            "first_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_charge.value }}",
+            "first_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_battery.value }}",
+            "first_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_motor.value }}",
+            "first_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_sensor.value }}",
+            "first_block_sixth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_gearing.value }}",
+            "second_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight | metafield_text }}",
+            "second_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_bike.value }}",
+            "second_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight_limit | metafield_text }}",
+            "second_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_seat_height | metafield_text }}",
+            "third_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_material.value }}",
+            "third_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_suspension.value }}",
+            "third_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_brakes.value }}",
+            "third_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_tyres.value }}",
+            "third_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_inner_tubes.value }}",
+            "fourth_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.headlight.value }}",
+            "fourth_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.taillight.value }}",
+            "fourth_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.horn.value }}"
+          }
+        },
+        "product_dUzxNx": {
+          "type": "product",
+          "settings": {
+            "product": "super73-r-blackout-se-blackout",
+            "first_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_range.value }}",
+            "first_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_charge.value }}",
+            "first_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_battery.value }}",
+            "first_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_motor.value }}",
+            "first_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_sensor.value }}",
+            "first_block_sixth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_gearing.value }}",
+            "second_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight | metafield_text }}",
+            "second_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_seat_height | metafield_text }}",
+            "second_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight_limit | metafield_text }}",
+            "second_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_seat_height | metafield_text }}",
+            "third_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_material.value }}",
+            "third_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_suspension.value }}",
+            "third_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_brakes.value }}",
+            "third_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_tyres.value }}",
+            "third_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.frameset_inner_tubes.value }}",
+            "fourth_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.headlight.value }}",
+            "fourth_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.taillight.value }}",
+            "fourth_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.horn.value }}"
+          }
+        },
+        "product_aaCBW4": {
+          "type": "product",
+          "settings": {
+            "product": "super73-rx-mojave-obsidian",
+            "first_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_range.value }}",
+            "first_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_charge.value }}",
+            "first_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_battery.value }}",
+            "first_block_fourth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_motor.value }}",
+            "first_block_fifth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_sensor.value }}",
+            "first_block_sixth_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.performance_gearing.value }}",
+            "second_block_first_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight | metafield_text }}",
+            "second_block_second_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_bike.value }}",
+            "second_block_third_row": "{{ block.settings.product.metafields.product_data.reference.value.specifications.value.dimensions_weight_limit | metafield_text }}",
+            "second_block_fourth_row": "81 cm",
+            "third_block_first_row": "Aluminium",
+            "third_block_second_row": "Full \/ Front + Rear Adjustable",
+            "third_block_third_row": "Hydraulic",
+            "third_block_fourth_row": "GRZLY \/ 4.5\" Front \/ 5\" Rear",
+            "third_block_fifth_row": "20\" x 4.5\/5\"",
+            "fourth_block_first_row": "LED",
+            "fourth_block_second_row": "LED",
+            "fourth_block_third_row": "Horn"
+          }
+        },
+        "product_Nhwnmg": {
+          "type": "product",
+          "settings": {
+            "product": "super73-r-adventure-series",
+            "first_block_first_row": "64-120 km (120 km in PAS Mode 1)",
+            "first_block_second_row": "6-7 hrs",
+            "first_block_third_row": "960Wh (48V 20Ah)",
+            "first_block_fourth_row": "250w EPAC",
+            "first_block_fifth_row": "Torque",
+            "first_block_sixth_row": "8-Speed",
+            "second_block_first_row": "40 kg",
+            "second_block_second_row": "70\"x28.5\"x43.5\"",
+            "second_block_third_row": "147 kg",
+            "second_block_fourth_row": "81 cm",
+            "third_block_first_row": "Aluminium",
+            "third_block_second_row": "Full \/ Front + Rear Adjustable",
+            "third_block_third_row": "Hydraulic",
+            "third_block_fourth_row": "GRZLY \/ 4.5\" Front \/ 5\" Rear",
+            "third_block_fifth_row": "20\" x 4.5\/5\"",
+            "fourth_block_first_row": "LED",
+            "fourth_block_second_row": "LED",
+            "fourth_block_third_row": "Horn"
+          }
+        },
+        "product_C4TDpw": {
+          "type": "product",
+          "settings": {
+            "product": "super73-z-miami",
+            "first_block_first_row": "40-80 km (80 km in PAS Mode 1)",
+            "first_block_second_row": "6-7 hrs",
+            "first_block_third_row": "615Wh (48V 12.8Ah)",
+            "first_block_fourth_row": "250w EPAC",
+            "first_block_fifth_row": "Cadence",
+            "first_block_sixth_row": "8-Speed",
+            "second_block_first_row": "27 kg",
+            "second_block_second_row": "64\"x25\"x39\"",
+            "second_block_third_row": "147 kg",
+            "second_block_fourth_row": "71 cm",
+            "third_block_first_row": "Aluminium",
+            "third_block_second_row": "Rigid",
+            "third_block_third_row": "Mechanical",
+            "third_block_fourth_row": "",
+            "third_block_fifth_row": "20\" x 4\"",
+            "fourth_block_first_row": "LED",
+            "fourth_block_second_row": "LED",
+            "fourth_block_third_row": "Horn"
+          }
+        }
+      },
+      "block_order": [
+        "product_LFyz7F",
+        "product_Twnw9b",
+        "product_dqW3HE",
+        "product_dUzxNx",
+        "product_aaCBW4",
+        "product_Nhwnmg",
+        "product_C4TDpw"
+      ],
+      "settings": {
+        "first_block_title": "Performance",
+        "first_block_visibility": true,
+        "second_block_title": "Dimensions",
+        "second_block_visibility": true,
+        "third_block_title": "Frameset",
+        "third_block_visibility": true,
+        "fourth_block_title": "Lights & Horn",
+        "fourth_block_visibility": true,
+        "first_block_first_row_title": "Range",
+        "first_block_second_row_title": "Charge Time",
+        "first_block_third_row_title": "Battery",
+        "first_block_fourth_row_title": "Motor",
+        "first_block_fifth_row_title": "Sensor",
+        "first_block_sixth_row_title": "Gearing",
+        "second_block_first_row_title": "Vehicle Weight",
+        "second_block_second_row_title": "Length x Width x Height",
+        "second_block_third_row_title": "Rider Weight Limit",
+        "second_block_fourth_row_title": "Seat Height",
+        "third_block_first_row_title": "Frame",
+        "third_block_second_row_title": "Suspension (if applicable)",
+        "third_block_third_row_title": "Brakes",
+        "third_block_fourth_row_title": "Tyres",
+        "third_block_fifth_row_title": "Inner Tubes",
+        "fourth_block_first_row_title": "Head Light",
+        "fourth_block_second_row_title": "Tail Light",
+        "fourth_block_third_row_title": "Horn",
+        "show_quick_view": false,
+        "quick_add_button_background_color": "#000000",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "add_image_padding": false,
+        "show_image_outline": false,
+        "show_vendor": false,
+        "show_badges": true,
+        "crop_product_title": false,
+        "transparent_background": true,
+        "lazy_load_threshold": 9,
+        "device_visibility": "both-devices",
+        "section_pt_desktop": 15,
+        "section_pb_desktop": 15,
+        "section_pt_mobile": 10,
+        "section_pb_mobile": 10
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ds_hero_KFn9zj",
+    "ds_comparison_table_7AqMwP"
+  ]
+}

@@ -1,0 +1,643 @@
+{{ 'component-comparison-table.css' | asset_url | stylesheet_tag }}
+
+{%- assign products = section.blocks | map: 'settings' | map: 'product' -%}
+
+{%- style -%}
+    .comparison-table-{{ section.id }} .table-wrapper{
+        padding-top: {{ section.settings.section_pt_mobile }}px;
+        padding-bottom: {{ section.settings.section_pb_mobile }}px;
+    }
+    @media (min-width: 750px) {
+        .comparison-table-{{ section.id }} .table-wrapper{
+            padding-top: {{ section.settings.section_pt_desktop }}px;
+            padding-bottom: {{ section.settings.section_pb_desktop }}px;
+        }
+    }
+{%- endstyle -%}
+
+<div class="comparison-table-container {{ section.settings.device_visibility }} comparison-table-{{ section.id }}">
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                <th class="row-header empty-head"></th>
+                    {%- for product in products -%}
+                        <td class="comparison-product-info">
+                            {%- if product != blank -%}
+                                {% render 'product-card',
+                                    product_card_product: product,
+                                    media_size: 'adapt',
+                                    product_card_index: forloop.index0,
+                                    feat_collection_index: section.id,
+                                    crop_product_title: section.settings.crop_product_title,
+                                    show_badges: section.settings.show_badges,
+                                    lazy_load: true,
+                                    quick_view_icon: true,
+                                    show_quick_view: section.settings.show_quick_view
+                                %}
+                            {%- endif -%}
+                        </td>
+                    {%- endfor -%}
+                </tr>
+            </thead>
+            <tbody>
+                {%- if section.settings.first_block_visibility == true -%}
+                    <tr class="row-wrapper">
+                        <th class="row-header row-main-title">{{ section.settings.first_block_title }}</th>
+                        <td colspan="{{ products.size }}"></td>
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_first_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_first_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_second_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_second_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_third_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_third_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_fourth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_fourth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_fifth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_fifth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.first_block_sixth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.first_block_sixth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                {%- endif -%}
+                {%- if section.settings.second_block_visibility == true -%}
+                    <tr class="row-wrapper">
+                        <th class="row-header row-main-title">{{ section.settings.second_block_title }}</th>
+                        <td colspan="{{ products.size }}"></td>
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.second_block_first_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.second_block_first_row | default:  '—' }}   </td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.second_block_second_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.second_block_second_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.second_block_third_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.second_block_third_row | default:  '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.second_block_fourth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.second_block_fourth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                {%- endif -%}
+                {%- if section.settings.third_block_visibility == true -%}
+                    <tr class="row-wrapper">
+                        <th class="row-header row-main-title">{{ section.settings.third_block_title }}</th>
+                        <td colspan="{{ products.size }}"></td>
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.third_block_first_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                                <td {{ block.shopify_attributes }}>{{ block.settings.third_block_first_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.third_block_second_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.third_block_second_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.third_block_third_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.third_block_third_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.third_block_fourth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.third_block_fourth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.third_block_fifth_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.third_block_fifth_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                {%- endif -%}
+                {%- if section.settings.fourth_block_visibility == true -%}
+                    <tr class="row-wrapper">
+                        <th class="row-header row-main-title">{{ section.settings.fourth_block_title }}</th>
+                        <td colspan="{{ products.size }}"></td>
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.fourth_block_first_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.fourth_block_first_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.fourth_block_second_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.fourth_block_second_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                    <tr>
+                    <th class="row-header">{{ section.settings.fourth_block_third_row_title }}</th>
+                        {%- for block in section.blocks -%}
+                            <td {{ block.shopify_attributes }}>{{ block.settings.fourth_block_third_row | default: '—' }}</td>
+                        {%- endfor -%}
+                    </tr>
+                {%- endif -%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "DS Comparison Table",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Blocks title & visibility"
+        },
+        {
+            "type": "text",
+            "id": "first_block_title",
+            "label": "First block title",
+            "default": "Performance"
+        },
+        {
+            "type": "checkbox",
+            "id": "first_block_visibility",
+            "label": "First block is visible",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "second_block_title",
+            "label": "Second block title",
+            "default": "Dimensions"
+        },
+        {
+            "type": "checkbox",
+            "id": "second_block_visibility",
+            "label": "Second block is visible",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "third_block_title",
+            "label": "Third block title",
+            "default": "Frameset"
+        },
+        {
+            "type": "checkbox",
+            "id": "third_block_visibility",
+            "label": "Third block is visible",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "fourth_block_title",
+            "label": "Fourth block title",
+            "default": "Lights & Horn"
+        },
+        {
+            "type": "checkbox",
+            "id": "fourth_block_visibility",
+            "label": "Fourth block is visible",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "First block - Rows title"
+        },
+        {
+            "type": "text",
+            "id": "first_block_first_row_title",
+            "label": "First block - First row title",
+            "default": "Range"
+        },
+        {
+            "type": "text",
+            "id": "first_block_second_row_title",
+            "label": "First block - Second row title",
+            "default": "Charge Time"
+        },
+        {
+            "type": "text",
+            "id": "first_block_third_row_title",
+            "label": "First block - Third row title",
+            "default": "Battery"
+        },
+        {
+            "type": "text",
+            "id": "first_block_fourth_row_title",
+            "label": "First block - Fourth row title",
+            "default": "Motor"
+        },
+        {
+            "type": "text",
+            "id": "first_block_fifth_row_title",
+            "label": "First block - Fifth row title",
+            "default": "Sensor"
+        },
+        {
+            "type": "text",
+            "id": "first_block_sixth_row_title",
+            "label": "First block - Sixth row title",
+            "default": "Gearing"
+        },
+        {
+            "type": "header",
+            "content": "Second block - Rows title"
+        },
+        {
+            "type": "text",
+            "id": "second_block_first_row_title",
+            "label": "Second block - First row title",
+            "default": "Vehicle Weight"
+        },
+        {
+            "type": "text",
+            "id": "second_block_second_row_title",
+            "label": "Second block - Second row title",
+            "default": "Length x Width x Height"
+        },
+        {
+            "type": "text",
+            "id": "second_block_third_row_title",
+            "label": "Second block - Third row title",
+            "default": "Rider Weight Limit"
+        },
+        {
+            "type": "text",
+            "id": "second_block_fourth_row_title",
+            "label": "Second block - Fourth row title",
+            "default": "Seat Height"
+        },
+        {
+            "type": "header",
+            "content": "Third block - Rows Title"
+        },
+        {
+            "type": "text",
+            "id": "third_block_first_row_title",
+            "label": "Third block - First row title",
+            "default": "Frame"
+        },
+        {
+            "type": "text",
+            "id": "third_block_second_row_title",
+            "label": "Third block - Second row title",
+            "default": "Suspension (if applicable)"
+        },
+        {
+            "type": "text",
+            "id": "third_block_third_row_title",
+            "label": "Third block - Third row title",
+            "default": "Brakes"
+        },
+        {
+            "type": "text",
+            "id": "third_block_fourth_row_title",
+            "label": "Third block - Fourth row title",
+            "default": "Tires"
+        },
+        {
+            "type": "text",
+            "id": "third_block_fifth_row_title",
+            "label": "Third block - Fifth row title",
+            "default": "Inner Tubes"
+        },
+        {
+            "type": "header",
+            "content": "Fourth block - Rows title"
+        },
+        {
+            "type": "text",
+            "id": "fourth_block_first_row_title",
+            "label": "Fourth block - First row title",
+            "default": "Head Light"
+        },
+        {
+            "type": "text",
+            "id": "fourth_block_second_row_title",
+            "label": "Fourth block - Second row title",
+            "default": "Tail Light"
+        },
+        {
+            "type": "text",
+            "id": "fourth_block_third_row_title",
+            "label": "Fourth block - Third row title",
+            "default": "Horn"
+        },
+        {
+			"type": "header",
+			"content": "t:sections.main-collection-product-grid.settings.header__3.content"
+		},
+        {
+			"type": "checkbox",
+			"id": "show_quick_view",
+			"default": false,
+			"label": "Enable quick view modal"
+		},
+		{
+			"type": "color",
+			"id": "quick_add_button_background_color",
+			"default": "#000000",
+			"label": "Quick add button background",
+			"info": "Functional in quick add mode only"
+		},
+		{
+			"type": "select",
+			"id": "image_ratio",
+			"options": [
+				{
+					"value": "adapt",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+				},
+				{
+					"value": "portrait",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+				},
+				{
+					"value": "square",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+				}
+			],
+			"default": "adapt",
+			"label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_secondary_image",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "add_image_padding",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.add_image_padding.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_image_outline",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_image_outline.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_vendor",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_badges",
+			"label": "t:settings_schema.badges.settings.enable_badges.label",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "crop_product_title",
+			"label": "Crop product title to 1 line",
+			"default": false
+		},
+		{
+			"type": "checkbox",
+			"id": "transparent_background",
+			"default": true,
+			"label": "Enable transparent background"
+		},
+		{
+			"type": "number",
+			"id": "lazy_load_threshold",
+			"default": 9,
+			"label": "Lazy Load Threshold",
+			"info": "Index at which lazy loading applies - NB this threshold applies to both desktop and mobile"
+		},
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "select",
+            "id": "device_visibility",
+            "options": [
+                {
+                    "value": "medium-hide large-up-hide",
+                    "label": "Only for mobile"
+                },
+                {
+                    "value": "small-hide",
+                    "label": "Only for desktop"
+                },
+                {
+                    "value": "both-devices",
+                    "label": "For both devices"
+                }
+            ],
+            "default": "both-devices",
+            "label": "Section visibility"
+        },
+        {
+            "type": "range",
+            "id": "section_pt_desktop",
+            "label": "t:sections.all.padding.padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 15
+        },
+        {
+            "type": "range",
+            "id": "section_pb_desktop",
+            "label": "t:sections.all.padding.padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 15
+        },
+        {
+            "type": "range",
+            "id": "section_pt_mobile",
+            "label": "t:sections.all.padding.padding_top_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 10
+        },
+        {
+            "type": "range",
+            "id": "section_pb_mobile",
+            "label": "t:sections.all.padding.padding_bottom_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 10
+        }
+    ],
+    "blocks": [
+        {
+            "type": "product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Add product",
+                    "info": "The details will be shown in the table only if the selected product have section.settings inside the metafields in the product backend."
+                },
+                {
+                    "type": "header",
+                    "content": "First block"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_first_row",
+                    "label": "First block - First row"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_second_row",
+                    "label": "First block - Second row"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_third_row",
+                    "label": "First block - Third row"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_fourth_row",
+                    "label": "First block - Fourth row"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_fifth_row",
+                    "label": "First block - Fifth row"
+                },
+                {
+                    "type": "text",
+                    "id": "first_block_sixth_row",
+                    "label": "First block - Sixth row"
+                },
+                {
+                    "type": "header",
+                    "content": "Second block"
+                },
+                {
+                    "type": "text",
+                    "id": "second_block_first_row",
+                    "label": "Second block - First row"
+                },
+                {
+                    "type": "text",
+                    "id": "second_block_second_row",
+                    "label": "Second block - Second row"
+                },
+                {
+                    "type": "text",
+                    "id": "second_block_third_row",
+                    "label": "Second block - Third row"
+                },
+                {
+                    "type": "text",
+                    "id": "second_block_fourth_row",
+                    "label": "Second block - Fourth row"
+                },
+                {
+                    "type": "header",
+                    "content": "Third block"
+                },
+                {
+                    "type": "text",
+                    "id": "third_block_first_row",
+                    "label": "Third block - First row"
+                },
+                {
+                    "type": "text",
+                    "id": "third_block_second_row",
+                    "label": "Third block - Second row"
+                },
+                {
+                    "type": "text",
+                    "id": "third_block_third_row",
+                    "label": "Third block - Third row"
+                },
+                {
+                    "type": "text",
+                    "id": "third_block_fourth_row",
+                    "label": "Third block - Fourth row"
+                },
+                {
+                    "type": "text",
+                    "id": "third_block_fifth_row",
+                    "label": "Third block - Fifth row"
+                },
+                {
+                    "type": "header",
+                    "content": "Fourth block"
+                },
+                {
+                    "type": "text",
+                    "id": "fourth_block_first_row",
+                    "label": "Fourth block - First row"
+                },
+                {
+                    "type": "text",
+                    "id": "fourth_block_second_row",
+                    "label": "Fourth block - Second row"
+                },
+                {
+                    "type": "text",
+                    "id": "fourth_block_third_row",
+                    "label": "Fourth block - Third row"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "DS Comparison Table",
+            "blocks": [
+                {
+                    "type": "product"
+                },
+                {
+                    "type": "product"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

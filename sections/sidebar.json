@@ -1,0 +1,60 @@
+{
+	"type": "aside",
+	"name": "Sidebar",
+	"sections": {
+		"ds-sidebar": {
+			"type": "ds-sidebar-menu",
+			"blocks": {
+				"19cb47ac-95ba-4d78-9b6a-a2e96383ce77": {
+					"type": "menu_link",
+					"settings": {
+						"menu_link_url": "shopify:\/\/pages\/shipping-returns",
+						"menu_link_text": "Shipping & Returns"
+					}
+				},
+				"8b1f97ac-ae78-4957-8cb5-bf957f43a1cc": {
+					"type": "menu_link",
+					"settings": {
+						"menu_link_url": "shopify:\/\/pages\/contact",
+						"menu_link_text": "Contact Us"
+					}
+				},
+				"94f14990-0d40-4b71-a42a-9ec5604eed6e": {
+					"type": "menu_link",
+					"settings": {
+						"menu_link_url": "shopify:\/\/pages\/size-chart",
+						"menu_link_text": "Size Guides"
+					}
+				},
+				"105ccae8-630f-46d6-b8bd-0fbf2cdd938e": {
+					"type": "menu_link",
+					"settings": {
+						"menu_link_url": "shopify:\/\/pages\/terms-conditions",
+						"menu_link_text": "Terms & Conditions"
+					}
+				},
+				"38b4b321-a454-4824-adbc-572877b20f9c": {
+					"type": "menu_link",
+					"settings": {
+						"menu_link_url": "shopify:\/\/pages\/privacy-policy",
+						"menu_link_text": "Privacy Policy"
+					}
+				}
+			},
+			"block_order": [
+				"19cb47ac-95ba-4d78-9b6a-a2e96383ce77",
+				"8b1f97ac-ae78-4957-8cb5-bf957f43a1cc",
+				"94f14990-0d40-4b71-a42a-9ec5604eed6e",
+				"105ccae8-630f-46d6-b8bd-0fbf2cdd938e",
+				"38b4b321-a454-4824-adbc-572877b20f9c"
+			],
+			"settings": {
+				"sidebar_title": "",
+				"uppercase_title": false
+			}
+		}
+	},
+	"order": [
+		"ds-sidebar"
+	]
+}

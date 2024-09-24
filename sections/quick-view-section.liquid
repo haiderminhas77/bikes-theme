@@ -1,0 +1,55 @@
+{% liquid 
+    assign product_data = product.metafields.product_data.reference.value
+    assign product_subtitle = product_data.subtitle.value 
+    assign sibling_metaobject = product_data.colour_siblings.value.list.value
+%}
+
+<div class="quick-view__content-wrapper product grid grid--2-col-desktop grid--1-col-tablet-down">
+    <span class="hidden product-json" aria-hidden="true">{{ product | json }}</span>
+    <div class="quick-view__gallery-wrapper grid__item">
+        <gallery-component data-usage="main-product">
+            <button class="slider-button slider-button--prev">{% render 'icon-arrow-left' %}</button>
+            <ul id="Slider-{{ section.id }}" class="product__media-list grid list-unstyled slider slider--everywhere">
+                {% assign current_gallery_items_array = '' %}
+                {% for image in product.media %}
+                    <li id="Slide-{{ section.id }}" class="product__media-item grid__item slider__slide slider__slide--full-width">
+                        <div class="media media--contain" style="padding-top: {{ 1 | divided_by: image.preview_image.aspect_ratio | times: 100 }}%;">
+                            <img src="{{ image | image_url: width: 533 }}" class="quick-view__featured-image" alt="{{ image.alt }}" loading="{% if forloop.index0 %}eager {% else %}lazy {% endif %}" />
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button class="slider-button slider-button--next">{% render 'icon-arrow-right' %}</button>
+            <div class="gallery-dots__wrapper">
+                {% render 'product-gallery-dots', product: product %}
+            </div>
+        </gallery-component>
+    </div>
+    <div class="quick-view__product-info-wrapper grid__item">
+        {% capture product_form_id %}product-form-{{ section.id }}{% endcapture %}
+        <div class="title-price__wrapper">
+            <h2 class="product__title">{{ product.title }}</h2>
+            {% if product_subtitle %}
+                <h3 class="product__subtitle">
+                    {{ product_subtitle | strip }}
+                </h3>
+            {% endif %}
+            {% render 'product-card-price', product: product, price_class: '' %}
+        </div>
+        {% unless sibling_metaobject == null %}
+            <div class="sibling-selector__option-name uppercase">
+                <p class="colour-label">{{ 'products.product.color' | t }}: </p><p class="colour-value">{{ product.options_with_values.first.selected_value }}</p>
+            </div>
+        {% endunless %}
+        <div class="product-sibling-swatch-container card__swatch--container">
+        </div>
+        <div class="variant__wrapper">
+            {% render 'product-variant-picker' product: product, block: block, product_form_id: product_form_id, usage: 'quick-view' %}
+        </div>
+        <div class="product__quantity-buy-buttons">
+            {% render 'product-quantity-selector', product: product, block: null, product_form_id: product_form_id %}
+            {% render 'product-buy-buttons' block: null, product_form_id: product_form_id, product: product, usage: 'quick-view' %}
+        </div>
+        <a href="{{ product.url }}" class="full-details__link button button--underline button--underline-left button--underline--hover">{{ 'products.quick_view.see_more_link' | t }} {% render 'icon-arrow' %}</a>
+    </div>
+</div>

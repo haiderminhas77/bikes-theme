@@ -1,0 +1,222 @@
+{% comment %}
+    Section that renders popup modal site Landing Mat
+
+    Usage:
+    {% section 'landing-mat' %} within layouts/theme.liquid
+{% endcomment %}
+{% if section.settings.enable_landing_mat and section.blocks.size > 0 %}
+    {% style %}
+        .landing-mat-modal {
+            box-sizing: border-box;
+            opacity: 0;
+            position: fixed;
+            visibility: hidden;
+            z-index: -1;
+            margin: 0 auto;
+            top: 0;
+            left: 0;
+            overflow: auto;
+            width: 100%;
+            background: rgba(var(--color-foreground),.2);
+            height: 100%;
+        }
+
+        .landing-mat-modal__content {
+            background-color: rgb(var(--color-background));
+            overflow: auto;
+            height: 70%;
+            margin: 0 auto;
+            left: 50%;
+            transform: translate(-50%);
+            margin-top: 5rem;
+            width: 92%;
+            position: absolute;
+            top: 0;
+            padding: 0 1.5rem 1.5rem 3rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .landing-mat-modal[open] {
+            opacity: 1;
+            visibility: visible;
+            z-index: 101;
+        }
+
+        .product-popup-modal__toggle {
+            background-color: rgb(var(--color-background));
+            border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+            border-radius: 50%;
+            color: rgba(var(--color-foreground), 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: sticky;
+            padding: 1.2rem;
+            z-index: 2;
+            top: 1.5rem;
+            width: 4rem;
+            margin: 0 0 0 auto;
+        }
+
+        .landing-mat-modal__content-flag-wrapper {
+            cursor: pointer;
+            //margin: 0 0 1rem 0;
+            background-color: rgb(var(--color-background));
+        }
+
+        .landing-mat-modal__content-flag-wrapper .media {
+            background-color: unset;
+            max-width: 66%;
+        }
+
+        .landing-mat-modal__content-message {
+            margin: 1rem 0 1rem 0;
+        }
+
+        .landing-mat-modal__content-remain-link {
+            text-decoration: none;
+            cursor: pointer;
+            margin: 1rem 0 0 0;
+        }
+
+        @media (max-width: 500px) {
+            .landing-mat-modal__content .grid .grid__item {
+                max-width: 80%;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .landing-mat-modal__content {
+                transform:translate(-50%,35%);
+                height: 55%;
+            }
+        }
+
+        @media (min-width: 750px) {
+            .landing-mat-modal__content {
+                margin-top: 9.7rem;
+                max-width: 70%;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .landing-mat-modal__content {
+                max-width: 50%;
+            }
+        }
+
+        @keyframes myAnimation{
+            0%{
+                opacity: 1;
+            }
+            50%{
+                opacity: 0.5;
+            }
+            100%{
+                display: none;
+                opacity: 0;
+            }
+        }
+
+        .landing-mat-modal--removal{
+            animation-name: myAnimation;
+            animation-duration: 800ms;
+            animation-fill-mode: forwards;
+        }
+    {% endstyle %}
+
+    {% capture sibling_stores %}{% for block in section.blocks %}{% assign block_json = block.settings | json %}{{ block_json }}{% unless forloop.last %}~{% endunless %}{% endfor %}{% endcapture %}
+    {% assign sibling_stores_array = sibling_stores | split: "~" %}
+    {% assign default_img = section.blocks[0].settings.store_flag %}
+    {% assign width = default_img.width %}
+    {% assign height = default_img.height %}
+
+    <landing-mat id="PopupModal-{{ section.id }}" class="landing-mat-modal" {{ section.shopify_attributes }} data-store-country="{{ shop.address.country_code }}" data-store-domain="{{ shop.domain | split: "." | first }}" {% if section.settings.test_mode %}data-test-mode="true"{% endif %} >
+        <div id="SiblingStoreData" class="hidden">{% for store in sibling_stores_array %}<span>{{ store }}</span>{% endfor %}</div>
+        <div role="dialog" aria-label="landing mat" aria-modal="true" class="landing-mat-modal__content" tabindex="-1">
+            <button id="ModalClose-{{ section.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+            <div class="h1 landing-mat-modal__content-title"  ></div>
+            <div class="h3 landing-mat-modal__content-message"></div>
+            <div class="grid" style="justify-content: center;">
+                <div class="grid__item" >
+                    <div class="landing-mat-modal__content-flag-wrapper media media--adapt" style="padding-bottom: {{ 1 | divided_by: default_img.aspect_ratio | times: 100 }}%;">
+                        {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2){%- endcapture -%}
+                        {{ default_img | image_url: width: 360 | image_tag:
+                        loading: 'lazy',
+                        sizes: sizes,
+                        height: height,
+                        width: width,
+                        class: 'landing-mat-modal__content-flag'
+                        }}
+                    </div>
+                </div>
+            </div>
+            <a class="h3 landing-mat-modal__content-remain-link"></a>
+        </div>
+    </landing-mat>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Landing Mat",
+    "max_blocks": 16,
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_landing_mat",
+            "default": true,
+            "label": "Enable Landing Mat"
+        },
+        {
+            "type": "checkbox",
+            "id": "test_mode",
+            "default": false,
+            "label": "Enable Test Mode",
+            "info": "When enabled, the landing mat will appear on any refreshed page when you are vpn-ing from a country with a matching sibling store"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "store",
+            "name": "Sibling Store",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "country",
+                    "label": "Country Code"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Mat Title"
+                },
+                {
+                    "type": "text",
+                    "id": "message",
+                    "label": "Mat Message"
+                },
+                {
+                    "type": "url",
+                    "id": "store_url",
+                    "label": "Store URL"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "store_flag",
+                    "label": "Store Flag"
+                },
+                {
+                    "type": "text",
+                    "id": "remain_link",
+                    "label": "Remain Link"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
+

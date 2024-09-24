@@ -1,0 +1,123 @@
+{% comment %}
+	Renders 'ds-second-nav' in sections everywhere,
+	only appears on mobile to be rendered on homepage at top of page,
+	uses a navigation defined in the CMS
+{% endcomment %}
+
+{% style %}
+	#shopify-section-{{ section.id }} ul.second-nav__container {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow: auto;
+		padding: 1.5rem 0rem;
+		margin: 0 1rem;
+		gap: 1rem;
+	}
+
+	#shopify-section-{{ section.id }} ul.second-nav__container li:first-child {
+		margin-left: 0.1rem;
+	}
+
+	#shopify-section-{{ section.id }} ul.second-nav__container li:last-child {
+		margin-right: 0.1rem;
+	}
+
+	#shopify-section-{{ section.id }} .button--secondary {
+		--color-button: {{ section.settings.button_outline_color.red }}, {{ section.settings.button_outline_color.green }}, {{ section.settings.button_outline_color.blue }};
+		--color-button-text: {{ section.settings.button_outline_text_color.red }}, {{ section.settings.button_outline_text_color.green }}, {{ section.settings.button_outline_text_color.blue }};
+	}
+
+	#shopify-section-{{ section.id }} ul.second-nav__container li a {
+		font-size: 1.4rem;
+		padding: 10px 25px;
+		height: 40px;
+		white-space: nowrap;
+		letter-spacing: .8px;
+		min-width: unset;
+		min-height: unset;
+		line-height: 1;
+	}
+
+	:root:root  #shopify-section-{{ section.id }} {
+		--color-base-background-1: {{ section.settings.colors_background_1.red }}, {{ section.settings.colors_background_1.green }}, {{ section.settings.colors_background_1.blue }};
+		--gradient-base-background-1: {% if section.settings.gradient_background_1 != blank %}{{ section.settings.gradient_background_1 }}{% else %}{{ section.settings.colors_background_1 }}{% endif %};
+	}
+{% endstyle %}
+
+<div class="{% if section.settings.hide_desktop %} medium-hide large-up-hide{% endif %}{% if section.settings.page_width_desktop %} page-width-desktop{% endif %}">
+	<ul class="second-nav__container list-unstyled">
+		{% for link in section.settings.second_nav.links %}
+			<li>
+				<a href="{{ link.url }}" class="button button--secondary uppercase">{{ link.title }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+
+
+{% schema %}
+{
+	"name": "DS Second Nav",
+	"tag": "section",
+    "class": "section color-background-1 gradient",
+	"disabled_on": {
+        "groups": ["header", "footer"]
+    },
+	"settings": [
+		{
+            "type": "checkbox",
+            "id": "page_width_desktop",
+            "label": "Enable desktop page width",
+            "info": "The max width defined in theme settings/layout - page width",
+            "default": false
+        },
+		{
+            "type": "checkbox",
+            "id": "hide_desktop",
+            "label": "Hide on desktop",
+            "default": true
+        },
+		{
+			"type": "link_list",
+			"id": "second_nav",
+			"default": "main-menu",
+			"info": "Create a menu and link here",
+			"label": "t:sections.header.settings.menu.label"
+		},
+		{
+			"type": "color",
+			"id": "button_outline_color",
+			"default": "#000000",
+			"label": "Border"
+		},
+		{
+			"type": "color",
+			"id": "button_outline_text_color",
+			"default": "#000000",
+			"label": "Text"
+		},
+		{
+            "type": "header",
+            "content": "background"
+        },
+        {
+            "type": "color",
+            "id": "colors_background_1",
+            "default": "rgba(0,0,0,0)",
+            "label": "background"
+        },
+        {
+            "id": "gradient_background_1",
+            "type": "color_background",
+            "label": "gradient"
+        }
+	],
+	"presets": [
+		{
+			"name": "DS Second Nav"
+		}
+	]
+}
+{% endschema %}
+
+

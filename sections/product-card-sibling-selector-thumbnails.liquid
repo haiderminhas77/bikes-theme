@@ -1,0 +1,142 @@
+{% assign initProduct = product %}
+{% comment %} replaced with simpler sibling {% assign sibling_metaobject = shop.metaobjects['sibling_selector'][initProduct.metafields.sibling.reference.value].list %} {% endcomment %}
+{%- assign sibling_metaobject = product.metafields.sibling.reference.value.list -%}
+
+{% assign swatch_count = 0 %}
+{% for item in sibling_metaobject.value %}
+    {% assign swatchSize = swatchSize | plus: 1 %}
+    {% assign loopProductHandle =  item.handle | downcase %}
+    {% assign initProductHandle = initProduct.handle | downcase %}
+{% endfor %}
+<div class="product-sibling-swatch-container card__swatch--container {% if swatchSize < 2 %} no-mobile-overspill{% endif %}{% if swatchSize < 5 %} no-desktop-overspill{% endif %}">
+    {% for item in sibling_metaobject.value %}
+        {% assign siblingTitle = item.title %}
+        {% assign siblingSubtitle = item.metafields.product.subtitle %}
+        {% assign siblingLink = item.url %}
+        {% assign siblingVariantId = item.variants[0].id %}
+        {% assign siblingHandle = item.handle %}
+        {% assign siblingMainImage = item.featured_media | image_url: width: 533 %}
+        {% assign siblingSecondImage = item.media[1] | image_url: width: 533 %}
+        {% if settings.currency_code_enabled == true %}
+            {% if item.compare_at_price_min > 0 %}
+                {% assign siblingPrice = item.price | money_with_currency %}
+                {% assign siblingComparePrice = item.compare_at_price_min | money %}
+            {% else %}
+                {% assign siblingPrice = item.price | money_with_currency %}
+                {% assign siblingComparePrice = null %}
+            {% endif %}
+        {% else %}
+            {% assign siblingPrice = item.price | money %}
+            {% if item.compare_at_price_min > 0 %}
+                {% assign siblingComparePrice = item.compare_at_price_min | money %}
+            {% else %}
+                {% assign siblingComparePrice = null %}
+            {% endif %}
+        {% endif %}
+
+        {% assign siblingAvailability = item.available %}
+        {% assign initProductHandle = initProduct.handle | downcase %}
+        {% assign loopProductHandle = item.handle | downcase %}
+        {% if loopProductHandle == initProductHandle %}
+            <div class="sibling-swatch card__swatch color-swatch swatch-thumbnail
+                card__swatch--selected swatch--selected
+                {% if item.available != true %} sibling-selector__option--unavailable{% endif %}"
+                data-url="{{ siblingLink }}"
+                data-title="{{ siblingTitle }}"
+                data-subtitle="{{ siblingSubtitle }}"
+                data-main-image="{{ siblingMainImage }}"
+                data-second-image="{{ siblingSecondImage }}"
+                data-price="{{ siblingPrice }}"
+                data-compare-price="{{ siblingComparePrice }}"
+                data-availability="{{ siblingAvailability }}"
+                data-variant-id="{{ siblingVariantId }}"
+                data-handle="{{ siblingHandle }}">
+                {{ siblingMainImage | image_url: width: 45 | image_tag:
+                    loading: 'lazy'
+                }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% assign swatch_count = swatch_count | plus: 1 %}
+    {% for item in sibling_metaobject.value %}
+        {% assign siblingTitle = item.title %}
+        {% assign siblingSubtitle = item.metafields.product.subtitle %}
+        {% assign siblingLink = item.url %}
+        {% assign siblingVariantId = item.variants[0].id %}
+        {% assign siblingHandle = item.handle %}
+        {% assign siblingMainImage = item.featured_media | image_url: width: 500 %}
+        {% assign siblingSecondImage = item.media[1] | image_url: width: 500 %}
+        {% if settings.currency_code_enabled == true %}
+            {% if item.compare_at_price_min > 0 %}
+                {% assign siblingPrice = item.price | money_with_currency %}
+                {% assign siblingComparePrice = item.compare_at_price_min | money %}
+            {% else %}
+                {% assign siblingPrice = item.price | money_with_currency %}
+                {% assign siblingComparePrice = null %}
+            {% endif %}
+        {% else %}
+            {% assign siblingPrice = item.price | money %}
+            {% if item.compare_at_price_min > 0 %}
+                {% assign siblingComparePrice = item.compare_at_price_min | money %}
+            {% else %}
+                {% assign siblingComparePrice = null %}
+            {% endif %}
+        {% endif %}
+
+        {% assign siblingAvailability = item.available %}
+        {% assign initProductHandle = initProduct.handle | downcase %}
+        {% assign loopProductHandle = item.handle | downcase %}
+            {% unless loopProductHandle == initProductHandle %}
+                {% if item.available %}
+                    <div class="sibling-swatch card__swatch color-swatch swatch-thumbnail"
+                    data-url="{{ siblingLink }}"
+                    data-title="{{ siblingTitle }}"
+                    data-subtitle="{{ siblingSubtitle }}"
+                    data-main-image="{{ siblingMainImage }}"
+                    data-second-image="{{ siblingSecondImage }}"
+                    data-price="{{ siblingPrice }}"
+                    data-compare-price="{{ siblingComparePrice }}"
+                    data-variant-id="{{ siblingVariantId }}"
+                    data-handle="{{ siblingHandle }}"
+                    data-availability="{{ siblingAvailability }}">
+                    {{ siblingMainImage | image_url: width: 45 | image_tag:
+                        loading: 'lazy'
+                    }}
+                </div>
+                {% endif %}
+                {% if item.available == false %}
+                    <div class="sibling-swatch card__swatch color-swatch swatch-thumbnail sibling-selector__option--unavailable"
+                    data-url="{{ siblingLink }}"
+                    data-title="{{ siblingTitle }}"
+                    data-subtitle="{{ siblingSubtitle }}"
+                    data-main-image="{{ siblingMainImage }}"
+                    data-second-image="{{ siblingSecondImage }}"
+                    data-price="{{ siblingPrice }}"
+                    data-compare-price="{{ siblingComparePrice }}"
+                    data-variant-id="{{ siblingVariantId }}"
+                    data-handle="{{ siblingHandle }}"
+                    data-availability="{{ siblingAvailability }}">
+                    {{ siblingMainImage | image_url: width: 45 | image_tag:
+                        loading: 'lazy'
+                    }}</div>
+                {% endif %}
+                {% assign swatch_count = swatch_count | plus: 1 %}
+            {% endunless %}
+    {% endfor %}
+    {% assign mobile_hidden_swatch_count = swatchSize | minus: 2 %}
+    {% assign desktop_hidden_swatch_count = swatchSize | minus: 4 %}
+    {% if mobile_hidden_swatch_count > 0 %}
+        <div class="sibling-swatch card__swatch swatch-thumbnail card__swatch--see-more {% if swatchSize < 2%}narrow-hide{% endif %}{% if swatchSize <= 4 %}wide-hide{% endif %}">
+            {% if mobile_hidden_swatch_count > 0 %}
+                <span class="wide-hide">
+                    + {{ swatchSize | minus: 2 }}
+                </span>
+            {% endif %}
+            {% if desktop_hidden_swatch_count > 0 %}
+                <span class="narrow-hide">
+                    + {{ swatchSize | minus: 4 }}
+                </span>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

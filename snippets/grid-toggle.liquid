@@ -1,0 +1,64 @@
+{% comment %}
+    Renders grid toggle within facets bar
+    
+    Usage:
+    {% render 'grid-toggle' %} in facets.liquid
+
+    Accepts:
+        display: {string} - "side_bar", "top_bar", "collapsed", "mobile"
+{% endcomment %}
+
+<style>
+    .grid__toggle-container {
+        display: flex;
+        {% if display == "top_bar" %}
+            grid-column-start: 4;
+        {% endif %}
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .grid__toggle-button {
+        height: 25px;
+        width: 25px;
+    }
+
+    .grid__toggle-button svg {
+        pointer-events: none;
+        color: rgb(var(--color-base-background-3));
+    }
+
+    .grid__toggle-button--active svg {
+        color: rgb(var(--color-base-text));
+    }
+
+    .grid__panel {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 749px) {
+        .grid__panel {
+            grid-area: grid-toggle;
+            margin-top: 1.5rem;
+        }
+    }
+
+    .grid__panel .product-count {
+        padding-right: 10px;
+        min-width: 15rem;
+    }
+</style>
+
+<grid-toggle class="grid__toggle-container {% if display == "mobile" %}large-up-hide medium-hide{% else %}small-hide {% endif %}"
+    data-mobile-products="{{ section.settings.products_per_row_mobile }}"
+    data-tablet-products="{{ section.settings.products_per_row_tablet }}"
+    data-desktop-products="{{ section.settings.products_per_row_desktop }}">
+    <span class="grid__toggle-button" data-action="decrease">{% render 'icon-grid-one', media_class: 'medium-hide large-up-hide' %}{% render 'icon-grid-two', media_class: 'small-hide large-up-hide' %}{% render 'icon-grid-three', media_class: 'small-hide medium-hide' %}</span>
+    <span class="grid__toggle-button" data-action="increase">{% render 'icon-grid-two', media_class: 'medium-hide large-up-hide' %}{% render 'icon-grid-three', media_class: 'small-hide large-up-hide' %}{% render 'icon-grid-four', media_class: 'small-hide medium-hide' %}</span>
+</grid-toggle>
+
+
+

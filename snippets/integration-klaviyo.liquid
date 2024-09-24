@@ -1,0 +1,22 @@
+{% comment %}
+	Integration snippet for OneTrust Cookie Banner verification tags - pulls unique ID from relevant theme setting
+
+	Accepts:
+	-
+
+	Usage:
+	{% render 'integration-klaviyo' %} within layout/theme.liquid if required
+{% endcomment %}
+{%- if settings.enable_klaviyo_bis -%}
+    <script type="text/javascript">
+        var __klKey = __klKey || "{{ settings.klaviyo_store_code }}";
+        (function () {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = '//static.klaviyo.com/forms/js/client.js';
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        })();
+    </script>
+{%- endif -%}

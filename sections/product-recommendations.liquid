@@ -1,0 +1,282 @@
+{% comment %}
+Section rendering product-recommendations
+Usage:
+"product-recommendations": {
+"type": "product-recommendations"
+}, in templates/product.json,
+{% endcomment %}
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-badges.css' | asset_url | stylesheet_tag }}
+{{ 'component-variant-radios.css' | asset_url | stylesheet_tag }}
+
+<noscript>{{ 'component-slider.css' | asset_url | stylesheet_tag }}</noscript>
+<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'section-product-recommendations.css' | asset_url | stylesheet_tag }}</noscript>
+<link rel="stylesheet" href="{{ 'section-product-recommendations.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<link rel="stylesheet" href="{{ 'template-collection.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{%- liquid
+	assign show_slider_on_mobile = false
+	if section.settings.enable_mobile_slider
+		assign show_slider_on_mobile = true
+	endif
+
+	assign show_slider_on_desktop = false
+	if section.settings.enable_desktop_slider
+		assign show_slider_on_desktop = true
+	endif
+-%}
+
+{% style %}
+	#shopify-section-{{ section.id }} .title-wrapper-with-link {
+		align-items: center;
+		display: flex;
+	}
+
+	#shopify-section-{{ section.id }} .title {
+		margin-top: 0;
+		color: {{ section.settings.title_color }};
+		justify-self: flex-start;
+	}
+	.section-{{ section.id }}-padding {
+		padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+		padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+	}
+
+	@media screen and (min-width: 750px) {
+		.section-{{ section.id }}-padding {
+			padding-top: {{ section.settings.padding_top }}px;
+			padding-bottom: {{ section.settings.padding_bottom }}px;
+		}
+	}
+
+	@media screen and (min-width: 750px) {
+		#shopify-section-{{ section.id }} .progress-slider {
+			display: none;
+		}
+	}
+{% endstyle %}
+
+<product-recommendations class="product-recommendations page-width" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
+	{% if recommendations.performed and recommendations.products_count > 0 %}
+		<slider-component class="slider-mobile-gutter{% if show_slider_on_mobile == false %} page-width-mobile page-width-tablet{% endif %}{% if show_slider_on_desktop == false and section.settings.full_width == false %} page-width-desktop{% endif %}{% if show_slider_on_desktop %} collection__slider-desktop{% endif %}">
+			<div class="title-wrapper-with-link collection__title{% if section.settings.heading == blank %}no-title{% endif %}{% if show_slider_on_mobile %} title-wrapper--self-padded-tablet-down{% endif %}">
+				{% unless section.settings.heading == blank %}<h2 class="title{% if section.settings.title_uppercase %} uppercase{% endif %}">{{ section.settings.heading | escape }}</h2>{% endunless %}
+			</div>
+
+			<ul id="Slider-{{ section.id }}" class="grid grid--2-col product-grid{% if recommendations.products_count > 3 %} grid--4-col-desktop {% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %} {% if show_slider_on_mobile or show_slider_on_desktop %} slider {%endif%}{% if show_slider_on_desktop %} slider--desktop{% endif %}{% if show_slider_on_mobile %} grid--1-col-tablet-down  slider--tablet grid--peek{% endif %}" role="list">
+				{% for recommendation in recommendations.products %}
+					<li id="Slide-{{ section.id }}-{{ forloop.index }}" class="grid__item {% if show_slider_on_mobile or show_slider_on_desktop %} slider__slide{% endif %}">
+						{% render 'product-card', product_card_product: product,
+							product_card_index: forloop.index0,
+							show_badges: section.settings.show_badges,
+							media_size: 'adapt',
+							crop_product_title: section.settings.crop_product_title,
+							position: position,
+							show_badges: section.settings.show_badges,
+							lazy_load: lazy_load,
+							show_quick_view: true,
+							quick_view_icon: true
+						%}
+					</li>
+				{% endfor %}
+			</ul>
+			{%- if show_slider_on_mobile -%}
+				<div class="title-wrapper-with-link{% if show_slider_on_mobile %} title-wrapper--self-padded-tablet-down{% endif %}">
+					{% render 'progress-slider-bar', item_count: recommendations.products_count, slider_step_count: section.settings.slider_step_count %}
+				</div>
+			{%- endif -%}
+		</slider-component>
+	{% endif %}
+</product-recommendations>
+
+{% javascript %}
+	class ProductRecommendations extends HTMLElement {
+		constructor() {
+			super();
+
+			const handleIntersection = (entries, observer) => {
+				if (!entries[0].isIntersecting) return;
+				observer.unobserve(this);
+
+				fetch(this.dataset.url)
+					.then(response => response.text())
+					.then(text => {
+						const html = document.createElement('div');
+						html.innerHTML = text;
+						const recommendations = html.querySelector('product-recommendations');
+						if (recommendations && recommendations.innerHTML.trim().length) {
+							this.innerHTML = recommendations.innerHTML;
+						}
+					})
+					.catch(e => {
+						console.error(e);
+					});
+			}
+
+			new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
+		}
+	}
+
+	customElements.define('product-recommendations', ProductRecommendations);
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "t:sections.product-recommendations.name",
+	"tag": "section",
+	"class": "spaced-section",
+	"settings": [
+		{
+			"type": "paragraph",
+			"content": "t:sections.product-recommendations.settings.paragraph__1.content"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"default": "You may also like",
+			"label": "t:sections.product-recommendations.settings.heading.label"
+		},
+		{
+            "type": "checkbox",
+            "id": "title_uppercase",
+            "default": true,
+            "label": "Uppercase"
+        },
+		{
+            "type": "color",
+            "id": "title_color",
+            "default": "#000000",
+            "label": "Heading"
+        },
+		{
+            "type": "checkbox",
+            "id": "enable_desktop_slider",
+            "label": "t:sections.featured-collection.settings.enable_desktop_slider.label",
+            "default": false
+        },
+		{
+            "type": "range",
+            "id": "slider_step_count",
+            "label": "Number of slides per button click",
+            "min": 1,
+            "max": 3,
+            "default": 1
+        },
+		{
+            "type": "checkbox",
+            "id": "enable_mobile_slider",
+            "label": "t:sections.featured-collection.settings.enable_mobile_slider.label",
+            "default": true
+        },
+		{
+			"type": "header",
+			"content": "t:sections.main-collection-product-grid.settings.header__3.content"
+		},
+		{
+			"type": "color",
+			"id": "quick_add_button_background_color",
+			"default": "#000000",
+			"label": "Quick add button background",
+			"info": "Functional in quick add mode only"
+		},
+		{
+			"type": "select",
+			"id": "image_ratio",
+			"options": [
+				{
+					"value": "adapt",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+				},
+				{
+					"value": "portrait",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+				},
+				{
+					"value": "square",
+					"label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+				}
+			],
+			"default": "adapt",
+			"label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_secondary_image",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "add_image_padding",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.add_image_padding.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_image_outline",
+			"default": true,
+			"label": "t:sections.main-collection-product-grid.settings.show_image_outline.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_vendor",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_badges",
+			"label": "t:settings_schema.badges.settings.enable_badges.label",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "crop_product_title",
+			"label": "Crop product title to 1 line",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "transparent_background",
+			"default": true,
+			"label": "Enable transparent background"
+		},
+		{
+			"type": "number",
+			"id": "lazy_load_threshold",
+			"default": 9,
+			"label": "Lazy Load Threshold",
+			"info": "Index at which lazy loading applies - NB this threshold applies to both desktop and mobile"
+		},
+		{
+            "type": "header",
+            "content": "t:sections.all.padding.section_padding_heading"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_top",
+            "default": 36
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_bottom",
+            "default": 36
+        }
+	]
+}
+{% endschema %}

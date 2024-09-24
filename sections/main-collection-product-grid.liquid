@@ -1,0 +1,1311 @@
+{% comment %}
+'Main section' rendering collection grid and filters/sortby on collection page
+Usage:
+"main": {
+"type": "main-collection-product-grid"
+} Listed in templates/collection.json
+{% endcomment %}
+
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-variant-radios.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-badges.css' | asset_url | stylesheet_tag }}
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+{{ 'component-lifestyle-tiles.css' | asset_url | stylesheet_tag }}
+{{ 'section-multicolumn.css' | asset_url | stylesheet_tag }}
+{% capture size_label %}{{ 'products.product.size' | t }}{% endcapture %}
+
+{% if section.settings.pagination_mode == 'infinite_scroll' %}
+	<style>
+		infinite-scroll {
+			display: block;
+		}
+		@media screen and (max-width: 998px){
+			infinite-scroll.collection.page-width {
+				max-width: 100vw;
+			}
+		}
+		infinite-scroll #pagination svg {
+			transform: translate(-50%, -50%);
+			position: absolute;
+			height: 40px;
+			width: 40px;
+			left: 50%;
+		}
+	</style>
+	<script src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+
+{% comment %}
+	Hidden Card Logic for Out of Stock Filters follows, while this logic doesn't dictate which cards to hide, it is required to pass an accurate product count to facets.liquid
+{% endcomment %}
+{% assign shown_cards = collection.products.size %}
+{%- for product in collection.products -%}
+	{% comment %}
+		Begin hidden card logic, where if a product card's lead sibling has the filtered size variant out of stock, the entire card isn't rendered
+	{% endcomment %}
+	{% for option in product.options_with_values %}
+		{% if option.name == size_label %}
+			{% comment %} product card has size as an option {% endcomment %}
+			{% for value in option.values %}
+				{% assign optionValue = value | downcase %}
+				{% for filter in collection.filters %}
+					{% comment %}collection is being filtered {% endcomment %}
+					{% if filter.label == size_label %}
+						{% for active_value in filter.active_values %}
+							{% assign filterValue = active_value.value | downcase %}
+							{% if filterValue == optionValue %}
+								{% comment %}Product Card Features Size we've filtered by {% endcomment %}
+								{% for variant in product.variants %}
+									{% assign variantSize = variant.option2 | downcase %}
+									{% if variantSize == optionValue %}
+										{% if variant.available == false %}
+											{% assign shown_cards = shown_cards | minus: 1 %}
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+	{% comment %}
+		End hidden card logic
+	{% endcomment %}
+{% endfor %}
+
+{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+	<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+	{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+		{% render 'facets', results: collection, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting %}
+	{%- endif -%}
+{%- endif -%}
+
+{% if section.settings.pagination_mode == 'fixed_limit_pagination' or section.settings.pagination_mode == 'infinite_scroll' %}
+	{%- assign limit = section.settings.products_per_page -%}
+{% else %}
+	{%- assign limit = collection.all_products_count -%}
+{% endif %}
+<div id="ProductGridContainer">
+	{%- paginate collection.products by limit -%}
+		{%- if collection.products.size == 0 -%}
+			{% comment %} Empty collection banner {% endcomment %}
+			<div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+				<div class="loading-overlay gradient"></div>
+				<div class="title-wrapper center">
+					<h2 class="title title--primary">
+						{{ 'sections.collection_template.empty' | t }}<br>
+						{{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: "underlined-link link" }}
+					</h2>
+				</div>
+			</div>
+		{%- else -%}
+
+			<{% if section.settings.pagination_mode == 'infinite_scroll' and collection.all_products_count > section.settings.products_per_page %}infinite-scroll data-collection-total-products="{{collection.all_products_count}}"{% else %}div{% endif %} class="collection page-width">
+				<div class="loading-overlay gradient"></div>
+
+				<ul id="product-grid" data-id="{{ section.id }}" data-collection-handle="{{ collection.handle }}" class="
+					grid grid--{{ section.settings.products_per_row_mobile }}-col product-grid grid--{{ section.settings.products_per_row_tablet }}-col-tablet grid--{{ section.settings.products_per_row_desktop }}-col-desktop">
+					{%- for product in collection.products -%}
+						{% assign hide_card = false %}
+						{% comment %}
+							Begin hidden card logic, where if a product card's lead sibling has the filtered size variant out of stock, the entire card isn't rendered
+						{% endcomment %}
+						{% for option in product.options_with_values %}
+							{% if option.name == size_label %}
+								{% comment %} product card has size as an option {% endcomment %}
+								{% for value in option.values %}
+									{% assign optionValue = value | downcase %}
+									{% for filter in collection.filters %}
+										{% comment %}collection is being filtered {% endcomment %}
+										{% if filter.label == size_label %}
+											{% for active_value in filter.active_values %}
+												{% assign filterValue = active_value.value | downcase %}
+												{% if filterValue == optionValue %}
+													{% comment %}Product Card Features Size we've filtered by {% endcomment %}
+													{% for variant in product.variants %}
+														{% assign variantSize = variant.option2 | downcase %}
+														{% if variantSize == optionValue %}
+															{% if variant.available == false %}
+																{% assign hide_card = true %}
+															{% endif %}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+										{% endif %}
+									{% endfor %}
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+						{% comment %}
+							End hidden card logic
+						{% endcomment %}
+						{% if section.settings.enable_lifestyle_tiles and collection.metafields.lifestyle_tiles.size and paginate.current_page == 1 %}
+							{%- assign grid_loop_index = forloop.index -%}
+							{% for block in section.blocks %}
+
+								{% if forloop.first %}
+									{% assign tile_index = block.settings.tile_index | plus: 0 %}
+								{% else %}
+									{% assign tile_index = block.settings.tile_index | plus: 0 | minus: forloop.index0 %}
+								{% endif %}
+
+								{% if tile_index == grid_loop_index %}
+									{% if tile_index >= section.settings.lazy_load_threshold %}{% assign lazy_load = true %}{% endif %}
+										{% render 'lifestyle-tile',
+											grid_loop_index: grid_loop_index;
+											tile_image: block.settings.tile_image,
+											tile_link_new_tab: block.settings.tile_link_new_tab,
+											tile_card_background: block.settings.tile_card_background,
+											tile_card_background_gradient: block.settings.tile_card_background_gradient,
+											tile_card_background_padding: block.settings.tile_card_background_padding,
+											tile_overlay: block.settings.tile_overlay,
+											tile_overlay_gradient: block.settings.tile_overlay_gradient,
+											tile_image_overlay_opacity: block.settings.tile_image_overlay_opacity,
+											tile_show_placeholder: block.settings.tile_show_placeholder,
+											tile_mob_below_overlay: block.settings.tile_mob_below_overlay,
+											tile_mob_below_overlay_gradient: block.settings.tile_mob_below_overlay_gradient,
+											tile_mob_below_image_overlay_opacity: block.settings.tile_mob_below_image_overlay_opacity,
+
+											tile_link: block.settings.tile_link,
+											tile_index: block.settings.tile_index,
+											lazy_load: lazy_load,
+
+											tile_show_text_below: block.settings.tile_show_text_below,
+											tile_show_text_below_desktop: block.settings.tile_show_text_below_desktop,
+											tile_banner_background: block.settings.tile_banner_background,
+											tile_banner_background_gradient: block.settings.tile_banner_background_gradient,
+											tile_desktop_content_position: block.settings.tile_desktop_content_position,
+											tile_desktop_content_alignment: block.settings.tile_desktop_content_alignment,
+											tile_width: block.settings.tile_width,
+											tile_desktop_content_position_top: block.settings.tile_desktop_content_position_top,
+											tile_desktop_content_position_bottom: block.settings.tile_desktop_content_position_bottom,
+											tile_desktop_content_position_left: block.settings.tile_desktop_content_position_left,
+											tile_desktop_content_position_right: block.settings.tile_desktop_content_position_right,
+
+											tile_banner__box_padding_top: block.settings.tile_banner__box_padding_top,
+											tile_banner__box_padding_bottom: block.settings.tile_banner__box_padding_bottom,
+											tile_banner__box_padding_left: block.settings.tile_banner__box_padding_left,
+											tile_banner__box_padding_right: block.settings.tile_banner__box_padding_right,
+
+											tile_mobile_content_position: block.settings.tile_mobile_content_position,
+											tile_mobile_content_alignment: block.settings.tile_mobile_content_alignment,
+											tile_width_mob: block.settings.tile_width_mob,
+											tile_mobile_content_position_top: tile_mobile_content_position_top,
+											tile_mobile_content_position_bottom: tile_mobile_content_position_bottom,
+											tile_mobile_content_position_left: tile_mobile_content_position_left,
+											tile_mobile_content_position_right: tile_mobile_content_position_right,
+											tile_banner__box_padding_bottom_mob: block.settings.tile_banner__box_padding_bottom_mob,
+											tile_banner__box_padding_left_mob: block.settings.tile_banner__box_padding_left_mob,
+											tile_banner__box_padding_right_mob: block.settings.tile_banner__box_padding_right_mob,
+
+											tile_caption: block.settings.tile_caption,
+											tile_caption_uppercase: block.settings.tile_caption_uppercase,
+											tile_caption_color: block.settings.tile_caption_color,
+											tile_caption_below_color: block.settings.tile_caption_below_color,
+											tile_caption_size_custom: block.settings.tile_caption_size_custom,
+											tile_caption_size_mobile_custom: block.settings.tile_caption_size_custom,
+											tile_caption_padding_top: block.settings.tile_caption_padding_top,
+											tile_caption_padding_bottom: block.settings.tile_caption_padding_bottom,
+											tile_caption_padding_top_mobile: block.settings.tile_caption_padding_top_mobile,
+											tile_caption_padding_bottom_mobile: block.settings.tile_caption_padding_bottom_mobile,
+
+											tile_heading: block.settings.tile_heading,
+											tile_heading_uppercase: block.settings.tile_heading_uppercase,
+											tile_heading_color: block.settings.tile_heading_color,
+											tile_heading_below_color: block.settings.tile_heading_below_color,
+											tile_heading_size_custom: block.settings.tile_heading_size_custom,
+											tile_heading_size_mobile_custom: block.settings.tile_heading_size_mobile_custom,
+											tile_heading_padding_top: block.settings.tile_heading_padding_top,
+											tile_heading_padding_bottom: block.settings.tile_heading_padding_bottom,
+											tile_heading_padding_top_mobile: block.settings.tile_heading_padding_top_mobile,
+											tile_heading_padding_bottom_mobile: block.settings.tile_heading_padding_bottom_mobile,
+
+											tile_text: block.settings.tile_text,
+											tile_text_uppercase: block.settings.tile_text_uppercase,
+											tile_text_color: block.settings.tile_text_color,
+											tile_text_link_color: block.settings.tile_text_link_color,
+											tile_text_below_color: block.settings.tile_text_below_color,
+											tile_text_link_below_color: block.settings.tile_text_link_below_color,
+											tile_text_size_custom: block.settings.tile_text_size_custom,
+											tile_text_size_mobile_custom: block.settings.tile_text_size_mobile_custom,
+											tile_text_padding_top: block.settings.tile_text_padding_top,
+											tile_text_padding_bottom: block.settings.tile_text_padding_bottom,
+											tile_text_padding_top_mobile: block.settings.tile_text_padding_top_mobile,
+											tile_text_padding_bottom_mobile: block.settings.tile_text_padding_bottom_mobile,
+
+											tile_button: block.settings.tile_button,
+											tile_button_size: block.settings.tile_button_size,
+											tile_button_size_mobile: block.settings.tile_button_size_mobile,
+											tile_button_uppercase_1: block.settings.tile_button_uppercase_1,
+											tile_button_style_1: block.settings.tile_button_style_1,
+											tile_button_wide_1: block.settings.tile_button_wide_1,
+											tile_button_color: block.settings.tile_button_color,
+											tile_button_text_color: block.settings.tile_button_text_color,
+											tile_button_outline_color: block.settings.tile_button_outline_color,
+											tile_button_below_color: block.settings.tile_button_below_color,
+											tile_button_below_text_color: block.settings.tile_button_below_text_color,
+											tile_button_below_outline_color: block.settings.tile_button_below_outline_color
+										%}
+								{% endif %}
+							{% endfor %}
+
+						{% endif %}
+
+						{% if hide_card == false %}
+						<li class="grid__item" data-position="{{ paginate.current_page | minus: 1 | times: limit | plus: forloop.index }}" >
+							{% assign position = paginate.current_page | minus: 1 | times: limit | plus: forloop.index %}
+
+							{% if grid_loop_index >= section.settings.lazy_load_threshold %}{% assign lazy_load = true %}{% endif %}
+								{% render 'product-card',
+									product_card_product: product,
+									media_size: 'adapt',
+									show_secondary_image: section.settings.show_secondary_image,
+                                    transparent_background: section.settings.transparent_background,
+									add_image_padding: false,
+									show_vendor: false,
+									show_image_outline: false,
+									product_card_index: forloop.index0,
+									show_badges: section.settings.show_badges,
+									crop_product_title: section.settings.crop_product_title,
+									position: position,
+									lazy_load: lazy_load,
+                                    quick_view_icon: true,
+									show_quick_view: section.settings.show_quick_view
+								%}
+							
+						</li>
+						{% else %}
+							{% assign grid_loop_index = grid_loop_index | minus: 1 %}
+						{% endif %}
+					{%- endfor -%}
+				</ul>
+
+				{%- if paginate.pages > 1 -%}
+					{% render 'pagination', paginate: paginate, mode: section.settings.pagination_mode, anchor: '', i_scroll_active: true %}
+				{%- endif -%}
+			</{% if section.settings.pagination_mode == 'infinite_scroll' %}infinite-scroll{% else %}div{% endif %}>
+		{%- endif -%}
+	{%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+	"name": "t:sections.main-collection-product-grid.name",
+	"class": "spaced-section collection-grid-section",
+	"settings": [
+		{
+			"type": "select",
+			"id": "pagination_mode",
+			"options": [
+				{
+					"value": "fixed_limit_pagination",
+					"label": "Fixed Limit Pagination"
+				},
+				{
+					"value": "infinite_scroll",
+					"label": "Infinite Scroll"
+				},
+				{
+					"value": "single_page_collection",
+					"label": "Single Page Collection"
+				}
+			],
+			"default": "infinite_scroll",
+			"label": "Pagination Mode"
+		},
+		{
+			"type": "range",
+			"id": "products_per_page",
+			"min": 8,
+			"max": 40,
+			"step": 4,
+			"default": 16,
+			"label": "t:sections.main-collection-product-grid.settings.products_per_page.label",
+			"info": "Products Per Page will be applied when Pagination Mode is set to Fixed Limit Pagination or Infinite Scroll"
+		},
+		{
+			"type": "select",
+			"id": "products_per_row_desktop",
+			"options": [
+				{
+					"value": "3",
+					"label": "Three"
+				},
+				{
+					"value": "4",
+					"label": "Four"
+				}
+			],
+			"default": "4",
+			"label": "Products Per Row Desktop"
+		},
+		{
+		"type": "select",
+			"id": "products_per_row_tablet",
+			"options": [
+				{
+					"value": "2",
+					"label": "Two"
+				},
+				{
+					"value": "3",
+					"label": "Three"
+				}
+			],
+			"default": "3",
+			"label": "Products Per Row Tablet"
+		},
+		{
+		"type": "select",
+			"id": "products_per_row_mobile",
+			"options": [
+				{
+					"value": "1",
+					"label": "One"
+				},
+				{
+					"value": "2",
+					"label": "Two"
+				}
+			],
+			"default": "2",
+			"label": "Products Per Row Mobile"
+		},
+		{
+			"type": "checkbox" ,
+			"id": "enable_lifestyle_tiles" ,
+			"default": true,
+			"label": "Enable Lifestyle Tiles" ,
+			"info": "When enabled, this setting will show lifestyle tiles on all collections that have the relevant metafields imported"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_secondary_image",
+			"default": false,
+			"label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+		},
+		{
+			"type": "header",
+			"content": "t:sections.main-collection-product-grid.settings.header__3.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_quick_view",
+			"default": false,
+			"label": "Enable quick view modal"
+		},
+        {
+			"type": "checkbox",
+			"id": "transparent_background",
+			"default": false,
+			"label": "Enable transparent background"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_badges",
+			"label": "Show variant level product badges",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "crop_product_title",
+			"label": "Crop product title to 1 line",
+			"default": false
+		},
+		{
+			"type": "number",
+			"id": "lazy_load_threshold",
+			"default": 9,
+			"label": "Lazy Load Threshold",
+			"info": "Index at which lazy loading applies - NB this threshold applies to both desktop and mobile"
+		},
+		{
+			"type": "header",
+			"content": "t:sections.main-collection-product-grid.settings.header__1.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_filtering",
+			"default": true,
+			"label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+			"info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_sorting",
+			"default": true,
+			"label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+		}
+	],
+	"blocks": [
+		{
+			"type": "lifestyle_tile",
+			"name": "Lifestyle Tile",
+			"limit": 10,
+			"settings": [				
+				{
+					"type": "text",
+					"id": "tile_index",
+					"label": "Tile Index"
+				},
+				{
+					"type": "image_picker",
+					"id": "tile_image",
+					"label": "Tile Image"
+				},
+				{
+					"type": "url",
+					"id": "tile_link",
+					"label": "Tile Link"
+				},
+				{
+                    "type": "checkbox",
+                    "id": "tile_link_new_tab",
+                    "default": false,
+                    "label": "Open link in new tab"
+                },
+				{
+                    "type": "color",
+                    "id": "tile_overlay",
+                    "default": "#000",
+                    "label": "Background"
+                },
+                {
+                    "id": "tile_overlay_gradient",
+                    "type": "color_background",
+                    "label": "Background gradient"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_image_overlay_opacity",
+                    "min": 0,
+                    "max": 100,
+                    "step": 10,
+                    "unit": "%",
+                    "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+                    "default": 0
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_show_placeholder",
+                    "default": true,
+                    "label": "Show placeholder"
+                },
+				{
+                    "type": "header",
+                    "content": "Promo background"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_card_background",
+                    "default": "rgba(0,0,0,0)",
+                    "label": "Background"
+                },
+                {
+                    "id": "tile_card_background_gradient",
+                    "type": "color_background",
+                    "label": "Background gradient"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_card_background_padding",
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Padding",
+                    "default": 0
+                },
+                {
+                    "type": "header",
+                    "content": "Text below"
+                },
+				{
+					"type": "checkbox",
+					"id": "tile_show_text_below",
+					"default": true,
+					"label": "Show text below [mob]"
+				},
+				{
+					"type": "checkbox",
+					"id": "tile_show_text_below_desktop",
+					"default": false,
+					"label": "show text below [desktop]"
+				},
+                {
+                    "type": "color",
+                    "id": "tile_mob_below_overlay",
+                    "default": "rgba(0,0,0,0)",
+                    "label": "Background"
+                },
+                {
+                    "id": "tile_mob_below_overlay_gradient",
+                    "type": "color_background",
+                    "label": "Background gradient"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_mob_below_image_overlay_opacity",
+                    "min": 0,
+                    "max": 100,
+                    "step": 10,
+                    "unit": "%",
+                    "label": "Background opacity",
+                    "default": 100
+                },
+				{
+                    "type": "header",
+                    "content": "Text banner background"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_banner_background",
+                    "default": "rgba(0,0,0,0)",
+                    "label": "Background"
+                },
+                {
+                    "id": "tile_banner_background_gradient",
+                    "type": "color_background",
+                    "label": "Background gradient"
+                },
+				{
+                    "type": "header",
+                    "content": "Desktop layout"
+                },
+                {
+                    "type": "select",
+                    "id": "tile_desktop_content_position",
+                    "options": [
+                        {
+                            "value": "top-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__1.label"
+                        },
+                        {
+                            "value": "top-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__2.label"
+                        },
+                        {
+                            "value": "top-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__3.label"
+                        },
+                        {
+                            "value": "middle-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__4.label"
+                        },
+                        {
+                            "value": "middle-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__5.label"
+                        },
+                        {
+                            "value": "middle-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__6.label"
+                        },
+                        {
+                            "value": "bottom-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__7.label"
+                        },
+                        {
+                            "value": "bottom-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__8.label"
+                        },
+                        {
+                            "value": "bottom-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__9.label"
+                        }
+                    ],
+                    "default": "middle-left",
+                    "label": "t:sections.image-banner.settings.desktop_content_position.label"
+                },
+                {
+                    "type": "select",
+                    "id": "tile_desktop_content_alignment",
+                    "options": [
+                        {
+                            "value": "left",
+                            "label": "t:sections.image-banner.settings.desktop_content_alignment.options__1.label"
+                        },
+                        {
+                            "value": "center",
+                            "label": "t:sections.image-banner.settings.desktop_content_alignment.options__2.label"
+                        },
+                        {
+                            "value": "right",
+                            "label": "t:sections.image-banner.settings.desktop_content_alignment.options__3.label"
+                        }
+                    ],
+                    "default": "left",
+                    "label": "t:sections.image-banner.settings.desktop_content_alignment.label"
+                },
+				{
+                    "type": "range",
+                    "id": "tile_width",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "label": "Max width of text",
+                    "default": 100
+                },
+				{
+                    "type": "header",
+                    "content": "desktop content position custom"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_desktop_content_position_top",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Top",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_desktop_content_position_bottom",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Bottom",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_desktop_content_position_left",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Left",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_desktop_content_position_right",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Right",
+                    "default": 0
+                },
+				{
+                    "type": "header",
+                    "content": "Desktop text box padding",
+                    "info": "padding around the text"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_top",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Top",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_bottom",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Bottom",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_left",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Left",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_right",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Right",
+                    "default": 10
+                },
+				{
+                    "type": "select",
+                    "id": "tile_mobile_content_position",
+                    "options": [
+                        {
+                            "value": "top-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__1.label"
+                        },
+                        {
+                            "value": "top-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__2.label"
+                        },
+                        {
+                            "value": "top-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__3.label"
+                        },
+                        {
+                            "value": "middle-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__4.label"
+                        },
+                        {
+                            "value": "middle-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__5.label"
+                        },
+                        {
+                            "value": "middle-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__6.label"
+                        },
+                        {
+                            "value": "bottom-left",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__7.label"
+                        },
+                        {
+                            "value": "bottom-center",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__8.label"
+                        },
+                        {
+                            "value": "bottom-right",
+                            "label": "t:sections.image-banner.settings.desktop_content_position.options__9.label"
+                        }
+                    ],
+                    "default": "middle-left",
+                    "label": "Mobile content position"
+                },
+                {
+                    "type": "select",
+                    "id": "tile_mobile_content_alignment",
+                    "options": [
+                        {
+                            "value": "left",
+                            "label": "t:sections.image-banner.settings.mobile_content_alignment.options__1.label"
+                        },
+                        {
+                            "value": "center",
+                            "label": "t:sections.image-banner.settings.mobile_content_alignment.options__2.label"
+                        },
+                        {
+                            "value": "right",
+                            "label": "t:sections.image-banner.settings.mobile_content_alignment.options__3.label"
+                        }
+                    ],
+                    "default": "left",
+                    "label": "t:sections.image-banner.settings.mobile_content_alignment.label"
+                },
+				{
+                    "type": "range",
+                    "id": "tile_width_mob",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "label": "Max width of text on mob",
+                    "default": 100
+                },
+				{
+                    "type": "header",
+                    "content": "Mobile content position custom"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_mobile_content_position_top",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Top",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_mobile_content_position_bottom",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Bottom",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_mobile_content_position_left",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Left",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_mobile_content_position_right",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "label": "Right",
+                    "default": 0
+                },
+				{
+                    "type": "header",
+                    "content": "mobile text box padding",
+                    "info": "padding around the text"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_top_mob",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.box_padding_top",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_bottom_mob",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.box_padding_bottom",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_left_mob",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.box_padding_left",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "tile_banner__box_padding_right_mob",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.box_padding_right",
+                    "default": 10
+                },
+				{
+                    "type": "header",
+                    "content": "Caption"
+                },
+                {
+                    "type": "text",
+                    "id": "tile_caption",
+                    "label": "Caption"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_caption_uppercase",
+                    "default": true,
+                    "label": "Uppercase"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_caption_color",
+                    "default": "#FFFFFF",
+                    "label": "caption"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_caption_below_color",
+                    "default": "#000000",
+                    "label": "caption [when text below]"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_size_custom",
+                    "min": 6,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size [desk]",
+                    "default": 16
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_size_mobile_custom",
+                    "min": 6,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size [mob]",
+                    "default": 16
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_padding_top",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_padding_bottom",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom",
+                    "default": 20
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_padding_top_mobile",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top_mobile",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_caption_padding_bottom_mobile",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom_mobile",
+                    "default": 20
+                },
+				{
+                    "type": "header",
+                    "content": "Heading"
+                },
+                {
+                    "type": "text",
+                    "id": "tile_heading",
+                    "default": "Image banner",
+                    "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_heading_uppercase",
+                    "default": true,
+                    "label": "Uppercase"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_heading_color",
+                    "default": "#FFFFFF",
+                    "label": "heading"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_heading_below_color",
+                    "default": "#000",
+                    "label": "heading [when text below]"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_size_custom",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size desk",
+                    "default": 36
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_size_mobile_custom",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size mob",
+                    "default": 28
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_padding_top",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_padding_bottom",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom",
+                    "default": 6
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_padding_top_mobile",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top_mobile",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_heading_padding_bottom_mobile",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom_mobile",
+                    "default": 6
+                },
+				{
+                    "type": "header",
+                    "content": "Text"
+                },
+                {
+                    "type": "richtext",
+                    "id": "tile_text",
+                    "default": "<p>One line of text</p>",
+                    "label": "t:sections.multicolumn.blocks.column.settings.text.label"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_text_uppercase",
+                    "default": false,
+                    "label": "Uppercase"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_text_color",
+                    "default": "#FFFFFF",
+                    "label": "Text"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_text_link_color",
+                    "default": "#FFFFFF",
+                    "label": "Link"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_text_below_color",
+                    "default": "#000",
+                    "label": "Text [when text below]"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_text_link_below_color",
+                    "default": "#000",
+                    "label": "Link [when text below]"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Font size"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_size_custom",
+                    "min": 6,
+                    "max": 100,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "Custom size mob",
+                    "default": 18
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_size_mobile_custom",
+                    "min": 6,
+                    "max": 36,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size [mob]",
+                    "default": 18
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_padding_top",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_padding_bottom",
+                    "min": 0,
+                    "max": 160,
+                    "step": 2,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_padding_top_mobile",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_top_mobile",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "tile_text_padding_bottom_mobile",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "t:sections.all.padding.padding_bottom_mobile",
+                    "default": 0
+                },
+				{
+                    "type": "header",
+                    "content": "Button"
+                },
+				{
+					"type": "text",
+					"id": "tile_button",
+					"label": "Button"
+				},
+                {
+                    "type": "header",
+                    "content": "Button Font size"
+                },
+                {
+                    "type": "range",
+                    "id": "tile_button_size",
+                    "min": 6,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size",
+                    "default": 18
+                },
+                {
+                    "type": "range",
+                    "id": "tile_button_size_mobile",
+                    "min": 6,
+                    "max": 36,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Custom size [mob]",
+                    "default": 18
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_button_uppercase_1",
+                    "default": true,
+                    "label": "Uppercase"
+                },
+                {
+                    "type": "select",
+                    "id": "tile_button_style_1",
+                    "options": [
+                        {
+                            "value": "primary",
+                            "label": "solid"
+                        },
+                        {
+                            "value": "outline",
+                            "label": "outline"
+                        }
+                    ],
+                    "default": "primary",
+                    "label": "Button style"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "tile_button_wide_1",
+                    "default": false,
+                    "label": "Button wide"
+                },
+                {
+                    "type": "header",
+                    "content": "Button colours"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Solid button:"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_color",
+                    "default": "#4D4D4D",
+                    "label": "Button"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_text_color",
+                    "default": "#FFFFFF",
+                    "label": "Text"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Outline button:"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_outline_color",
+                    "default":  "#FFFFFF",
+                    "label": "Text/Border"
+                },
+                {
+                    "type": "header",
+                    "content": "Text below Button"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Solid button:"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_below_color",
+                    "default": "#4D4D4D",
+                    "label": "Button"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_below_text_color",
+                    "default": "#FFFFFF",
+                    "label": "Text"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Outline button:"
+                },
+                {
+                    "type": "color",
+                    "id": "tile_button_below_outline_color",
+                    "default": "#FFFFFF",
+                    "label": "Text/Border"
+                }
+			]
+		}
+	]
+}
+{% endschema %}

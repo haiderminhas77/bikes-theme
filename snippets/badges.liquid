@@ -1,0 +1,89 @@
+{% comment %}
+    Renders badges snippet on both PDP and PLP to display variant-specific badges
+
+    Accepts:
+    - product: {Object} Object from CMS (for featured product only)
+
+    Usage:
+    {% render 'badges', product: product, class: class, usage: main-product or product-card %} in main-product.liquid or product-card.liquid
+    Is wrapped inside <info-badges> custom element
+{% endcomment %}
+
+{% assign product_data = product.metafields.product_data.reference.value %}
+{% assign colour_siblings = product_data.colour_siblings.value.list.value %}
+
+{% if settings.enable_badges %}
+    {% comment %}
+        InfoBadges element for products that are part of a sibling family
+    {% endcomment %}
+    {% if colour_siblings %}
+        <info-badges class="{% if usage == 'main-product' %}main-product__badges{% endif %} {{ class }}" data-usage="{{ usage }}">
+            {%- for sibling in colour_siblings -%}
+                {% if sibling.available == false %}
+                    <span class="badge product__badge-sold-out uppercase" data-variant="{{ sibling.selected_or_first_available_variant.title }}">
+                        {{ 'products.product.sold_out' | t }}
+                    </span>
+                {% endif %}
+                {% if sibling.metafields.product.badge and sibling.available %}
+                    <span class="badge product__badge-new hidden uppercase" data-variant="{{ sibling.selected_or_first_available_variant.title }}" style="color: {{ sibling.metafields.product.badge_colour }}; background-color: {{ sibling.metafields.product.badge_bkg_colour }}; border-color: {{ sibling.metafields.product.badge_bkg_colour }};">
+                        {{- sibling.metafields.product.badge -}}
+                    </span>
+                {% endif %}
+                {% if sibling.compare_at_price != null and sibling.metafields.product.badge == null and sibling.available %}
+                    <span class="badge product__badge-sale hidden uppercase" data-variant="{{ sibling.selected_or_first_available_variant.title }}">
+                        {% if settings.sale_badge_format == 'sale' %}
+                            {{ 'products.product.on_sale' | t }}
+                        {% elsif settings.sale_badge_format == 'save_percentage' %}
+                            {%- if sibling.compare_at_price > sibling.price %}
+                                {% assign price_difference = sibling.compare_at_price | minus: sibling.price | times: 1.0 %}
+                                {% assign percentage_saved = price_difference | divided_by: sibling.compare_at_price | times: 100 %}
+                                {{ 'products.product.save_percentage' | t }} {{ percentage_saved | round: 0 }}%
+                            {% endif %}
+                        {% elsif settings.sale_badge_format == 'save_amount' %}
+                            {%- if sibling.compare_at_price > sibling.price %}
+                                {% assign price_difference = sibling.compare_at_price | minus: sibling.price %}
+                                {{ 'products.product.save_percentage' | t }} {{ price_difference | money_without_trailing_zeros }}
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </info-badges>
+    {% else %}
+    {% comment %}
+        InfoBadges element for products that are dont' have siblings
+    {% endcomment %}
+        <info-badges class="card-info-badges {{ class }}" data-usage="{{ usage }}">
+            <div class="product__badges">
+                {% if product.metafields.product.badge %}
+                    <span class="badge product__badge-new uppercase" data-variant="{{ product.selected_or_first_available_variant.title }}" style="color: {{ product.metafields.product.badge_colour }}; background-color: {{ product.metafields.product.badge_bkg_colour }}; border-color: {{ product.metafields.product.badge_bkg_colour }};">
+                        {{- product.metafields.product.badge -}}
+                    </span>
+                {% endif %}
+                {% if product.available == false and product.metafields.product.badge == null %}
+                    <span class="badge product__badge-sold-out uppercase" data-variant="{{ product.selected_or_first_available_variant.title }}">
+                        {{ 'products.product.sold_out' | t }}
+                    </span>
+                {% endif %}
+                {% if product.compare_at_price != null and product.metafields.product.badge == null and product.available == true %}
+                    <span class="badge product__badge-sale uppercase" data-variant="{{ product.selected_or_first_available_variant.title }}">
+                        {% if settings.sale_badge_format == 'sale' %}
+                            {{ 'products.product.on_sale' | t }}
+                        {% elsif settings.sale_badge_format == 'save_percentage' %}
+                            {%- if product.compare_at_price > product.price %}
+                                {% assign price_difference = product.compare_at_price | minus: product.price | times: 1.0 %}
+                                {% assign percentage_saved = price_difference | divided_by: product.compare_at_price | times: 100 %}
+                                {{ 'products.product.save_percentage' | t }} {{ percentage_saved | round: 0 }}%
+                            {% endif %}
+                        {% elsif settings.sale_badge_format == 'save_amount' %}
+                            {%- if product.compare_at_price > product.price %}
+                                {% assign price_difference = product.compare_at_price | minus: product.price %}
+                                {{ 'products.product.save_percentage' | t }} {{ price_difference | money_without_trailing_zeros }}
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                {% endif %}
+            </div>
+        </info-badges>
+    {% endif %}
+{% endif %}

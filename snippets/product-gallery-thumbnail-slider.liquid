@@ -1,0 +1,82 @@
+{% comment %}
+	Renders thumbnail slider beneath PDP gallery
+
+	Accepts:
+	- current_gallery_items_array: {Variable}
+
+	Usage:
+	{% render 'product-gallery-thumbnail-slider', current_gallery_items_array: current_gallery_items_array %} within sections/main-product.liquid
+{% endcomment %}
+{%- liquid
+    assign media_width = 0.65
+	assign media_count = product.media.size
+
+	assign desktop_columns = 1
+	if media_count > 1
+		assign desktop_columns = 1
+	endif
+	
+	assign mobile_columns = 1
+-%}
+
+<div class="gallery-thumbnail-slider gallery__controls gallery-buttons slider-buttons no-js-hidden">
+    <div class="gallery-counter gallery-counter__thumbnails">
+        <ul class="gallery__control-wrapper thumbnail-list list-unstyled slider slider--tablet slider--desktop" data-langstring-load="{{ 'sections.slideshow.load_slide' | t }}" data-langstring-of="{{ 'general.slider.of' | t }}">
+            {% for media in product.media %}
+                <li class="thumbnail-list__item slider__slide">
+                    <button class="gallery-counter__link link {% if forloop.index0 == 0 %}gallery-counter__link--active {% endif %}" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length}}" aria-controls="Slider-{{ section.id }}">
+                        {%- if media.media_type == 'image' -%}
+                            <div class="product__media media {% if transparent_background %}media--transparent{% endif %}" style="padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+                                {%- capture sizes -%}
+                                    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 2.4rem), (min-width: 750px) calc((100vw - 2.4rem) / 2), calc(100vw / {{ mobile_columns }} - 1.6rem)
+                                {%- endcapture -%}
+                                {{ media.preview_image | image_url: width: 120 | image_tag:
+                                    loading: lazy_load,
+                                    preload: preload_statement,
+                                    sizes: sizes,
+                                    widths: '246, 516, 600, 713, 823, 1100, 1206, 1346, 1426, 1646, 1946'
+                                }}
+                            </div>
+                        {%- endif -%}
+                        {%- if media.media_type != 'image' -%}
+                            <div class="product__media media no-js-hidden {% if section.settings.transparent_background %}media--transparent{% endif %}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}" data-autoplay-setting="{{ section.settings.enable_video_autoplay }}">
+                                <span class="deferred-media__poster-button motion-reduce product-gallery__video-button">
+                                    <span class="visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
+                                    {%- render 'icon-play' -%}
+                                </span>
+                                    {{ media.preview_image | image_url: width: 120 | image_tag:
+                                        loading: lazy_load,
+                                        preload: preload_statement,
+                                        sizes: sizes,
+                                        widths: '246, 516, 600, 713, 823, 1100, 1206, 1346, 1426, 1646, 1946'
+                                    }}
+                            <template>
+                                {% if section.settings.enable_video_autoplay == true %}
+                                    {% assign preload_settings = "auto" %}
+                                    {% assign controls_settings = false %}
+                                {% else %}
+                                    {% assign preload_settings = "none" %}
+                                    {% assign controls_settings = true %}
+                                {% endif %}
+                                {%- liquid
+                                    case media.media_type
+                                    when 'external_video'
+                                        assign video_class = 'js-' | append: media.host
+                                        if media.host == 'youtube'
+                                            echo media | external_video_url: autoplay: true, loop: loop, playlist: media.external_id | external_video_tag: class: video_class, loading: "lazy"
+                                        else
+                                            echo media | external_video_url: autoplay: true, loop: loop | external_video_tag: class: video_class, loading: "lazy"
+                                        endif
+                                    when 'video'
+                                        echo media | media_tag: image_size: "2048x", autoplay: true, loop: loop, controls: controls_settings, preload: preload_settings, autoplay: true
+                                    endcase
+                                -%}
+                            </template>
+                            </div>
+                        {%- endif -%}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

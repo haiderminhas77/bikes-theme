@@ -1,0 +1,59 @@
+/*
+	component-badges.css used in theme.liquid (originally rendered in multiple sections with product cards)
+*/
+.product__info-container .price--show-badge {
+    display: flex;
+    margin: 1rem 0 2rem;
+    justify-content: space-between;
+}
+
+.product__info-container .price--show-badge .badge {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    font-style: var(--font-heading-style);
+    letter-spacing: var(--font-heading-letter-spacing-wide);
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    margin: unset;
+    min-width: unset;
+    padding: .5rem 1rem;
+}
+
+.product__badge-sale {
+    color: var(--sale-badge-color);
+    background-color: var(--sale-badge-background-color);
+}
+
+.product__badge-new {
+    color: var(--new-badge-color);
+    background-color: var(--new-badge-background-color);
+}
+
+.product__badge-sold-out {
+    color: var(--card-sold-out-badge-color);
+    background-color: var(--card-sold-out-badge-background-color);
+}
+
+.product__badge-few-left {
+    color: var(--few-left-badge-color);
+    background-color: var(--few-left-badge-background-color);
+}
+
+
+/* .product__badge-sale,
+.product__badge-new,
+.product__badge-few-left {
+    display: none;
+}
+
+.product--on-sale .product__badge-sale,
+.product--new .product__badge-new,
+.product--few-left .product__badge-few-left {
+    display: unset;
+}
+
+.product--few-left .product__badge-sale,
+.product--few-left .product__badge-new {
+    display: none;
+} */

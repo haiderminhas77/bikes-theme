@@ -1,0 +1,63 @@
+{
+	"sections": {
+		"ds_hero_xcYarY": {
+		"type": "ds-hero",
+		"settings": {
+			"page_width": "full",
+			"margin_left_right_desktop": 0,
+			"margin_left_right_mob": 0,
+			"lazy_load": false,
+			"image": "shopify:\/\/shop_images\/Super73_LP_OTA_Torque_2400x_6149aea4-4bee-4495-ae05-9a4d17caf521.webp",
+			"image_height": "medium",
+			"adapt_height_first_image": false,
+			"link": "",
+			"link_new_tab": false,
+			"overlay": "#1c1c1c",
+			"overlay_gradient": "",
+			"image_overlay_opacity": 0,
+			"video_url": "",
+			"banner_background": "rgba(0,0,0,0)",
+			"banner_background_gradient": "",
+			"desktop_content_position": "middle-left",
+			"desktop_content_alignment": "left",
+			"width": 50,
+			"desktop_content_position_top": 0,
+			"desktop_content_position_bottom": 0,
+			"desktop_content_position_left": 0,
+			"desktop_content_position_right": 0,
+			"banner__box_padding_top": 32,
+			"banner__box_padding_bottom": 32,
+			"banner__box_padding_left": 32,
+			"banner__box_padding_right": 32,
+			"mobile_content_position": "middle-left",
+			"mobile_content_alignment": "left",
+			"width_mob": 100,
+			"mobile_content_position_top": 0,
+			"mobile_content_position_bottom": 0,
+			"mobile_content_position_left": 0,
+			"mobile_content_position_right": 0,
+			"banner__box_padding_top_mob": 32,
+			"banner__box_padding_bottom_mob": 32,
+			"banner__box_padding_left_mob": 32,
+			"banner__box_padding_right_mob": 32,
+			"show_text_below": false,
+			"mob_below_overlay": "rgba(0,0,0,0)",
+			"mob_below_overlay_gradient": "",
+			"padding_top": 0,
+			"padding_bottom": 36,
+			"padding_top_mobile": 0,
+			"padding_bottom_mobile": 36
+			}
+		},
+		"main": {
+			"type": "main-login",
+			"settings": {
+				"background_color": "#fff"
+			}
+		}
+	},
+	"order": [
+		"ds_hero_xcYarY",
+		"main"
+	]
+} 

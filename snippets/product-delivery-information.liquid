@@ -1,0 +1,73 @@
+{% comment %}
+	Renders product delivery information link on PDP
+
+	Accepts:
+	- block: {Object} Block object
+
+	Usage:
+	{% render 'product-delivery-information', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% style %}
+    modal-opener .delivery-modal__button {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: {{ block.settings.desktop_alignment }};
+        padding: 0;
+        padding-top: {{ block.settings.top_padding_desktop }}px;
+        padding-bottom: {{ block.settings.bottom_padding_desktop }}px;
+    }
+
+    modal-opener .delivery-modal__button span {
+        color: {{ block.settings.delivery_color }};
+        font-size: {{ block.settings.button_text_size_desktop }}px;
+        padding-left: 1rem;
+
+        {% if block.settings.heading_font == 'caption-font' %}
+			font-family: var(--font-caption-family);
+			font-weight: var(--font-caption-weight);
+			font-style: var(--font-caption-style);
+			letter-spacing: var(--font-caption-letter-spacing-wide);
+		{% elsif block.settings.heading_font == 'heading-font' %}
+			font-family: var(--font-heading-family);
+			font-weight: var(--font-heading-weight);
+			font-style: var(--font-heading-style);
+			letter-spacing: var(--font-heading-letter-spacing-wide);
+		{% elsif block.settings.heading_font == 'body-font' %}
+			font-family: var(--font-body-family);
+			font-style: var(--font-body-style);
+			font-weight: var(--font-body-weight);
+			letter-spacing: var(--font-body-letter-spacing);
+		{% endif %}
+    }
+
+    modal-opener .delivery-modal__button svg {
+        width: {{ block.settings.icon_size_desktop }}px;
+        height: auto;
+        color: {{ block.settings.icon_color }};
+    }
+
+    @media screen and (max-width: 749px) {
+        modal-opener .delivery-modal__button {
+            justify-content: {{ block.settings.mobile_alignment }};
+            padding-top: {{ block.settings.top_padding_mobile }}px;
+            padding-bottom: {{ block.settings.bottom_padding_mobile }}px;
+        }
+
+        modal-opener .delivery-modal__button span {
+            font-size: {{ block.settings.button_text_size_mobile }}px;
+        }
+
+        modal-opener .delivery-modal__button svg {
+            width: {{ block.settings.icon_size_mobile }}px;
+        }
+    }
+{% endstyle %}
+
+<modal-opener class="product-popup-modal__opener" data-modal="#delivery-modal">
+    <button class="delivery-modal__button">
+        {% render 'icon-picker', icon: block.settings.icon %}
+        <span class="underlined-link {% if block.settings.text_uppercase %}uppercase{% endif %}">{{ block.settings.delivery_info_string }}</span>
+    </button>
+</modal-opener>

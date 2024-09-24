@@ -1,0 +1,23 @@
+.gift-with-purchase__message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gift-with-purchase__message {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gift-with-purchase__message svg {
+    height: 1.7rem;
+    width: 1.7rem;
+    margin-right: 0.4rem;
+}
+
+cart-modal .gift-with-purchase__message-container {
+    margin-top: 2rem;
+}

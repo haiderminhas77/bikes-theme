@@ -1,0 +1,63 @@
+<video-control-button>
+    <button>
+        <span class="video-control-button__play hidden">
+            {% render 'icon-video-control-button-play' %}
+        </span>
+        <span class="video-control-button__pause">
+            {% render 'icon-video-control-button-pause' %}
+        </span>
+
+    </button>
+</video-control-button>
+
+{% style %}
+    .video-control-button__container {
+        position: relative;
+    }
+
+    video-control-button {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        z-index: 3;
+    }
+
+    video-control-button button {
+        display: block;
+        position: relative;
+        border: none;
+        border-radius: 50%;
+        z-index: 2;
+        cursor: pointer;
+        height: 3.8rem;
+        background: transparent;
+    }
+
+    video-control-button button:hover .pause-button--hover,
+    video-control-button button:hover .play-button--hover {
+        display: unset;
+    }
+
+    video-control-button button:not(hover) .pause-button--default,
+    video-control-button button:not(hover) .play-button--default {
+        display: unset;
+    }
+
+
+    video-control-button button:hover .pause-button--default,
+    video-control-button button:hover .play-button--default {
+        display: none;
+    }
+
+    video-control-button button:not(hover) .pause-button--hover,
+    video-control-button button:not(hover) .play-button--hover {
+        display: none;
+    }
+
+    .video-control-button__play,
+    .video-control-button__pause {
+        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+{% endstyle %}

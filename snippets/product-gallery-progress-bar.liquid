@@ -1,0 +1,34 @@
+{% comment %}
+		Renders progress slider within PDP gallery with arrows, counter is hidden
+
+		Accepts:
+		- item_count {Integer} - this informs percentage width of each slider 'block' and for loop counts
+
+		Usage:
+		{% render 'product-gallery-progress-bar', item_count: .... %} within sections/main-product.liquid
+{% endcomment %}
+
+{% if item_count > 1 %}
+    <div class="progress-slider gallery-buttons slider-buttons no-js-hidden">
+        <div class="progress-slider__wrapper">
+            <div class="gallery-counter gallery-counter--lines slider-counter--lines">
+                <div class="gallery__control-wrapper" data-langstring-load="{{ 'sections.slideshow.load_slide' | t }}" data-langstring-of="{{ 'general.slider.of' | t }}">
+                    {% for item in (1..item_count) %}
+                        <button class="gallery-counter__link slider-counter__link gallery-counter__link--lines slider-counter__link--lines link" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length}}" aria-controls="Slider-{{ section.id }}--progress-slider"  style="width: {{ 100.0 | divided_by: item_count }}%;">
+                            <span class="line"></span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="progress-slider__arrows">
+                <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}" aria-controls="Slider-{{ section.id }}--progress-slider" data-parent="slideshow-component">{% render 'icon-caret' %}</button>
+                {% comment %} counter is hidden {% endcomment %}
+                <span class="slider-counter--current visually-hidden">1</span>
+                <span aria-hidden="true" class="visually-hidden"> / </span>
+                <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+                <span class="slider-counter--total visually-hidden">{{ item_count }}</span>
+                <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'sections.slideshow.next_slideshow' | t }}" aria-controls="Slider-{{ section.id }}--progress-slider" data-parent="slideshow-component">{% render 'icon-caret' %}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}

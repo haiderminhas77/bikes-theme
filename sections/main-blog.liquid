@@ -1,0 +1,573 @@
+{% comment %}
+'Main section' rendering blog section on blog page
+Usage:
+"main": {
+"type": "main-blog"
+} Listed in templates/blog.json
+{% endcomment %}
+
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+	.section-{{ section.id }}-padding {
+		margin-top: {{ section.settings.padding_top_mobile }}px;
+		margin-bottom: {{ section.settings.padding_bottom_mobile }}px;
+	}
+
+	@media screen and (min-width: 750px) {
+		.section-{{ section.id }}-padding {
+			margin-top: {{ section.settings.padding_top }}px;
+			margin-bottom: {{ section.settings.padding_bottom }}px;
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+	/* center */
+    @media screen and (max-width: 749px) {
+        .section-{{ section.id }}-margins {
+            padding-left: {{ section.settings.margin_left_right_mob | divided_by: 10.0 }}rem;
+            padding-right: {{ section.settings.margin_left_right_mob | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-margins {
+            padding-left: {{ section.settings.margin_left_right_desktop | divided_by: 10.0 }}rem;
+            padding-right: {{ section.settings.margin_left_right_desktop | divided_by: 10.0 }}rem;
+        }
+    }
+
+{%- endstyle -%}
+
+<div class="blog__header-filters page-wdith">
+	<h1>
+		{{ section.settings.title }}
+	</h1>
+
+	{%- if section.settings.show_blog_filters %}
+		{% assign filters = section.settings.filters %}
+		<nav class="blog-filters">
+			<ul class="blog-filters__list list-unstyled">
+				<li><a href="{{ blog.url }}" class="full-unstyled-link text-tag text-tag--round {% unless current_tags %}text-tag--active{% endunless %}">{{ 'blogs.article.all' | t }}</a></li>
+				{% assign filters = filters | split: ',' %}
+				{%- for item in filters -%}
+					{% liquid
+						assign tag_name = item | strip
+						assign tag = 'category_' | append: tag_name
+						assign tag_downcase = tag | downcase
+						assign string_count = tag_name.size
+		
+						capture tag_shape
+							render 'article-tag-shape', string_count: string_count
+						endcapture
+					%}
+					<li>
+						{% if current_tags contains tag or current_tags contains tag_downcase %}
+							<span class="text-tag text-tag--{{ tag_shape }} text-tag--active">
+								{{ tag_name }}
+							</span>
+						{% else %}
+							<a class="text-tag text-tag--{{ tag_shape }}" href="{{ blog.url }}/tagged/{{ tag | handle }}">
+								{{ tag_name }}
+							</a>
+						{% endif %}
+					</li>
+				{%- endfor -%}
+			</ul>
+		</nav>
+	{%- endif -%}	
+</div>
+
+{%- paginate blog.articles by 24 -%}
+	<div class="main-blog section-{{ section.id }}-padding section-{{ section.id }}-margins {% if section.settings.page_width == 'normal' %} page-width-desktop-max-width-only{% endif %}">
+		<div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}{% if section.settings.layout == 'grid' %}{% if section.settings.grid_columns == 3 %} blog-grid__3-col_desktop blog-grid__2-col_tablet{% elsif section.settings.grid_columns == 2 %}blog-grid__2-col_desktop-down{% else %}blog-grid__1-col{% endif %}{% endif %}">
+			{%- for article in blog.articles -%}
+				<div class="blog-articles__article article">
+					{%- render 'article-card', article: article, icon: section.settings.icon_article, image_height: section.settings.image_height, show_image: section.settings.show_image, show_date: section.settings.show_date, show_author: section.settings.show_author, show_excerpt: section.settings.show_excerpt, show_title: section.settings.show_article_title, show_readmore: section.settings.show_readmore -%}
+				</div>
+			{%- endfor -%}
+		</div>
+
+		{%- if paginate.pages > 1 -%}
+			{%- render 'pagination', paginate: paginate -%}
+		{%- endif -%}
+	</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+	"name": "t:sections.main-blog.name",
+	"tag": "section",
+	"class": "spaced-section",
+	"settings": [
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "select",
+			"id": "layout",
+			"options": [
+				{
+					"value": "grid",
+					"label": "t:sections.main-blog.settings.layout.options__1.label"
+				},
+				{
+					"value": "collage",
+					"label": "t:sections.main-blog.settings.layout.options__2.label"
+				}
+			],
+			"default": "grid",
+			"label": "t:sections.main-blog.settings.layout.label"
+		},
+		{
+			"type": "paragraph",
+			"content": "Set layout to grid to enable setting below"
+		},
+		{
+            "type": "range",
+            "id": "grid_columns",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "label": "Grid columns",
+            "default": 3
+        },
+		{
+			"type": "select",
+			"id": "icon_article",
+			"options": [
+			{
+				"value": "none",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__1.label"
+			},
+			{
+				"value": "apple",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__2.label"
+			},
+			{
+				"value": "banana",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__3.label"
+			},
+			{
+				"value": "bottle",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__4.label"
+			},
+			{
+				"value": "box",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__5.label"
+			},
+			{
+				"value": "carrot",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__6.label"
+			},
+			{
+				"value": "chat_bubble",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__7.label"
+			},
+			{
+				"value": "check_mark",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__8.label"
+			},
+			{
+				"value": "clipboard",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__9.label"
+			},
+			{
+				"value": "dairy",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__10.label"
+			},
+			{
+				"value": "dairy_free",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__11.label"
+			},
+			{
+				"value": "dryer",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__12.label"
+			},
+			{
+				"value": "eye",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__13.label"
+			},
+			{
+				"value": "fire",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__14.label"
+			},
+			{
+				"value": "gluten_free",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__15.label"
+			},
+			{
+				"value": "heart",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__16.label"
+			},
+			{
+				"value": "iron",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__17.label"
+			},
+			{
+				"value": "leaf",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__18.label"
+			},
+			{
+				"value": "leather",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__19.label"
+			},
+			{
+				"value": "lightning_bolt",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__20.label"
+			},
+			{
+				"value": "lipstick",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__21.label"
+			},
+			{
+				"value": "lock",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__22.label"
+			},
+			{
+				"value": "map_pin",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__23.label"
+			},
+			{
+				"value": "nut_free",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__24.label"
+			},
+			{
+				"value": "pants",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__25.label"
+			},
+			{
+				"value": "paw_print",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__26.label"
+			},
+			{
+				"value": "pepper",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__27.label"
+			},
+			{
+				"value": "perfume",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__28.label"
+			},
+			{
+				"value": "plane",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__29.label"
+			},
+			{
+				"value": "plant",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__30.label"
+			},
+			{
+				"value": "price_tag",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__31.label"
+			},
+			{
+				"value": "question_mark",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__32.label"
+			},
+			{
+				"value": "recycle",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__33.label"
+			},
+			{
+				"value": "return",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__34.label"
+			},
+			{
+				"value": "ruler",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__35.label"
+			},
+			{
+				"value": "serving_dish",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__36.label"
+			},
+			{
+				"value": "shirt",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__37.label"
+			},
+			{
+				"value": "shoe",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__38.label"
+			},
+			{
+				"value": "silhouette",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__39.label"
+			},
+			{
+				"value": "snowflake",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__40.label"
+			},
+			{
+				"value": "star",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__41.label"
+			},
+			{
+				"value": "stopwatch",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__42.label"
+			},
+			{
+				"value": "truck",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__43.label"
+			},
+			{
+				"value": "washing",
+				"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__44.label"
+			},
+			{
+				"value": "super73-lightning",
+				"label": "super73-lightning"
+			},
+			{
+				"value": "super73-display",
+				"label": "super73-display"
+			},
+			{
+				"value": "super73-battery",
+				"label": "super73-battery"
+			},
+			{
+				"value": "super73-throttle",
+				"label": "super73-throttle"
+			},
+			{
+				"value": "super73-accessories",
+				"label": "super73-accessories"
+			},
+			{
+				"value": "super73-accessories-sale",
+				"label": "super73-accessories-sale"
+			},
+			{
+				"value": "super73-accessories-apparel",
+				"label": "super73-accessories-apparel"
+			},
+			{
+				"value": "super73-accessories-parts",
+				"label": "super73-accessories-parts"
+			},
+			{
+				"value": "super73-accessories-marketplace",
+				"label": "super73-accessories-marketplace"
+			},
+			{
+				"value": "super73-community-customs",
+				"label": "super73-community-customs"
+			},
+			{
+				"value": "super73-community-guides",
+				"label": "super73-community-guides"
+			},
+			{
+				"value": "super73-community-aboutus",
+				"label": "super73-community-aboutus"
+			},
+			{
+				"value": "super73-community-press",
+				"label": "super73-community-press"
+			},
+			{
+				"value": "super73-community-calendar",
+				"label": "super73-community-calendar"
+			},
+			{
+				"value": "super73-community-blogs",
+				"label": "super73-community-blogs"
+			},
+			{
+				"value": "super73-bike-discover",
+				"label": "super73-bike-discover"
+			}
+			],
+			"default": "lightning_bolt",
+			"label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.label"
+		},
+		{
+			"type": "header",
+			"content": "Filters"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_blog_filters",
+			"default": false,
+			"label": "t:sections.main-blog.settings.show_blog_filters.label",
+			"info": "t:sections.main-blog.settings.show_blog_filters.info"
+		},
+		{
+			"type": "textarea",
+			"id": "filters",
+			"label": "Header Filters",
+			"info": "List of category tags separated by ',' to display in header"
+		},
+		{
+            "type": "header",
+            "content": "Section Width"
+        },
+        {
+            "type": "select",
+            "id": "page_width",
+            "options": [
+                {
+                    "value": "normal",
+                    "label": "normal"
+                },
+                {
+                    "value": "full",
+                    "label": "full"
+                }
+            ],
+            "default": "normal",
+            "label": "Add a set page width to desktop"
+        },
+        {
+            "type": "range",
+            "id": "margin_left_right_desktop",
+            "min": 0,
+            "max": 40,
+            "step": 1,
+            "default": 0,
+            "unit": "px",
+            "label": "Margin left/right"
+        },
+        {
+            "type": "range",
+            "id": "margin_left_right_mob",
+            "min": 0,
+            "max": 40,
+            "step": 1,
+            "default": 0,
+            "unit": "px",
+            "label": "Margin left/right mob"
+        },
+		{
+			"type": "header",
+			"content": "t:sections.main-blog.settings.header.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_image",
+			"default": true,
+			"label": "t:sections.main-blog.settings.show_image.label"
+		},
+		{
+			"type": "select",
+			"id": "image_height",
+			"options": [
+				{
+					"value": "adapt",
+					"label": "t:sections.main-blog.settings.image_height.options__1.label"
+				},
+				{
+					"value": "small",
+					"label": "t:sections.main-blog.settings.image_height.options__2.label"
+				},
+				{
+					"value": "medium",
+					"label": "t:sections.main-blog.settings.image_height.options__3.label"
+				},
+				{
+					"value": "large",
+					"label": "t:sections.main-blog.settings.image_height.options__4.label"
+				},
+				{
+					"value": "square",
+					"label": "Square"
+				},
+				{
+					"value": "portrait",
+					"label": "Portrait"
+				},
+				{
+					"value": "landscape",
+					"label": "Landscape"
+				}
+			],
+			"default": "landscape",
+			"label": "t:sections.main-blog.settings.image_height.label",
+			"info": "t:sections.main-blog.settings.image_height.info"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_article_title",
+			"default": true,
+			"label": "Show article title"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_date",
+			"default": true,
+			"label": "t:sections.main-blog.settings.show_date.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_author",
+			"default": false,
+			"label": "t:sections.main-blog.settings.show_author.label"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_excerpt",
+			"default": true,
+			"label": "Show excerpt",
+			"info": "t:sections.main-blog.settings.paragraph.content"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_readmore",
+			"default": true,
+			"label": "Show Read More button"
+		},
+		{
+            "type": "header",
+            "content": "t:sections.all.padding.section_padding_heading",
+            "info": "t:sections.all.padding.section_padding_info"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "Top padding [desktop]",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "Bottom padding [desktop]",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_top_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_top_mobile",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom_mobile",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_bottom_mobile",
+            "default": 0
+        }
+	]
+}
+{% endschema %}

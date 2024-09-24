@@ -1,0 +1,178 @@
+{% comment %}
+	Sticky add to cart button on PDP (mobile only)
+
+    Built in sticky-atc.js
+    Schema settings in main-product.liquid
+
+	Usage:
+	Enabled within sections/main-product.liquid
+{% endcomment %}
+
+{% style %}
+    sticky-atc {
+        {% if border == 'border_top' %}
+            border-top: 2px solid {{ border_color }};
+        {% elsif border == 'border_bottom' %}
+            border-bottom: 2px solid {{ border_color }};
+        {% else %}
+            border: unset;
+        {% endif %}
+        background-color: {{ background_color }};
+    }
+
+    {% if hide_product_details %}
+        @media screen and (min-width: 750px) {
+            sticky-atc .sticky-atc__wrapper {
+                justify-content: {{ button_alignment }}!important;
+                gap: 4rem!important;
+            }
+            
+            sticky-atc .sticky-atc__title-options-price {
+                display: none!important;
+            }
+        }
+    {% endif %}
+
+    {% if hide_product_details_mob %}
+        @media screen and (max-width: 749px) {
+            sticky-atc .sticky-atc__wrapper {
+                justify-content: {{ button_alignment_mob }}!important;
+            }
+
+            sticky-atc .sticky-atc__title-options-price {
+                display: none!important;
+            }
+        }
+    {% endif %}
+
+    sticky-atc .sticky-atc__title-options-price .sticky-atc__title, sticky-atc .sticky-atc__title-options-price, sticky-atc .sticky-atc__title-options-price .sticky-atc__options::after {
+        --color-base-text: {{ text_color.red }}, {{ text_color.green }}, {{ text_color.blue }};
+    }
+
+    sticky-atc .sticky-atc__title-options-price .sticky-atc__title, sticky-atc .sticky-atc__title-options-price {
+        color: rgb(var(--color-base-text));
+    }
+
+    {% unless product.variants.size < 2 %}
+        @media screen and (min-width: 750px) {
+            sticky-atc .sticky-atc__title-options-price .sticky-atc__options {
+                position: relative;
+                padding-right: 2rem;
+                margin-right: 2rem;
+            }
+
+            sticky-atc .sticky-atc__title-options-price .sticky-atc__options::after {
+                content: "";
+                display: block;
+                position: absolute;
+                right: 0;
+                top: -1px;
+                width: 2px;
+                height: 25px;
+                background: rgb(var(--color-base-text));
+            }
+        }
+    {% endunless %}
+
+    sticky-atc button#button--sticky-atc.button--sticky {
+        --color-button: {{ button_background_color.red }}, {{ button_background_color.green }}, {{ button_background_color.blue }};
+        --color-button-text: {{ button_text_color.red }}, {{ button_text_color.green }}, {{ button_text_color.blue }};
+    }
+
+    @media screen and (min-width: 750px) {
+        sticky-atc button#button--sticky-atc.button--sticky {
+            font-size: {{ button_size | divided_by: 10.0 }}rem;
+        }
+    }
+    
+    @media screen and (max-width: 749px) {
+        sticky-atc button#button--sticky-atc.button--sticky {
+            font-size: {{ button_size_mob | divided_by: 10.0 }}rem;
+        }
+
+        {% if button_wide %}
+            sticky-atc button#button--sticky-atc.button--sticky {
+                display: flex;
+                width: 100%;
+            }
+        {% endif %}
+    }
+
+    sticky-atc .sticky-atc__anchor-1 {
+        --color-button-text: {{ anchor_button_text_color_1.red }}, {{ anchor_button_text_color_1.green }}, {{ anchor_button_text_color_1.blue }};
+        --color-button: {{ anchor_button_background_color_1.red }}, {{ anchor_button_background_color_1.green }}, {{ anchor_button_background_color_1.blue }};
+    }
+
+    sticky-atc .sticky-atc__anchor-2 {
+        --color-button-text: {{ anchor_button_text_color_2.red }}, {{ anchor_button_text_color_2.green }}, {{ anchor_button_text_color_2.blue }};
+        --color-button: {{ anchor_button_background_color_2.red }}, {{ anchor_button_background_color_2.green }}, {{ anchor_button_background_color_2.blue }};
+    }
+
+    @media screen and (min-width: 750px) {
+        sticky-atc .sticky-atc__anchor-1 {
+            font-size: {{ anchor_button_size_1 | divided_by: 10.0 }}rem;
+        }
+
+        sticky-atc .sticky-atc__anchor-2 {
+            font-size: {{ anchor_button_size_2 | divided_by: 10.0 }}rem;
+        }
+    }
+    
+    @media screen and (max-width: 749px) {
+        sticky-atc .sticky-atc__anchor-1 {
+            font-size: {{ anchor_button_size_mob_1 | divided_by: 10.0 }}rem;
+        }
+
+        sticky-atc .sticky-atc__anchor-2 {
+            font-size: {{ anchor_button_size_mob_2 | divided_by: 10.0 }}rem;
+        }
+    }
+{% endstyle %}
+
+<sticky-atc class="{% if positioning == 'top' %} sticky-atc__top{% else %} sticky-atc__bottom active{% endif %}">
+    <div class="page-width sticky-atc__wrapper">
+        <div class="sticky-atc__title-options-price">
+            <span class="h4 sticky-atc__title uppercase">{{ product.title }}</span>
+            <span class="sticky-atc__options-price">
+                <span class="sticky-atc__options uppercase">
+                {% unless product.variants.size < 2 %}
+                    {{ product.selected_or_first_available_variant.title }}
+                {% endunless %}
+                </span>
+                <span class="sticky-atc__price">
+                    {{ product.selected_or_first_available_variant.price | money }}
+                </span>
+            </span>
+        </div>
+        {% if anchor_button_label_1 != blank and hide_product_details and hide_product_details_mob %}
+            <a class="button button--primary sticky-atc__anchor-1 uppercase" href="{{ anchor_button_link_1 }}" {% if anchor_button_new_tab_1 %}target="_blank"{% endif %}>
+                {{ anchor_button_label_1 }}
+            </a>
+        {% endif %}
+        <button
+        type="submit"
+        name="add"
+        class="product-form__submit button button--primary button--sticky"
+        id="button--sticky-atc"
+        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+        >
+            <span>
+                {%- if product.selected_or_first_available_variant.available -%}
+                    {{ atc_button_text }}
+                {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+            </span>
+            <div class="loading-overlay__spinner hidden">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                </svg>
+            </div>
+        </button>
+        {% if anchor_button_label_2 != blank and hide_product_details and hide_product_details_mob %}
+            <a class="button button--primary sticky-atc__anchor-2 uppercase" href="{{ anchor_button_link_2 }}" {% if anchor_button_new_tab_2 %}target="_blank"{% endif %}>
+                {{ anchor_button_label_2 }}
+            </a>
+        {% endif %}
+    </div>
+</sticky-atc>

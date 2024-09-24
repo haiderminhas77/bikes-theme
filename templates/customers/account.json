@@ -1,0 +1,97 @@
+{
+	"sections": {
+		"2326fa4b-e801-4d2a-a97c-ee5466e230d3": {
+			"type": "ds-hero",
+			"blocks": {
+			"bf57357b-3455-4428-8457-1577aa38e6cb": {
+				"type": "heading",
+				"settings": {
+					"heading": "",
+					"custom_liquid": "Welcome, {{ customer.first_name }}",
+					"heading_uppercase": false,
+					"heading_color": "#ffffff",
+					"heading_below_color": "#000000",
+					"heading_size": "custom",
+					"heading_size_custom": 70,
+					"heading_size_mobile": "custom",
+					"heading_size_mobile_custom": 40,
+					"heading_font_family": "heading-font",
+					"padding_top": 0,
+					"padding_bottom": 0,
+					"padding_top_mobile": 0,
+					"padding_bottom_mobile": 20,
+					"margin_top": 0,
+					"margin_bottom": 0,
+					"margin_top_mobile": 0,
+					"margin_bottom_mobile": 0
+				}
+			}
+		},
+		"block_order": [
+			"bf57357b-3455-4428-8457-1577aa38e6cb"
+		],
+		"settings": {
+			"page_width": "full",
+			"margin_left_right_desktop": 0,
+			"margin_left_right_mob": 0,
+			"lazy_load": false,
+			"image": "shopify:\/\/shop_images\/Super73_LP_OTA_Torque_2400x_6149aea4-4bee-4495-ae05-9a4d17caf521.webp",
+			"image_height": "medium",
+			"adapt_height_first_image": false,
+			"link": "",
+			"link_new_tab": false,
+			"overlay": "#000000",
+			"overlay_gradient": "",
+			"image_overlay_opacity": 0,
+			"video_url": "",
+			"banner_background": "rgba(0,0,0,0)",
+			"banner_background_gradient": "",
+			"desktop_content_position": "middle-left",
+			"desktop_content_alignment": "left",
+			"width": 50,
+			"desktop_content_position_top": 0,
+			"desktop_content_position_bottom": 0,
+			"desktop_content_position_left": 0,
+			"desktop_content_position_right": 0,
+			"banner__box_padding_top": 0,
+			"banner__box_padding_bottom": 0,
+			"banner__box_padding_left": 20,
+			"banner__box_padding_right": 0,
+			"mobile_content_position": "bottom-left",
+			"mobile_content_alignment": "left",
+			"width_mob": 100,
+			"mobile_content_position_top": 0,
+			"mobile_content_position_bottom": 0,
+			"mobile_content_position_left": 0,
+			"mobile_content_position_right": 0,
+			"banner__box_padding_top_mob": 0,
+			"banner__box_padding_bottom_mob": 0,
+			"banner__box_padding_left_mob": 10,
+			"banner__box_padding_right_mob": 0,
+			"show_text_below": false,
+			"mob_below_overlay": "#D9D9D9",
+			"mob_below_overlay_gradient": "",
+			"padding_top": 0,
+			"padding_bottom": 0,
+			"padding_top_mobile": 0,
+			"padding_bottom_mobile": 0
+		}
+	},
+	"main": {
+		"type": "main-account",
+		"settings": {
+			"background_color": "#ffffff",
+			"custom_page_title": "My Account",
+			"account_profile_text": "<p>To change your password, please <a class=\"button button--underline\" href=\"\/account\/logout\" title=\"\/account\/logout\">log out<\/a> of your account and head to the account page - you will see a  'forgot your password' link to change it.<\/p>",
+			"padding_top": 56,
+			"padding_bottom": 0,
+			"padding_top_mobile": 16,
+			"padding_bottom_mobile": 0
+		}
+	}
+	},
+	"order": [
+		"2326fa4b-e801-4d2a-a97c-ee5466e230d3",
+		"main"
+	]
+}

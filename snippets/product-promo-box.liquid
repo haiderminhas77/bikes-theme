@@ -1,0 +1,78 @@
+{% comment %}
+	Renders product promo box within PDP
+
+	Accepts:
+	- block: {Object} Block object
+
+	Usage:
+	{% render 'product-price', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% style %}
+    .product__promo-box {
+        display: flex;
+        justify-content: center;
+        border: 2px solid {{ block.settings.promo_box_border }};
+    }
+
+    .promo-box__content {
+        background-color: {{ block.settings.promo_box_background }};
+        padding: .5rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        {% if block.settings.text_style == 'heading-font' %}
+            font-family: var(--font-heading-family);
+            font-style: var(--font-heading-style);
+            font-weight: var(--font-heading-weight);
+            letter-spacing: var(--font-heading-letter-spacing-wide);
+        {% elsif block.settings.text_style == 'caption-font' %}
+            font-family: var(--font-caption-family);
+            font-style: var(--font-caption-style);
+            font-weight: var(--font-caption-weight);
+            letter-spacing: var(--font-caption-letter-spacing-wide);
+        {% endif %}
+        margin-top: {{ block.settings.top_margin_desktop | divided_by: 10.0 }}rem;
+        margin-bottom: {{ block.settings.bottom_margin_desktop | divided_by: 10.0 }}rem;
+    }
+
+    @media screen and (max-width: 749px){
+        .promo-box__content {
+            margin-top: {{ block.settings.top_margin_mobile | divided_by: 10.0 }}rem;
+            margin-bottom: {{ block.settings.bottom_margin_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+
+    .promo-box__content svg {
+        color: {{ block.settings.promo_box_icon }};
+        height: 20px;
+        width: 20px;
+        margin-right: 0.4rem;
+    }
+
+    .promo-box__content p {
+        color: {{ block.settings.promo_box_foreground }};
+        margin: 0;
+        font-size: {{ block.settings.text_size_desktop | divided_by: 10.0 }}rem;
+    }
+
+    @media screen and (max-width: 749px){
+        .promo-box__content p {
+            font-size: {{ block.settings.text_size_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+
+    .promo-box__content a,
+    .promo-box__content a:visited {
+        color: {{ block.settings.promo_box_link }};
+    }
+{% endstyle %}
+
+<div class="product__promo-box">
+    <span class="promo-box__content{% if block.settings.text_uppercase %} uppercase{% endif %}">
+        {% render 'icon-picker', icon: block.settings.icon %}
+        {{ block.settings.content }}
+    </span>
+</div>

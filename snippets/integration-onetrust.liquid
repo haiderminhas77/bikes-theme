@@ -1,0 +1,19 @@
+{% comment %}
+	Integration snippet for OneTrust Cookie Banner verification tags - pulls unique ID from relevant theme setting
+
+	Accepts:
+	-
+
+	Usage:
+	{% render 'integration-onetrust' %} within layout/theme.liquid if required
+{% endcomment %}
+
+{% if settings.enable_onetrust_banner %}
+    <script type="text/javascript"
+        src="https://cdn-ukwest.onetrust.com/consent/{{ settings.onetrust_script_key }}/OtAutoBlock.js"></script>
+    <script src="https://cdn-ukwest.onetrust.com/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8"
+        data-domain-script="{{ settings.onetrust_script_key }}"></script>
+    <script type="text/javascript">
+        function OptanonWrapper() { }
+    </script>
+{% endif %}

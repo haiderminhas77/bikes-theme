@@ -1,0 +1,80 @@
+{% comment %}
+	Renders product accordion within PDP
+
+	Accepts:
+	- block: {Object} Block object
+	
+	Usage:
+	{% render 'product-collapsible-tab', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% style %}
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} {
+		margin-top: {{ block.settings.top_margin_desktop | divided_by: 10.0 }}rem;
+		margin-bottom: {{ block.settings.bottom_margin_desktop | divided_by: 10.0 }}rem;
+	}
+
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} .summary__title {
+		background-color: {{ block.settings.heading_background_color }};
+		color: {{ block.settings.heading_text_color }};
+	}
+
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} .summary__title .accordion__title {
+		font-size: {{ block.settings.heading_size_desktop | divided_by: 10.0 }}rem;
+	}
+
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }}[open] .summary__title {
+		background-color: {{ block.settings.heading_background_color_active }};
+		color: {{ block.settings.heading_text_color_active }};
+	}
+
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }}[open] .summary__title .accordion__title {
+		color: {{ block.settings.heading_text_color_active }};
+	}
+
+	.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} .accordion__content {
+		font-size: {{ block.settings.text_size_desktop | divided_by: 10.0 }}rem;
+		padding-top: {{ block.settings.top_padding_desktop | divided_by: 10.0 }}rem;
+		padding-bottom: {{ block.settings.bottom_padding_desktop | divided_by: 10.0 }}rem;
+		margin-bottom: unset;
+		background-color: {{ block.settings.background_color }};
+		color: {{ block.settings.text_color }};
+	}
+
+	@media screen and (max-width: 749px) {
+		.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} {
+			margin-top: {{ block.settings.top_margin_mobile | divided_by: 10.0 }}rem;
+			margin-bottom: {{ block.settings.bottom_margin_mobile | divided_by: 10.0 }}rem;
+		}
+
+		.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} .summary__title .accordion__title {
+			font-size: {{ block.settings.heading_size_mobile | divided_by: 10.0 }}rem;
+		}
+
+		.product__info-container .product__accordion #Details-{{ block.id }}-{{ section.id }} .accordion__content {
+			font-size: {{ block.settings.text_size_mobile | divided_by: 10.0 }}rem;
+			padding-top: {{ block.settings.top_padding_mobile | divided_by: 10.0 }}rem;
+			padding-bottom: {{ block.settings.bottom_padding_mobile | divided_by: 10.0 }}rem;
+		}
+	}
+
+	.product__accordion #Details-{{ block.id }}-{{ section.id }} .accordion__content a, .product__accordion #Details-{{ block.id }}-{{ section.id }} .accordion__content a:visited {
+		color: {{ block.settings.text_link_color }}!important;
+	}
+{% endstyle %}
+
+<div class="product__accordion accordion" {{ block.shopify_attributes }}>
+	<details id="Details-{{ block.id }}-{{ section.id }}" {% if block.settings.open_collapsible_tab %}open{% endif %}>
+		<summary class="summary__title">
+			{% render 'icon-picker', icon: block.settings.icon %}
+			<h2 class="h4 accordion__title">
+				{{ block.settings.heading | default: block.settings.page.title }}
+			</h2>
+			{% render 'icon-caret' %}
+		</summary>
+		<div class="accordion__content" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+			{{ block.settings.content }}
+			{{ block.settings.page.content }}
+		</div>
+	</details>
+</div>

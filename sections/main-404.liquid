@@ -1,0 +1,34 @@
+{% comment %}
+'Main section' rendering 404 section on 404 page
+Usage:
+"main": {
+"type": "main-404"
+} Listed in templates/404.json
+{% endcomment %}
+
+<style type="text/css">
+	.template-404 .title + * {
+		margin-top: 1rem;
+	}
+
+	.template-404 .title {
+		letter-spacing: var(--font-heading-letter-spacing-narrow);
+		margin-bottom: unset;
+	}
+
+	.template-404 p {
+		margin-top: unset;
+	}
+</style>
+
+<div class="template-404 page-width page-margin center">
+	<h1 class="title uppercase">
+		{{ 'templates.404.title' | t }}
+	</h1>
+	<p>
+		{{ 'templates.404.subtext' | t }}
+	</p>
+	<a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+		{{ 'general.continue_shopping' | t }}
+	</a>
+</div>

@@ -1,0 +1,9 @@
+{% comment %}
+    Component of cart modal, fetched using section rendering API
+{% endcomment %}
+{%- if cart != empty -%}
+    <div class="cart-modal__subtotal">
+        <span>{{ 'sections.cart.subtotal' | t }}</span>
+        <span>{{ cart.items_subtotal_price | money }}</span>
+    </div>
+{%- endif -%}

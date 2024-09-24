@@ -1,0 +1,98 @@
+{
+    "sections": {
+    "breadcrumbs_nRC8Ep": {
+        "type": "breadcrumbs",
+        "settings": {
+        }
+    },
+    "main": {
+        "type": "main-page",
+        "settings": {
+        "background_color": "#ffffff",
+        "show_title": true,
+        "full_width": false,
+        "page_title_custom": "Unisex Fit + Size Charts",
+        "page_title_uppercase": true,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+        }
+    },
+    "ds_page_3RxFW9": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-tops",
+        "show_title": false
+        }
+    },
+    "ds_page_nPfL9N": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-anvil-chore-jacket",
+        "show_title": false
+        }
+    },
+    "ds_page_hfJ3Kp": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-chisel-hooded-jacket",
+        "show_title": false
+        }
+    },
+    "ds_page_zYpkUp": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-royce-harrington-jacket",
+        "show_title": false
+        }
+    },
+    "ds_page_jndWbt": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-sipes-varsity-jacket",
+        "show_title": false
+        }
+    },
+    "ds_page_EKcALW": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-vale-packable-anorak",
+        "show_title": false
+        }
+    },
+    "ds_page_WkFF4E": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-hoon-jersey",
+        "show_title": false
+        }
+    },
+    "ds_page_HLdN8i": {
+        "type": "ds-page",
+        "settings": {
+        "page": "size-guide-mule-hydration-vest",
+        "show_title": false
+        }
+    }
+    },
+    "order": [
+    "breadcrumbs_nRC8Ep",
+    "main",
+    "ds_page_3RxFW9",
+    "ds_page_nPfL9N",
+    "ds_page_hfJ3Kp",
+    "ds_page_zYpkUp",
+    "ds_page_jndWbt",
+    "ds_page_EKcALW",
+    "ds_page_WkFF4E",
+    "ds_page_HLdN8i"
+    ]
+}  

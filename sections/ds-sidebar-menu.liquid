@@ -1,0 +1,115 @@
+{% style %}
+    .page-aside__menu {
+        display: flex;
+        flex-flow: column nowrap;
+        flex: 100% 1 1;
+    }
+
+    @media screen and (max-width: 749px){
+        .page-aside__menu {
+            width: 100%;
+            padding: 10px 30px;
+        }
+    }
+
+	.page-aside__menu {
+		font-size: 1.2rem;
+		line-height: 1.4;
+	}
+	.page-aside__menu p {
+		margin: 15px 0;
+		padding: 0;
+	}
+	.page-aside__menu a {
+		text-decoration: none;
+		color: #000000;
+	}
+	.page-aside__menu a:hover, .page-aside__menu a:visited {
+		text-decoration: none;
+		color: #000000;
+	}
+
+
+    .page-aside__menu--mobile {
+        display: block;
+        padding: 40px 0;
+        margin-top: 40px;
+        line-height: 22px;
+        border-top: 1px solid #e3e3e3
+    }
+
+    @media (min-width: 1024px) {
+        .page-aside__menu--mobile {
+            display: none
+        }
+    }
+{% endstyle %}
+
+<aside class="page-aside__menu">
+        {{ section.settings.sidebar_title }}
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'menu_link' %}
+                    <a href="{{ block.settings.menu_link_url }}" class="sidebar-menu__link">{{ block.settings.menu_link_text | escape }}</a>
+                {% when 'sidebar_blurb' %}
+                    {{ block.settings.sidebar_blurb_text }}
+            {% endcase %}
+        {% endfor %}
+    </aside>
+
+{% schema %}
+{
+    "name": "Sidebar Menu",
+    "tag": "aside",
+    "disabled_on": {
+        "groups": ["header", "footer"]
+    },
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "sidebar_title",
+            "label": "Sidebar menu title",
+            "default": "<h3>Customer Service</h3>"
+        },
+        {
+            "type": "checkbox",
+            "id": "uppercase_title",
+            "label": "Uppercase title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "menu_link",
+            "name": "Menu link",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "menu_link_url",
+                    "label": "URL for menu link"
+                },
+                {
+                    "type": "text",
+                    "id": "menu_link_text",
+                    "label": "Text for menu link"
+                }
+            ]
+        },
+        {
+            "type": "sidebar_blurb",
+            "name": "Sidebar Blurb",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "sidebar_blurb_text",
+                    "label": "Sidebar blurb"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "uppercase_blurb",
+                    "label": "Uppercase blurb"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

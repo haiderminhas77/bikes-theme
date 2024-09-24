@@ -1,0 +1,1214 @@
+<div class="page-width" data-section-id="{{ section.id }}">
+	<div class="page-header">
+		<h1 class="uppercase">{{ page.title }}</h1>
+	</div>
+
+	<div>
+        <style>
+            :root:root {
+                --color-base-background-1: {{ settings.colors_background_1.red }}, {{ settings.colors_background_1.green }}, {{ settings.colors_background_1.blue }};
+            }
+
+            .buttons-container {
+				margin: 16px 0;
+			}
+
+			.buttons-container-arrows {
+				height: 20rem;
+				width: 20rem;
+				position: relative;
+				border: 2px solid rgb(var(--color-base-text));
+			}
+
+			.buttons-container .button {
+				margin: 0 24px 16px 0;
+			}
+
+			.icons-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+				grid-auto-rows: 60px;
+				margin: 48px 0;
+			}
+
+			.icons-grid--lg .icon {
+				width: 30px;
+				height: 30px;
+			}
+
+			.slider-button {
+				position: absolute;
+			}
+
+			.slider-button--up {
+				top: 0;
+				right: 8rem;
+			}
+
+			.slider-button--next {
+				right: 0;
+				bottom: 8rem;
+			}
+
+			.slider-button--down {
+				bottom: 0;
+				right: 8rem;
+			}
+
+			.slider-button--prev {
+				bottom: 8rem;
+				left: 0;
+			}
+        </style>
+		{% comment %} <style>
+			section {
+				margin-bottom: 48px;
+			}
+
+			.section-title {
+				margin-bottom: 16px;
+			}
+
+			.section-subtitle {
+				margin-top: 32px;
+			}
+
+			.buttons-bg,
+			.form-bg {
+				margin-bottom: 32px;
+				padding: 2px 32px;
+				background: #000000;
+				color: #ffffff;
+			}
+
+			.form-bg {
+				margin-top: 48px;
+				padding: 32px;
+			}
+
+			section .form__group input:not([type='checkbox']):not([type='radio']),
+			section .form__group textarea {
+				width: 100%;
+			}
+
+			.form__group--flex {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+			}
+
+			.form__group--flex input {
+				margin-right: 10px;
+			}
+
+			.featured-blog__grid {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 24px;
+			}
+
+			@media only screen and (min-width: 61.875rem) {
+				.featured-blog__grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+
+			.controls-demo {
+				position: relative;
+				height: 200px;
+				margin-bottom: 16px;
+				border: 1px solid #000000;
+			}
+		</style> {% endcomment %}
+
+		<section>
+			<h2 class="uppercase">Colours</h2>
+            <h3 class="uppercase">Primary</h3>
+			<ul class="list-unstyled">
+				<li>
+					<div style="color: rgba(var(--color-base-text),1);"><p>Black - #000000</p></div>
+					<code>rgba(var(--color-base-text), 1);</code>
+				</li>
+				<li>
+					<div style="color: rgba(var(--color-base-background-1),1); background-color: rgba(var(--color-base-text),1); width: fit-content;"><p>White - #FFFFFF</p></div>
+					<code>rgba(var(--color-base-background-1), 1);</code>
+				</li>
+				<li>
+					<div style="color: rgba(var(--color-base-background-2),1);"><p>Dark Grey - #4D4D4D</p></div>
+					<code>rgba(var(--color-base-background-2), 1);</code>
+				</li>
+                <li>
+					<div style="color: rgba(var(--color-base-background-3),1);"><p>Grey - #878787</p></div>
+					<code>rgba(var(--color-base-background-3), 1);</code>
+				</li>
+				<li>
+					<div style="color: rgba(var(--color-base-background-4),1);"><p>Light Grey - #D9D9D9</p></div>
+					<code>rgba(var(--color-base-background-4), 1);</code>
+				</li>
+			</ul>
+            <h3 class="uppercase">Secondary</h3>	
+            <ul class="list-unstyled">
+                <li>
+					<div style="color: rgba(var(--color-base-accent-1),1);"><p>Green - #9D9986</p></div>
+					<code>rgba(var(--color-base-accent-1), 1);</code>
+				</li>
+                <li>
+					<div style="color: rgba(var(--color-base-accent-2),1);"><p>Blue - #00486F</p></div>
+					<code>rgba(var(--color-base-accent-2), 1);</code>
+				</li>
+                <li>
+					<div style="color: rgba(var(--color-base-accent-3),1);"><p>Gold - #BF811D</p></div>
+					<code>rgba(var(--color-base-accent-3), 1);</code>
+				</li>
+				<li>
+					<div style="color: rgba(var(--color-base-accent-4),1);"><p>Red - #A30000</p></div>
+					<code>rgba(var(--color-base-accent-4), 1);</code>
+				</li>
+			</ul>
+		</section>
+		<hr>
+		<section>
+			<p>Body text - Nimbus sans</p>
+			<p>Regular font: Born from the desire to inspire</p>
+			<p style="font-style: italic;">regular / italic: Born from the desire to inspire</p>
+			<p style="font-weight: var(--font-body-weight-bold)">Bold: SUPER73</p>
+			<code>usage:
+			font-family: var(--font-body-family); //nimbus-sans, sans-serif;
+			<br>
+			font-style: var(--font-body-style);
+			<br>
+			font-weight: var(--font-body-weight); //400
+			<br>
+			font-weight: var(--font-body-weight); //700
+			<br>
+			letter-spacing: var(--font-body-letter-spacing); //-0.02rem;</code>
+		</section>
+        <hr>
+        <hr>
+		<section>
+			<h2 class="uppercase">Fonts: body</h2>
+			<h2 class="section-title h1">Headings: bebas-neue-pro - bold - uppercase - normal spacing </h2>
+			<h2 class="section-title h1" style="font-style: italic;">Headings italic: bebas-neue-pro</h2>
+			<code>usage:
+				font-family: var(--font-heading-family); //--font-heading-family (bebas-neue-pro, sans-serif;)
+				<br>
+				font-weight: var(--font-heading-weight); 600;
+				<br>
+				font-style: var(--font-heading-style);
+				<br>
+				letter-spacing: var(--font-heading-letter-spacing); //normal
+				<br>
+				letter-spacing: var(--font-heading-letter-spacing-wide); //0.075em <-- might only be used for caption
+			</code>
+			<div>
+				<h1>Heading One</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h2>Heading Two</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h3>Heading Three</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h4>Heading Four</h4>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h5>Heading Five</h5>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h6>Heading Six</h6>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+
+				<p>
+					Suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+					vulputate velit esse molestie consequat.
+				</p>
+				<p>
+					Lorem <strong>ipsum dolor sit</strong> amet, consectetuer <em>adipiscing elit</em>, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna <a href="#">liquam erat volutpat</a>. Ut wisi enim ad minim veniam,
+					quis nostrud exerci tation ullamcorper.
+				</p>
+
+				<ul>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ul>
+
+				<ol>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ol>
+			</div>
+			<div class="rte">
+				<h1> rte : Heading One</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h2>Heading Two</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h3>Heading Three</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h4>Heading Four</h4>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h5>Heading Five</h5>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h6>Heading Six</h6>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+
+				<p>
+					Suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+					vulputate velit esse molestie consequat.
+				</p>
+				<p>
+					Lorem <strong>ipsum dolor sit</strong> amet, consectetuer <em>adipiscing elit</em>, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna <a href="#">liquam erat volutpat</a>. Ut wisi enim ad minim veniam,
+					quis nostrud exerci tation ullamcorper.
+				</p>
+
+				<ul>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ul>
+
+				<ol>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ol>
+			</div>
+		</section>
+        <hr>
+
+		<section>
+			<p class="caption-with-letter-spacing">Caption: bebas-neue-pro - regular font weight with wide spacing!</p>
+			<p class="caption-with-letter-spacing" style="font-style: italic;">Caption italic: bebas-neue-pro - regular with wide spacing!</p>
+			<code>usage:
+				font-family: var(--font-caption-family); //--font-heading-family (bebas-neue-pro, sans-serif;)
+				<br>
+				font-weight: var(--font-caption-weight); //	--font-heading-weight-light: 400;
+				<br>
+				font-style: var(--font-caption-style);
+				<br>
+				letter-spacing: var(--font-caption-letter-spacing); //normal <-- might not be used
+				<br>
+				letter-spacing: var(--font-caption-letter-spacing-wide); //0.075em
+			</code>
+		</section>
+        <hr>
+
+        <section>
+			<h2 class="uppercase">Buttons</h2>
+
+			<h4 class="uppercase">Default Button</h4>
+			<code>.button .button--primary</code>
+			<div class="buttons-container">
+				<a class="button button--primary">Default Button</a>
+				<a class="button button--primary" disabled>Button Disabled</a>
+			</div>
+
+			<h4 class="uppercase">Secondary Button</h4>
+			<code>.button .button--secondary</code>
+			<div class="buttons-container">
+				<a class="button button--secondary">Secondary Button</a>
+				<a class="button button--secondary" disabled>Secondary Button Disabled</a>
+			</div>
+
+
+            <h4 class="uppercase">Light Button</h4>
+            <code>.button .button--light</code>
+            <div class="buttons-container">
+                <button class="button button--light">Light Button</button>
+                <button class="button button--light" disabled>Light Button Disabled</button>
+            </div>
+
+			<h4 class="uppercase">Block Button</h4>
+			<code>.button .button--primary .button--full-width</code>
+			<div class="buttons-container">
+				<a class="button button--primary button--full-width">Block Button</a>
+				<a class="button button--primary button--full-width" disabled>Button Disabled</a>
+			</div>
+
+			<h4 class="uppercase">Right Icon Button</h4>
+			<code>.button .button--primary .button--icon</code>
+			<div class="buttons-container">
+				<a class="button button--primary button--icon">
+                    Right Icon Button
+					{%- render 'icon-arrow-right' -%}
+				</a>
+			</div>
+
+			<h4 class="uppercase">Down Icon Button</h4>
+			<code>.button .button--primary .button--icon</code>
+			<div class="buttons-container">
+				<a class="button button--primary button--icon">
+					Down Icon Button
+					{%- render 'icon-arrow-down' -%}
+				</a>
+			</div>
+
+			<h4 class="section-subtitle">Left Icon Button</h4>
+			<code>.link .link-with-icon</code>
+			<div class="buttons-container">
+				<a class="link link-with-icon">
+					{%- render 'icon-arrow' -%}
+					Left Icon Button
+				</a>
+			</div>
+	
+			<h4 class="section-subtitle">Right Icon Button</h4>
+			<code>.link .link-with-icon</code>
+			<div class="buttons-container">
+				<a class="link link-with-icon">
+					Right Icon Button
+					{%- render 'icon-arrow-right' -%}
+				</a>
+			</div>
+	
+			<h4 class="section-subtitle">Text Button underline</h4>
+			<code>.button button--underline</code>
+			<div class="buttons-container">
+				<a class="button button--underline">Text Button</a>
+			</div>
+	
+			<h4 class="section-subtitle">Text Button Underline Left</h4>
+			<code>.button button--underline button--underline-left</code>
+			<div class="buttons-container">
+				<a class="button button--underline button--underline-left">Text Button</a>
+			</div>
+			<h4 class="section-subtitle">Text Button Underline Hover</h4>
+			<code>.button button--underline button--underline--hover</code>
+			<div class="buttons-container">
+				<a class="button button--underline button--underline--hover">Text Button</a>
+			</div>
+	
+			<h4 class="section-subtitle">Text Button Underline Left hover</h4>
+			<code>.button button--underline button--underline-left button--underline--hover</code>
+			<div class="buttons-container">
+				<a class="button button--underline button--underline-left button--underline--hover">Text Button</a>
+			</div>
+
+			<h4 class="uppercase">Slider Buttons</h4>
+			<code>.slider-button .slider-button--prev / .slider-button--up / .slider-button--next / .slider-button--down</code>
+            <div class="buttons-container buttons-container-arrows">
+                <button class="slider-button slider-button--prev">{% render 'icon-arrow-left' %}</button>
+				<button class="slider-button slider-button--up">{% render 'icon-arrow' %}</button>
+				<button class="slider-button slider-button--next">{% render 'icon-arrow-right' %}</button>
+				<button class="slider-button slider-button--down" disabled>{% render 'icon-arrow-down' %}</button>
+            </div>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">RTE</h2>
+			<div class="rte">
+				<h1>Heading One</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h2>Heading Two</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h3>Heading Three</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h4>Heading Four</h4>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h5>Heading Five</h5>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+				<h6>Heading Six</h6>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in.
+				</p>
+
+				<p>
+					Suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+					vulputate velit esse molestie consequat.
+				</p>
+				<p>
+					Lorem <strong>ipsum dolor sit</strong> amet, consectetuer <em>adipiscing elit</em>, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna <a href="#">liquam erat volutpat</a>. Ut wisi enim ad minim veniam,
+					quis nostrud exerci tation ullamcorper.
+				</p>
+
+				<ul>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ul>
+
+				<ol>
+					<li>One</li>
+					<li>Two</li>
+					<li>Three</li>
+					<li>Four</li>
+				</ol>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Icons</h2>
+
+			<div class="icons-grid icons-grid--lg">
+				{%- liquid
+					render 'icon-3D-model'
+					render 'icon-account'	
+					render 'icon-arrow-left'
+					render 'icon-arrow-right'
+					render 'icon-arrow-down'
+					render 'icon-arrow'
+					render 'icon-caret-solid'
+					render 'icon-caret'
+					render 'icon-cart-empty'
+					render 'icon-cart'
+					render 'icon-checkmark'
+					render 'icon-chevron-down'
+					render 'icon-clipboard'
+					render 'icon-close'
+					render 'icon-close-small'
+					render 'icon-discount'
+					render 'icon-error'
+					render 'icon-filter'
+					render 'icon-full-zoom'
+					render 'icon-hamburger'
+					render 'icon-minus'
+					render 'icon-plus'
+					
+					render 'icon-quick-view'
+					render 'icon-search'
+					render 'icon-share'
+					render 'icon-play'
+					render 'icon-pause'
+					render 'icon-tick'
+					render 'icon-padlock'
+				
+				-%}
+			</div>
+
+			<h2 class="section-title h3">Super73 customs</h2>
+
+			<div class="icons-grid icons-grid--lg">
+				{%- liquid
+					render 'icon-super73-lightning'
+					render 'icon-super73-display'
+					render 'icon-super73-battery'
+					render 'icon-super73-throttle'
+					render 'icon-super73-community-customs'
+					render 'icon-super73-community-guides'
+					render 'icon-super73-community-aboutus'
+					render 'icon-super73-community-press'
+					render 'icon-super73-community-calendar'
+					render 'icon-super73-community-blogs'
+					render 'icon-super73-accessories'
+					render 'icon-super73-accessories-sale'
+					render 'icon-super73-accessories-apparel'
+					render 'icon-super73-accessories-parts'
+					render 'icon-super73-accessories-marketplace'
+					render 'icon-super73-bike-discover'
+					render 'icon-super73-bike-k1d'
+					render 'icon-super73-bike-c1x'
+					render 'icon-super73-bike-r-adv'
+					render 'icon-super73-bike-s2'
+					render 'icon-super73-bike-z-miami'
+				-%}
+			</div>
+
+			<h2 class="section-title h3">Social Icons</h2>
+
+			<div class="icons-grid icons-grid--lg">
+				{%- liquid
+					render 'icon-facebook'
+					render 'icon-instagram'
+					render 'icon-pinterest'
+					render 'icon-snapchat'
+					render 'icon-tiktok'
+					render 'icon-tumblr'
+					render 'icon-twitter'
+					render 'icon-vimeo'
+					render 'icon-youtube'
+				-%}
+			</div>
+
+
+			<h2 class="section-title h3">Flag Icons</h2>
+
+			<div class="icons-grid icons-grid--lg">
+				{%- liquid
+					render 'icon-flag-au'
+					render 'icon-flag-ca'
+					render 'icon-flag-de'
+					render 'icon-flag-eu'
+					render 'icon-flag-fr'
+					render 'icon-flag-gb'
+					render 'icon-flag-ie'
+					render 'icon-flag-it'
+					render 'icon-flag-nl'
+					render 'icon-flag-nz'
+					render 'icon-flag-us'
+				-%}
+			</div>
+		</section>
+
+		<hr>
+
+	
+
+		<hr>
+
+{% comment %}
+		<section>
+			<h2 class="section-title h3">Tags Style</h2>
+			<p>
+				Style used in various places e.g. predictive search keywords, filters on collection page, article cards, filters
+				on blog page
+			</p>
+
+			<p style="margin-top: 40px">Search</p>
+			<code>.full-unstyled-link .text-tag .text-tag--arrow</code><br>
+			<a class="full-unstyled-link text-tag text-tag--arrow" href="#" style="margin-top: 16px">Keywords</a>
+
+			<p style="margin-top: 40px">Collection Filters</p>
+			<code>.full-unstyled-link  .text-tag .text-tag--arrow .text-tag--alt</code><br>
+			<a class="full-unstyled-link text-tag text-tag--arrow text-tag--alt body-sm-short" href="#" style="margin-top: 16px"
+				><span>Tag</span> {% render 'icon-close' -%}
+			</a>
+
+			<p style="margin-top: 40px">Blog</p>
+			<code>.full-unstyled-link .text-tag .text-tag--arrow .text-tag--small</code><br>
+			<a class="full-unstyled-link  text-tag text-tag--arrow text-tag--small" href="#" style="margin-top: 16px; margin-bottom: 32px;"
+				>Surf</a
+			><br>
+			<code>.full-unstyled-link  text-tag .text-tag--round .text-tag--small</code><br>
+			<a class="full-unstyled-link  text-tag text-tag--round text-tag--small" href="#" style="margin-top: 16px; margin-bottom: 32px">Surf</a
+			><br>
+			<code>.full-unstyled-link  .text-tag .text-tag--rect .text-tag--small</code><br>
+			<a class="full-unstyled-link  text-tag text-tag--rect text-tag--small" href="#" style="margin-top: 16px; margin-bottom: 32px">Surf</a
+			><br>
+		</section>
+
+		<section>
+			<h2 class="section-title h3">Headings</h2>
+			<h1 class="hero-1">Hero 1</h1>
+			<h2 class="hero-2">Hero 2</h2>
+			<h1>Heading one</h1>
+			<h2>Heading two</h2>
+			<h3>Heading three</h3>
+			<h4>Heading four</h4>
+			<h5>Heading five</h5>
+			<h6>Heading six</h6>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Forms</h2>
+
+			<div class="customer login">
+				<div><form method="post" action="/account/login?oseid=pJq9aSommyQSyhorAY4gdMRJ" id="customer_login" accept-charset="UTF-8" data-login-with-shop-sign-in="true" novalidate="novalidate" data-editor-form-attribute=""><input type="hidden" name="form_type" value="customer_login"><input type="hidden" name="utf8" value="✓"><div class="field">
+							<input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off" autocapitalize="off" placeholder="Email">
+							<label for="CustomerEmail">
+								Email
+							</label>
+						</div><div class="field">
+								<input type="password" value="" name="customer[password]" id="CustomerPassword" autocomplete="current-password" placeholder="Password">
+								<label for="CustomerPassword">
+									Password
+								</label>
+							</div>
+			
+							<a href="#recover">
+								Forgot your password?
+							</a><a class="button--full-width uppercase">
+							Sign in
+						</a>
+			
+						<a href="/account/register">
+							Create account
+						</a><input type="hidden" name="oseid" value="pJq9aSommyQSyhorAY4gdMRJ"></form></div></div>
+			<form>
+				<div class="form__group form__group--floating">
+					<select id="selectHorizontal1">
+						<option value="">Choose option</option>
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+						<option value="3">Option 3</option>
+					</select>
+				</div>
+
+				<div class="form__group">
+					<select id="selectHorizontal1" class="select--sm">
+						<option value="">Choose option</option>
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+						<option value="3">Option 3</option>
+					</select>
+				</div>
+
+				<div class="form__group form__group--floating">
+					<textarea
+						rows="10"
+						name="contact[body]"
+						id="ContactFormMessage"
+						placeholder="{{ 'contact.form.message' | t }}"
+					></textarea>
+					<label for="ContactFormMessage">{{ 'contact.form.message' | t }}</label>
+				</div>
+
+				<div class="form__group">
+					<div class="form__inline-input">
+						<input type="checkbox" id="checkInline">
+						<label for="checkInline">Checkbox Label</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="checkbox" id="checkInline2" disabled>
+						<label for="checkInline2">Checkbox Label disabled</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="checkbox" id="checkInline3" checked disabled>
+						<label for="checkInline3">Checkbox Label checked disabled</label>
+					</div>
+				</div>
+
+				<div class="form__group">
+					<div class="form__inline-input">
+						<input type="radio" id="radio-option-1" name="radio-option">
+						<label for="radio-option-1">Radio Button 1</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="radio" id="radio-option-2" name="radio-option">
+						<label for="radio-option-2">Radio Button 2</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="radio" id="radio-option-3" name="radio-option">
+						<label for="radio-option-3">Radio Button 3</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="radio" id="radio-option-4" name="radio-option" disabled>
+						<label for="radio-option-4">Radio Button 4 disabled</label>
+					</div>
+					<div class="form__inline-input">
+						<input type="radio" id="radio-option-4" name="radio-option-disabled" checked disabled>
+						<label for="radio-option-4">Radio Button 4 checked disabled</label>
+					</div>
+				</div>
+
+				<input type="submit" class="button" value="{{ 'contact.form.send' | t }}">
+
+				<div class="form-bg form--dark">
+					<div class="form__group form__group--floating">
+						<input
+							type="text"
+							name="contact[name]"
+							id="ContactFormName2"
+							placeholder="{{ 'contact.form.name' | t }}"
+							value=""
+						>
+						<label for="ContactFormName2">{{ 'contact.form.name' | t }}</label>
+					</div>
+
+					<div class="form__group form__group--floating">
+						<select id="selectHorizontal2">
+							<option value="">Choose option</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+
+					<div class="form__group">
+						<div class="form__inline-input">
+							<input type="checkbox" id="checkInline4">
+							<label for="checkInline4">Checkbox Label</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="checkbox" id="checkInline5" disabled>
+							<label for="checkInline5">Checkbox Label disabled</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="checkbox" id="checkInline6" checked disabled>
+							<label for="checkInline6">Checkbox Label checked disabled</label>
+						</div>
+					</div>
+
+					<div class="form__group">
+						<div class="form__inline-input">
+							<input type="radio" id="radio-option-5" name="radio-option">
+							<label for="radio-option-5">Radio Button 5</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="radio" id="radio-option-6" name="radio-option">
+							<label for="radio-option-6">Radio Button 6</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="radio" id="radio-option-7" name="radio-option">
+							<label for="radio-option-7">Radio Button 7</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="radio" id="radio-option-8" name="radio-option" disabled>
+							<label for="radio-option-8">Radio Button 8 disabled</label>
+						</div>
+						<div class="form__inline-input">
+							<input type="radio" id="radio-option-9" name="radio-option-disabled" checked disabled>
+							<label for="radio-option-9">Radio Button 9 checked disabled</label>
+						</div>
+					</div>
+
+					<input type="submit" class="button button--outline" value="{{ 'contact.form.send' | t }}">
+				</div>
+			</form>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Form validation</h2>
+
+			<form>
+				<p class="form__info-message">Info message</p>
+
+				<p class="form__success-message">Success message</p>
+
+				<p class="form__warning-message">Warning message</p>
+
+				<div class="form__error-message">Error message</div>
+
+				<div class="form__group form__group--floating">
+					<input
+						type="text"
+						name="contact[name]"
+						id="ContactFormName"
+						class="input-error"
+						placeholder="{{ 'contact.form.name' | t }}"
+						value=""
+					>
+					<label for="ContactFormName">{{ 'contact.form.name' | t }} (error)</label>
+
+					<div class="input__error-message">Form input error message</div>
+				</div>
+			</form>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Collection Card</h2>
+
+			{%- liquid
+				for collection in collections
+					if collection.all_products_count < 4
+						continue
+					endif
+					assign collection = collection
+					break
+				endfor
+			-%}
+			<div class="collection-list__grid">
+				<div class="collection-list__grid-item">
+					{%- render 'component-collection-card',
+						collection: collection,
+						link_text: 'Shop Now',
+						link_type: 'text_link'
+					-%}
+				</div>
+				<div class="collection-list__grid-item">
+					{%- render 'component-collection-card',
+						collection: collection,
+						link_text: 'Shop Now',
+						link_type: 'button_link'
+					-%}
+				</div>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Product Card</h2>
+
+			<ul class="results-grid results-grid--product list-inline">
+				{% comment %} {%- for product in collection.products limit: 4 -%}
+					<li class="results-grid__tile">
+						{%- render 'product-card', product: product -%}
+					</li>
+				{%- endfor -%} {% endcomment %}
+			</ul>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Article Card</h2>
+
+			<div class="featured-blog__grid">
+				{%- for article in blogs.blog.articles limit: 3 -%}
+					{% render 'article-card', article: article, blog: blogs.blog %}
+				{%- endfor -%}
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Breadcrumbs</h2>
+
+			<nav class="breadcrumbs" aria-label="Breadcrumbs">
+				<ol class="breadcrumbs__list">
+					<li class="breadcrumbs__item">
+						<a class="breadcrumbs__link" href="/"><span>Home</span></a>
+					</li>
+					<li class="breadcrumbs__item">
+						<a class="breadcrumbs__link" href="#"><span>Gold</span></a>
+					</li>
+					<li class="breadcrumbs__item"><span>Choker with Gold Pendant</span></li>
+				</ol>
+			</nav>
+
+			<div class="breadcrumbs breadcrumbs--return">
+				<a type="button" class="button button--icon" data-return-button>
+					{% render 'icon-arrow-undo' %}
+					{{ 'general.breadcrumbs.return' | t }}
+				</a>
+			</div>
+		</section>
+
+		<hr>
+
+		<section>
+			<h2 class="section-title h3">Accordions</h2>
+			{%- liquid
+				assign accordion_labels = 'Accordion label 1|Accordion label 2|Accordion label 3|Accordion label 4'
+				assign accordion_content = 'Accordion content lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.|Accordion content lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.|Accordion content lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.|Accordion content lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.'
+
+				assign label_array = accordion_labels | split: '|'
+				assign content_array = accordion_content | split: '|'
+
+				render 'component-accordion-item', labels: label_array, contents: content_array, multi: false, open_first: true
+			-%}
+
+			<h3>Same accordion with multi open but closed first item</h3>
+			{% render 'component-accordion-item',
+				labels: label_array,
+				contents: content_array,
+				multi: true,
+				open_first: false
+			%}
+		</section>
+
+		<section>
+			<h2 class="section-title h2">Tabs</h2>
+
+			<div class="js-tabs">
+				<ul class="js-tablist">
+					<li class="js-tablist__item">
+						<a class="js-tablist__link" href="#tab-1" data-selected="1">You May Also Like</a>
+					</li>
+					<li class="js-tablist__item">
+						<a class="js-tablist__link" href="#tab-2">Recently Viewed</a>
+					</li>
+				</ul>
+
+				<div id="tab-1" class="js-tabcontent">
+					<p>Tab 1 content.</p>
+				</div>
+				<div id="tab-2" class="js-tabcontent">
+					<p>Tab 2 content.</p>
+				</div>
+			</div>
+
+			<h3 class="section-subtitle">Small Tabs</h3>
+
+			<div class="js-tabs tabs--small">
+				<ul class="js-tablist">
+					<li class="js-tablist__item">
+						<a class="js-tablist__link" href="#tab-3" data-selected="1">Mens</a>
+					</li>
+					<li class="js-tablist__item">
+						<a class="js-tablist__link" href="#tab-4">Womens</a>
+					</li>
+				</ul>
+
+				<div id="tab-3" class="js-tabcontent">
+					<p>Tab 1 content.</p>
+				</div>
+				<div id="tab-4" class="js-tabcontent">
+					<p>Tab 2 content.</p>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2 class="section-title h3">Pagination</h2>
+
+			<nav class="pagination-nav" aria-label="{{ 'accessibility_labels.pagination_label' | t }}">
+				<ol class="pagination">
+					<li class="active" aria-current="page" aria-label="{{ 'accessibility_labels.current_page' | t }} 1">
+						<span class="pagination__page">1</span>
+					</li>
+					<li>
+						<a
+							href="#"
+							class="pagination__page pagination__page-link"
+							aria-label="{{ 'accessibility_labels.page' | t }} 2"
+						>
+							<span class="visually-hidden">{{ 'accessibility_labels.page' | t }}</span> 2
+						</a>
+					</li>
+					<li>
+						<a
+							href="#"
+							class="pagination__page pagination__page-link"
+							aria-label="{{ 'accessibility_labels.page' | t }} 3"
+						>
+							<span class="visually-hidden">{{ 'accessibility_labels.page' | t }}</span> 3
+						</a>
+					</li>
+					<li aria-label="&hellip;">
+						<span class="pagination__page">&hellip;</span>
+					</li>
+					<li>
+						<a
+							href="#"
+							class="pagination__page pagination__page-link"
+							aria-label="{{ 'accessibility_labels.page' | t }} 6"
+						>
+							<span class="visually-hidden">{{ 'accessibility_labels.page' | t }}</span> 6
+						</a>
+					</li>
+					<li>
+						<a
+							class="pagination__arrow"
+							href="#"
+							aria-label="{{ 'accessibility_labels.next_page' | t }}"
+						>
+							<span aria-hidden="true">{% render 'icon-chevron-right' %}</span>
+						</a>
+					</li>
+				</ol>
+			</nav>
+
+			<nav class="pagination-nav pagination-nav--bottom" aria-label="{{ 'accessibility_labels.pagination_label' | t }}">
+				<div class="pagination__load-more" data-pagination>
+					<p class="pagination__header">
+						{%- liquid
+							assign viewed_html = '<span data-pagination-viewed>' | append: 48 | append: '</span>'
+							assign results_type = 'general.pagination.products' | t
+
+							echo 'general.pagination.progress_text_html' | t: count: viewed_html, total: 96, results: results_type
+						-%}
+					</p>
+
+					<div class="pagination__progress">
+						<div class="pagination__progress-bar" style="width: 20%;" data-progress-bar></div>
+					</div>
+
+					<div class="pagination__load-next">
+						<a
+							class="button button--text"
+							href="#"
+							rel="next"
+							title="{{ 'general.pagination.load_more' | t | capitalize }} {{ results_type }}"
+							data-load-more
+							data-load-next
+						>
+							{{ 'general.pagination.load_more' | t }}
+						</a>
+					</div>
+				</div>
+			</nav>
+		</section>
+
+		<section>
+			<h2 class="section-title h3">Controls</h2>
+
+			<div class="controls-demo">
+				<ol class="flickity-page-dots">
+					<li class="dot is-selected" aria-label="Page dot 1" aria-current="step"></li>
+					<li class="dot" aria-label="Page dot 2"></li>
+					<li class="dot" aria-label="Page dot 3"></li>
+				</ol>
+
+				{% render 'carousel-controls' %}
+			</div>
+		</section>
+
+		<section>
+			<h2 class="section-title h3">Drawers & Modals</h2>
+
+			<a type="button" class="button button--text button--underline" data-modal-test-left-1-trigger>
+				Left Drawer Trigger
+			</a>
+			<p style="margin:8px 0 24px;">Modal class modifiers: <code>drawer drawer-left slide-in</code></p>
+
+			<a type="button" class="button button--text button--underline" data-modal-test-right-trigger>
+				Right Drawer Trigger
+			</a>
+			<p style="margin:8px 0 24px;">Modal class modifiers: <code>drawer drawer-right slide-in</code></p>
+
+			<a type="button" class="button button--text button--underline" data-modal-test-left-2-trigger>
+				Drawer Trigger (Fade)
+			</a>
+			<p style="margin:8px 0 24px;">Modal class modifiers: <code>drawer drawer-left</code></p>
+
+			<a type="button" class="button button--text button--underline" data-modal-test-box-trigger>
+				Modal Box Trigger (Slide)
+			</a>
+			<p style="margin:8px 0 24px;">Modal class modifiers: <code>box slide-in</code></p>
+
+			<a type="button" class="button button--text button--underline" data-modal-test-fade-trigger>
+				Modal Box Trigger (Fade)
+			</a>
+
+			<p style="margin:8px 0 24px;">Modal class modifiers: <code>box</code></p>
+
+			{%- capture modal_test_content -%}
+				<p>Modal Content</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+			{%- endcapture -%}
+
+			{%- capture modal_test_content_short -%}
+				<p>Modal Content</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p>
+			{%- endcapture -%} {% endcomment %}
+
+			{% # theme-check-disable LiquidTag %}
+			{% comment %} {% render 'component-modal-dialog',
+				modal_class: 'test-left drawer drawer-left slide-in',
+				modal_id: 'test-left-1',
+				modal_content: modal_test_content
+			%}
+
+			{% render 'component-modal-dialog',
+				modal_class: 'test-right drawer drawer-right slide-in',
+				modal_id: 'test-left',
+				modal_id: 'test-right',
+				modal_header: 'Drawer Heading',
+				modal_sticky_header: true,
+				modal_content: modal_test_content
+			%}
+
+			{% render 'component-modal-dialog',
+				modal_class: 'test-left drawer drawer-left',
+				modal_id: 'test-left-2',
+				modal_content: modal_test_content
+			%}
+
+			{% render 'component-modal-dialog',
+				modal_class: 'box slide-in',
+				modal_id: 'test-box',
+				modal_content: modal_test_content_short
+			%}
+
+			{% render 'component-modal-dialog',
+				modal_class: 'box',
+				modal_id: 'test-fade',
+				modal_header: 'Drawer Fade Heading',
+				modal_sticky_header: true,
+				modal_content: modal_test_content_short
+			%} {% endcomment %}
+			{% # theme-check-enable LiquidTag %}
+		{% comment %} </section>
+
+		<section>
+			<h2 class="section-title h3">Component Video</h2> {% endcomment %}
+
+			{% comment %} <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+				{% liquid
+					assign product = all_products['video-test']
+
+					for media in product.media
+						if media.media_type == 'image'
+							continue
+						endif
+
+						render 'component-video', video: media, autoplay: true, poster_width: 800, aspect_ratio: 'natural'
+					endfor
+
+					assign video_url = 'surfer.mp4' | file_url
+					render 'component-video', video: video_url, autoplay: true, controls: true
+
+					render 'component-video', video: video_url, autoplay: true, controls: true, aspect_ratio: 'natural'
+
+					assign video_url = 'Time_Lapse_Video_Of_Clouds.mp4' | file_url
+					assign image = product.media | where: 'media_type', 'image' | first
+					render 'component-video', video: video_url, autoplay: false, poster: image
+				%}
+			</div> {% endcomment %}
+		{% comment %} </section> {% endcomment %}
+	</div>
+</div>

@@ -1,0 +1,14 @@
+.article__progress-bar-wrapper {
+    /* position: fixed;
+    top: 0; */
+    width: 100%;
+    height: .5rem;
+    background-color: rgb(var(--media-color-foreground));
+}
+
+.article__progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: rgba(var(--color-base-accent-3), 1);
+    transition: width .2s ease-in-out;
+}

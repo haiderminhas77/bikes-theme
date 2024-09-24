@@ -1,0 +1,136 @@
+{% comment %}
+Renders free shipping notice. Used in multiple locs - cart-modal, cart page, PDP. Can be pass bool arg to render a progress bar.
+Accepts:
+margin: 'class, str',
+progress_bar: {bool}
+{% render 'free-shipping-notice' %} in header.liquid
+Scripts:
+Class FreeShipping in global.js
+Styles:
+styles/component-free-shipping-notice.css
+{% endcomment %}
+
+{%- comment -%}Settings{%- endcomment -%}
+{% liquid assign threshold = settings.fsn-threshold
+    assign before_threshold_message = settings.fsn-before-threshold-message
+    assign after_threshold_message = settings.fsn-after-threshold-message
+    assign before_threshold_icon = settings.fsn-before-threshold-icon
+    assign after_threshold_icon = settings.fsn-after-threshold-icon
+    assign before_threshold_message_color = settings.fsn_before_threshold_message_color
+    assign after_threshold_message_color = settings.fsn_after_threshold_message_color
+    assign background_color = settings.fsn_background_color
+    assign progress_foreground_color = settings.fsn_progress_foreground
+    assign progress_background_color = settings.fsn_progress_background
+    assign pdp_text_uppercase = settings.fsn_pdp_uppercase
+    assign font_size_pdp_desktop = settings.fsn_pdp_text_size_desktop
+    assign font_size_pdp_mobile = settings.fsn_pdp_text_size_mobile
+    assign margin_top_pdp_desktop = settings.fsn_pdp_margin_top_desktop
+    assign margin_bottom_pdp_desktop = settings.fsn_pdp_margin_bottom_desktop
+    assign margin_top_pdp_mobile = settings.fsn_pdp_margin_top_mobile
+    assign margin_bottom_pdp_mobile = settings.fsn_pdp_margin_bottom_mobile
+    assign cart_text_uppercase = settings.fsn_cart_uppercase
+    assign font_size_cart_desktop = settings.fsn_cart_text_size_desktop
+    assign font_size_cart_mobile = settings.fsn_cart_text_size_mobile
+    assign margin_top_cart_desktop = settings.fsn_cart_margin_top_desktop
+    assign margin_bottom_cart_desktop = settings.fsn_cart_margin_bottom_desktop
+    assign margin_top_cart_mobile = settings.fsn_cart_margin_top_mobile
+    assign margin_bottom_cart_mobile = settings.fsn_cart_margin_bottom_mobile
+%}
+
+{% if progress_bar %}
+    {% assign cart_total_float = cart.total_price | times: 1.0 %}
+    {% assign thresold_float = threshold | times: 1.0 %}
+    {% assign progress_percentage = cart_total_float | divided_by: thresold_float | times: 100 | floor %}
+{% endif %}
+
+
+<link rel="stylesheet" href="{{ 'component-free-shipping-notice.css' | asset_url }}">
+
+{% style %}
+    free-shipping-notice {
+        background-color: {{ background_color }};
+    }
+
+    .fsn__before-message--color {
+        color: {{ before_threshold_message_color }};
+    }
+
+    .fsn__after-message--color {
+        color: {{ after_threshold_message_color }};
+    }
+
+    .fsn__progress-outer {
+        background-color: {{ progress_background_color }};
+    }
+
+    .fsn__progress-inner {
+        background-color: {{ progress_foreground_color }};
+        width: {{ progress_percentage }}%;
+    }
+
+    /* PDP Styling */
+    .product__info-container free-shipping-notice {
+        margin-top: {{ margin_top_pdp_desktop | divided_by: 10.0 }}rem;
+        margin-bottom: {{ margin_bottom_pdp_desktop | divided_by: 10.0 }}rem;
+    }
+
+    .product__info-container free-shipping-notice .fsn__message {
+        font-size: {{ font_size_pdp_desktop | divided_by: 10.0 }}rem;
+        {% if pdp_text_uppercase %}text-transform: uppercase;{% endif %}
+    }
+
+    @media screen and (max-width: 749px) {
+        .product__info-container free-shipping-notice {
+            margin-top: {{ margin_top_pdp_mobile | divided_by: 10.0 }}rem;
+            margin-bottom: {{ margin_bottom_pdp_mobile | divided_by: 10.0 }}rem;
+        }
+
+        .product__info-container free-shipping-notice .fsn__message {
+            font-size: {{ font_size_pdp_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+
+    /* Cart Styling */
+    .cart-modal__contents-inner free-shipping-notice {
+        margin-top: {{ margin_top_cart_desktop | divided_by: 10.0 }}rem;
+        margin-bottom: {{ margin_bottom_cart_desktop | divided_by: 10.0 }}rem;
+    }
+
+    .fsn .fsn__cart-modal {
+        font-size: {{ font_size_cart_desktop | divided_by: 10.0 }}rem;
+        {% if cart_text_uppercase %}text-transform: uppercase;{% endif %}
+        padding: .5rem 0;
+    }
+
+    @media screen and (max-width: 749px) {
+        .cart-modal__contents-inner free-shipping-notice {
+            margin-top: {{ margin_top_cart_mobile | divided_by: 10.0 }}rem;
+            margin-bottom: {{ margin_bottom_cart_mobile | divided_by: 10.0 }}rem;
+        }
+
+        .fsn .fsn__cart-modal {
+            font-size: {{ font_size_cart_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+{% endstyle %}
+
+<free-shipping-notice class="fsn" id="fsn" data-cart-total="{{cart.items_subtotal_price}}" data-progress="{{ progress_percentage }}">
+    <div class="{% if cart.items_subtotal_price >= threshold %}hidden{% endif %} fsn__message {{ margin }} fsn__before-message--color {% if cart_modal_fsp == "true" %}fsn__cart-modal{% endif %}">
+        {% render 'icon-picker', icon: before_threshold_icon %}
+        <span>{{ before_threshold_message | split: "*threshold*" | first }}</span>
+        <span class="fsn__remainder" data-threshold="{{ threshold }}"> {{ threshold | minus: cart.items_subtotal_price | money }} </span>
+        <span>{{ before_threshold_message | split: "*threshold*" | last }}</span>
+    </div>
+    <div class="{% if cart.items_subtotal_price < threshold %}hidden {% endif %}
+        fsn__message {{ margin }} fsn__after-message--color
+        {% if cart_modal_fsp == "true" %} fsn__cart-modal{% endif %}">
+        {% render 'icon-picker', icon: after_threshold_icon %}
+        <span >{{ after_threshold_message }}</span>
+    </div>
+
+    {% if progress_bar %}
+        <div class="fsn__progress-outer">
+            <span class="fsn__progress-inner"></span>
+        </div>
+    {% endif %}
+</free-shipping-notice>

@@ -1,0 +1,4 @@
+{% comment %}
+    Component of cart modal, fetched using section rendering API
+{% endcomment %}
+{{ 'sections.cart.new_subtotal' | t }}: {{ cart.total_price | money_with_currency }}

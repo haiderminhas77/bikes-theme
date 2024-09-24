@@ -1,0 +1,15 @@
+{% if settings.enable_mavenoid %}
+    {% unless template.name == "cart" %}
+        <script>
+            (function (m, a, v, e, n, o, i, d) {
+                d = m.createElement(a);
+                d.async = true;
+                d.src =
+                "https://widget-hosts.mavenoid.com/custom-embedding-scripts/" + n + ".js";
+                i = m.getElementsByTagName(a)[0];
+                i.parentNode.insertBefore(d, i);
+                v[e] = v[e] || [];
+            })(document, "script", window, "mavenoid", "super73");
+        </script>
+    {% endunless %}
+{% endif %}

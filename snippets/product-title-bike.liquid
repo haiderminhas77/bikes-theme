@@ -1,0 +1,39 @@
+{% comment %}
+	Renders product title, subtitle and subline on bike PDP
+
+	Accepts:
+	- block: {Object} Block object
+	- product: {Object} Object from CMS (for featured product only)
+
+	Usage:
+	{% render 'product-title', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% liquid 
+	assign product_data = product.metafields.product_data.reference.value
+	assign product_subline = product_data.subline.value
+	assign product_subtitle = product_data.subtitle.value
+	assign product_colour = product.variants[0].option1 
+%}
+
+<div class="product__bike-titles product__title-subtitle">
+	{% if section.id contains 'main' %}
+		{% if product_subline %}
+			<h3 class="product__subtitle uppercase" {{ block.shopify_attributes }}>
+				{{ product_subline | strip }}
+			</h3>
+		{% endif %}
+		<h1 class="product__title" {{ block.shopify_attributes }}>
+			{% if product_colour %}
+				{{ product_colour | escape }}
+			{% else %}
+				{{ product.title | escape }}
+			{% endif %}
+		</h1>
+		{% if product_subtitle %}
+			<h3 class="product__subtitle uppercase" {{ block.shopify_attributes }}>
+				{{ product_subtitle | strip }}
+			</h3>
+		{% endif %}
+	{% endif %}
+</div>

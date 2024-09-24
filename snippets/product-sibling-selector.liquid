@@ -1,0 +1,78 @@
+{% comment %} 
+    Renders a sibling selector - corrently configured to render colour 'sibling' links
+
+    styles: styles/component-product-sibling-selector.liquid
+
+    Usage:
+    {% render 'product-sibling-selector', block: block, product_form_id: product_form_id %} within sections/main-product.liquid
+{% endcomment %}
+
+{% comment %} simplified sibling reference {%- assign siblings = shop.metaobjects['sibling_selector'][product.metafields.sibling.reference.value].list -%} {% endcomment %}
+{% comment %} {%- assign siblings = product.metafields.sibling.reference.value.list -%} {% endcomment %}
+
+{% comment %} Bike PDP CMS settings {% endcomment %}
+{% style %}
+    sibling-selector {
+        background-color: {{ block.settings.sticky_atc_background_color }};
+    }
+
+    @media screen and (max-width: 749px) {
+        .product-main-bike sibling-selector {
+            padding-top: {{ block.settings.padding_top_mobile | divided_by: 10.0 }}rem;
+            padding-bottom: {{ block.settings.padding_bottom_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        .product-main-bike sibling-selector {
+            padding-top: {{ block.settings.padding_top_desktop | divided_by: 10.0 }}rem;
+            padding-bottom: {{ block.settings.padding_bottom_desktop | divided_by: 10.0 }}rem;
+        }
+    }
+{% endstyle %}
+
+{% assign product_data = product.metafields.product_data.reference.value %}
+{% assign sibling_metaobject = product_data.colour_siblings.value.list.value %}
+
+{% if sibling_metaobject %}
+    <sibling-selector data-prod-id="{{ product.id }}" data-variant-option="{{ 'products.product.size' | t }}">
+        {% comment %} Bike PDP - hides selected colour {% endcomment %}
+        {% unless block.settings.hide_selected_colour %}
+            <div class="sibling-selector__option-name uppercase">
+                <p>{{ 'products.product.color' | t }}: </p><p>{{ product.variants[0].option1 }}</p>
+            </div>
+        {% endunless %}
+        <div class="sibling-selector__container">
+            {%- for sibling in sibling_metaobject -%}
+                {%- liquid
+                    assign swatch = sibling.metafields.colour_swatches.reference.value
+                    assign swatch_value = null
+                    if swatch.image.value
+                        assign image_url = swatch.image | image_url: width: 38
+                        assign swatch_value = 'url(' | append: image_url | append: ')'
+                    elsif swatch.colour.value
+                        assign swatch_value = swatch.colour.value
+                    endif
+                -%}
+                {% if swatch_value %}
+                    <a 
+                        href="{{ sibling.url | product_url }}"
+                        class="swatch-circle{% if sibling == product %} swatch--selected{% endif %}{% if sibling.available == false %} sibling-selector__option--unavailable{% endif %}"
+                        style="background: {{ swatch_value }}; background-position: center;">
+                        {% if sibling == product %}{% render 'icon-super73-lightning' %}{% endif %}
+                    </a>
+                {% else %}
+                    {% comment %} Sibling thumbnails {% endcomment %}
+                    <a href="{{ sibling.url | product_url }}" class="{% if sibling == product %} swatch--selected{% endif %}{% if sibling.available == false %} sibling-selector__option--unavailable{% endif %}" style="width: 80px;">
+                        <div class="product__media media" style="padding-top: {{ 1 | divided_by: sibling.media[0].preview_image.aspect_ratio | times: 100 }}%;">
+                            {{ sibling.media[0].src | image_url: width: 80 | image_tag:
+                                loading: 'lazy',
+                                height: sibling.media[0].preview_image.height,
+                                width: 80 }}
+                        </div>
+                    </a>
+                {% endif %}
+            {%- endfor -%}
+        </div>
+    </sibling-selector>
+{% endif %}

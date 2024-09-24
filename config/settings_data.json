@@ -1,0 +1,310 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "current": {
+    "colors_text": "#000000",
+    "colors_background_1": "#FFFFFF",
+    "colors_background_2": "#4D4D4D",
+    "colors_accent_1": "#9D9986",
+    "colors_accent_2": "#00486F",
+    "media_background": "#EDEDED",
+    "colors_outline_button_labels": "#878787",
+    "type_heading_font": "inter_n7",
+    "type_body_font": "assistant_n4",
+    "type_caption_font": "monotype_goudy_modern_n4",
+    "spacing_grid_horizontal": 20,
+    "gtm_store_code": "5DJ8NHR",
+    "klaviyo_store_code": "N7DSey",
+    "klaviyo_newsletter_code": "TuuXET",
+    "enable_onetrust_banner": false,
+    "clarity_key": "lz0po5yunz",
+    "enable_mavenoid": false,
+    "enable_pdp_fsn": true,
+    "enable_cart_page_fsn": true,
+    "enable_cart_notification_fsn": true,
+    "fsn-threshold": 25000,
+    "fsn-before-threshold-message": "<p>Add *threshold* to cart to qualify for free shipping.<\/p>",
+    "fsn-after-threshold-message": "<p>Congrats, you've qualified for free shipping.<\/p>",
+    "fsn-before-threshold-icon": "none",
+    "fsn-after-threshold-icon": "<svg class=\"icon icon-cart\" aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewbox=\"0 0 40 40\" fill=\"none\">\n  <path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M20.5 6.5a4.75 4.75 0 00-4.75 4.75v.56h-3.16l-.77 11.6a5 5 0 004.99 5.34h7.38a5 5 0 004.99-5.33l-.77-11.6h-3.16v-.57A4.75 4.75 0 0020.5 6.5zm3.75 5.31v-.56a3.75 3.75 0 10-7.5 0v.56h7.5zm-7.5 1h7.5v.56a3.75 3.75 0 11-7.5 0v-.56zm-1 0v.56a4.75 4.75 0 109.5 0v-.56h2.22l.71 10.67a4 4 0 01-3.99 4.27h-7.38a4 4 0 01-4-4.27l.72-10.67h2.22z\"><\/path>\n<\/svg>",
+    "fsn_before_threshold_message_color": "#ffffff",
+    "fsn_after_threshold_message_color": "#ffffff",
+    "fsn_background_color": "#00486f",
+    "fsn_progress_foreground": "#878787",
+    "fsn_progress_background": "#ffffff",
+    "fsn_pdp_enable_progress_bar": false,
+    "fsn_pdp_text_size_desktop": 16,
+    "fsn_pdp_text_size_mobile": 16,
+    "fsn_pdp_margin_top_desktop": 20,
+    "fsn_pdp_margin_bottom_desktop": 20,
+    "fsn_pdp_margin_top_mobile": 15,
+    "fsn_pdp_margin_bottom_mobile": 15,
+    "fsn_cart_enable_progress_bar": true,
+    "fsn_cart_text_size_mobile": 15,
+    "social_twitter_link": "https:\/\/x.com\/super73",
+    "social_facebook_link": "https:\/\/www.facebook.com\/super73eu\/",
+    "social_instagram_link": "https:\/\/www.instagram.com\/super73eu?igsh=YXB4ajBwbGZ1ZTdo",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UC4bmkOLkBz6RsQJriSNlbMw",
+    "favicon": "shopify:\/\/shop_images\/Super73_Web_Favicon_96x96px.png",
+    "vvastify_logo": "shopify:\/\/shop_images\/vvastify_logo_grey.svg",
+    "include_cart_countdown": false,
+    "date_of_countdown_end": "03\/08\/2024",
+    "time_of_countdown_end": "24:00",
+    "countdown_size": 16,
+    "countdown_size_mobile": 16,
+    "heading_color": "#ffffff",
+    "heading_size_desktop": 30,
+    "heading_size_mobile": 25,
+    "image": "shopify:\/\/shop_images\/Super73_Cart_Acc.jpg",
+    "link": "shopify:\/\/collections\/electric-bikes",
+    "heading": "<p>Bikes<\/p>",
+    "image_2": "shopify:\/\/shop_images\/Super73_Cart_Bikes_1.jpg",
+    "link_2": "shopify:\/\/collections\/parts-accessories",
+    "heading_2": "<p>Accessories<\/p>",
+    "image_3": "shopify:\/\/shop_images\/Super73_Cart_Apparel_1.jpg",
+    "link_3": "shopify:\/\/collections\/apparel",
+    "heading_3": "<p>Apparel<\/p>",
+    "image_4": "shopify:\/\/shop_images\/Super73_Cart_Helmets_1.jpg",
+    "link_4": "shopify:\/\/collections\/locks-helmets",
+    "heading_4": "<p>Helmets<\/p>",
+    "account_links": "2-0-account-pages",
+    "fsn-before-threshold-message-color": "#f51414",
+    "fsn-after-threshold-message-color": "#0aef0e",
+    "badge_foreground_color": "#f9faf5",
+    "badge_background_color": "#000000",
+    "badge_border": "#000000",
+    "menu_flag": "flag-toggle",
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "text_XEjKKb": {
+            "type": "text",
+            "settings": {
+              "heading": "SUPER73 EUROPE",
+              "subtext": "<p>Industrieweg 61, 1115 AD Duivendrecht, The Netherlands<br\/>Dutch Chamber of Commerce #76631761<\/p>"
+            }
+          },
+          "link_list_JGAXcY": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Company info",
+              "menu": "2-0-company-info",
+              "open_first_collapsible_row": false
+            }
+          },
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Quick links",
+              "menu": "2-0-footer",
+              "open_first_collapsible_row": false
+            }
+          },
+          "footer-2": {
+            "type": "newsletter",
+            "settings": {
+              "newsletter_heading": "Subscribe to our newsletter",
+              "newsletter_heading_size": 30,
+              "newsletter_heading_size_mobile": 20,
+              "newsletter_text": "<p>Keep up on exclusives, sales and events.<\/p>",
+              "newsletter_text_size": 18,
+              "newsletter_text_size_mobile": 16,
+              "custom_form": "",
+              "newsletter_subtext": "<p>By submitting your email address you consent to marketing and online advertising. Please click<strong> <\/strong><a href=\"\/pages\/copy-of-privacy-policy-18-7-24\" title=\"Privacy Policy\"><strong>here<\/strong><\/a> for a link to our privacy notice.<\/p>",
+              "newsletter_submit_button": "Sign me up",
+              "button_color": "#000000",
+              "button_text_color": "#ffffff"
+            }
+          },
+          "footer-3": {
+            "type": "social",
+            "settings": {
+              "heading": "Follow us",
+              "social_subtext": ""
+            }
+          },
+          "flag_item_4c76rb": {
+            "type": "flag_item",
+            "settings": {
+              "title": "EU",
+              "flag_link": "#",
+              "flag_icon": "EU",
+              "country_name": "EU",
+              "top_flag": true
+            }
+          },
+          "flag_item_catYKf": {
+            "type": "flag_item",
+            "settings": {
+              "title": "UK",
+              "flag_link": "https:\/\/uk.super73.com\/",
+              "flag_icon": "GB",
+              "country_name": "UK",
+              "top_flag": false
+            }
+          },
+          "flag_item_bxrcF9": {
+            "type": "flag_item",
+            "settings": {
+              "title": "US",
+              "flag_link": "https:\/\/super73.com\/?SkipCozyRedirect=yes",
+              "flag_icon": "US",
+              "country_name": "US",
+              "top_flag": false
+            }
+          }
+        },
+        "block_order": [
+          "text_XEjKKb",
+          "link_list_JGAXcY",
+          "footer-0",
+          "footer-2",
+          "footer-3",
+          "flag_item_4c76rb",
+          "flag_item_catYKf",
+          "flag_item_bxrcF9"
+        ],
+        "settings": {
+          "footer_background_color": "#000000",
+          "footer_foreground_color": "#ffffff",
+          "footer_foreground_color_hover": "#878787",
+          "footer_foreground_heading_color": "#ffffff",
+          "newsletter_enable": true,
+          "footer_menu_privacy_color": "#878787",
+          "show_logo": true,
+          "logosvg": "",
+          "logo_width": 100,
+          "logo_width_mob": 85,
+          "enable_country_selector": false,
+          "enable_language_selector": false,
+          "payment_enable": true,
+          "margin_top": 0,
+          "header_flag_dropdown_foreground_color": "#1a1a1a",
+          "header_flag_dropdown_background_color": "#ffffff",
+          "header_flag_mob_dropdown_foreground_color": "#1a1a1a",
+          "header_flag_mob_dropdown_background_color": "#ffffff"
+        }
+      },
+      "landing-mat": {
+        "type": "landing-mat",
+        "settings": {
+          "enable_landing_mat": true,
+          "test_mode": false
+        }
+      },
+      "breadcrumbs": {
+        "type": "breadcrumbs",
+        "settings": {
+        }
+      },
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "logosvg": "",
+          "logo_max_width": 100,
+          "colors_background_1": "#FFFFFF",
+          "colors_foreground_1": "#FFFFFF",
+          "gradient_background_1": ""
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "colors_background_1": "#FFFFFF",
+          "gradient_background_1": ""
+        }
+      },
+      "sidebar-static-hero": {
+        "type": "sidebar-static-hero",
+        "blocks": {
+          "heading_wjWwzm": {
+            "type": "heading",
+            "settings": {
+              "heading": "<p>GET THE ANSWERS YOU'RE LOOKING FOR<\/p>",
+              "heading_uppercase": true,
+              "heading_color": "#ffffff",
+              "heading_below_color": "#1c1c1c",
+              "heading_size": "custom",
+              "heading_size_custom": 90,
+              "heading_size_mobile": "custom",
+              "heading_size_mobile_custom": 60,
+              "heading_font_family": "heading-font",
+              "padding_top": 12,
+              "padding_bottom": 0,
+              "padding_top_mobile": 12,
+              "padding_bottom_mobile": 0,
+              "margin_top": 0,
+              "margin_bottom": 0,
+              "margin_top_mobile": 0,
+              "margin_bottom_mobile": 0
+            }
+          }
+        },
+        "block_order": [
+          "heading_wjWwzm"
+        ],
+        "settings": {
+          "page_width": "full",
+          "margin_left_right_desktop": 0,
+          "margin_left_right_mob": 0,
+          "lazy_load": false,
+          "image": "shopify:\/\/shop_images\/Super73__Hero_ZG_1920x1080_1_c2e5098d-1e47-41cd-bbf5-0c261b9ec5e4.jpg",
+          "image_height": "medium",
+          "adapt_height_first_image": false,
+          "link": "",
+          "link_new_tab": false,
+          "overlay": "#1c1c1c",
+          "overlay_gradient": "",
+          "image_overlay_opacity": 40,
+          "video_url": "",
+          "banner_background": "rgba(0,0,0,0)",
+          "banner_background_gradient": "",
+          "desktop_content_position": "middle-center",
+          "desktop_content_alignment": "center",
+          "width": 50,
+          "desktop_content_position_top": 0,
+          "desktop_content_position_bottom": 0,
+          "desktop_content_position_left": 0,
+          "desktop_content_position_right": 0,
+          "banner__box_padding_top": 32,
+          "banner__box_padding_bottom": 32,
+          "banner__box_padding_left": 32,
+          "banner__box_padding_right": 32,
+          "mobile_content_position": "middle-left",
+          "mobile_content_alignment": "left",
+          "width_mob": 100,
+          "mobile_content_position_top": 0,
+          "mobile_content_position_bottom": 0,
+          "mobile_content_position_left": 0,
+          "mobile_content_position_right": 0,
+          "banner__box_padding_top_mob": 32,
+          "banner__box_padding_bottom_mob": 32,
+          "banner__box_padding_left_mob": 32,
+          "banner__box_padding_right_mob": 32,
+          "show_text_below": false,
+          "mob_below_overlay": "rgba(0,0,0,0)",
+          "mob_below_overlay_gradient": "",
+          "padding_top": 0,
+          "padding_bottom": 36,
+          "padding_top_mobile": 0,
+          "padding_bottom_mobile": 36
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
+  "presets": {
+    "Default": {
+    }
+  }
+}

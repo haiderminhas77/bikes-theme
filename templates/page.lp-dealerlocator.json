@@ -1,0 +1,346 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "background_color": "#ffffff",
+        "show_title": true,
+        "full_width": true,
+        "page_title_custom": "",
+        "page_title_uppercase": true,
+        "page_title_center": false,
+        "page_title_color": "#000000",
+        "show_static_page_content": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_hero_cEqhX9": {
+      "type": "ds-hero",
+      "blocks": {
+        "heading_kqVctN": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>FIND YOUR LOCAL DEALER<\/p>",
+            "custom_liquid": "",
+            "heading_uppercase": true,
+            "icon": "none",
+            "heading_color": "#ffffff",
+            "heading_below_color": "#1c1c1c",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "text_3qMpQQ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Trying a SUPER73 has never been so easy<\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_paragraph_spacing": 30,
+            "text_paragraph_spacing_mob": 16,
+            "text_color": "#ffffff",
+            "text_link_color": "#ffffff",
+            "text_below_color": "#1c1c1c",
+            "text_link_below_color": "#1c1c1c",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_kqVctN",
+        "text_3qMpQQ"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "lazy_load": false,
+        "image": "shopify:\/\/shop_images\/Super73_Web_LifestyleImage_05_1920x1080_62e8c738-0123-499b-8d77-31f6a8dc3a20.jpg",
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "link": "",
+        "link_new_tab": false,
+        "overlay": "#1c1c1c",
+        "overlay_gradient": "",
+        "image_overlay_opacity": 30,
+        "video_url": "",
+        "banner_background": "rgba(0,0,0,0)",
+        "banner_background_gradient": "",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "width": 64,
+        "banner_content_page_width": false,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 0,
+        "banner__box_padding_bottom": 66,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "bottom-left",
+        "mobile_content_alignment": "left",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 20,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "show_text_below": false,
+        "mob_below_overlay": "rgba(0,0,0,0)",
+        "mob_below_overlay_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_rich_text_NkQ4VU": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "heading_WrfNNm": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Get the ultimate local SUPER73 experience<\/p>",
+            "heading_uppercase": true,
+            "heading_color": "#1a1a1a",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 46,
+            "heading_center": true,
+            "heading_font_family": "heading-font",
+            "padding_top": 0,
+            "padding_bottom": 40,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 40
+          }
+        },
+        "text_Hx4baf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>This year we’re working to give you a local experience when it comes to shopping for a new SUPER73! Dealers will be your one-stop shop for test rides, purchasing and repairs.<br\/><br\/>Because of this, our trusted dealers are ready to bring you top-notch service to get you riding as soon as possible. We partner with bicycle, lifestyle, motorcycle, and e-mobility retailers across Europe – use the map below to find your closest local dealer. We look forward to welcoming you to the Super Squad! <br\/><\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_WrfNNm",
+        "text_Hx4baf"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": true,
+        "colors_background_1": "rgba(0,0,0,0)",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "width": 80,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "center",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 0,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "ds_html_eWRFAT": {
+      "type": "ds-html",
+      "settings": {
+        "custom_liquid": "<!-- Start Stockist.co widget -->\n<div data-stockist-widget-tag=\"u4833\">Loading store locator\nfrom <a href=\"https:\/\/stockist.co\">Stockist store locator<\/a>...<\/div>\n<script>\n  (function(s,t,o,c,k){c=s.createElement(t);c.src=o;c.async=1;\n  k=s.getElementsByTagName(t)[0];k.parentNode.insertBefore(c,k);\n  })(document,'script','\/\/stockist.co\/embed\/v1\/widget.min.js');\n<\/script>\n<!-- End Stockist.co widget -->",
+        "page_width": "full",
+        "text_page_width": "normal",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "background_color": "rgba(0,0,0,0)",
+        "background_gradient": "",
+        "caption": "",
+        "caption_color": "#000000",
+        "caption_size_custom": 24,
+        "caption_size_mobile_custom": 18,
+        "heading": "",
+        "heading_uppercase": true,
+        "heading_color": "#000000",
+        "heading_size_custom": 60,
+        "heading_size_mobile_custom": 36,
+        "heading_alignment": "left",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "ds_rich_text_KYjU7y": {
+      "type": "ds-rich-text",
+      "blocks": {
+        "heading_Pc36JW": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Dealer inquiries<\/p>",
+            "heading_uppercase": true,
+            "heading_color": "#1a1a1a",
+            "heading_size": "custom",
+            "heading_size_custom": 90,
+            "heading_size_mobile": "custom",
+            "heading_size_mobile_custom": 60,
+            "heading_center": true,
+            "heading_font_family": "heading-font",
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        },
+        "text_y4yfTd": {
+          "type": "text",
+          "settings": {
+            "text": "<p><br\/>If you are interested in becoming a dealer or distributor, please fill out the <a href=\"\/pages\/dealer-registration\" target=\"_blank\" title=\"Dealer Application\">Dealer Application <\/a>and someone from our Sales team will contact you. Please note, we will only review businesses that have an existing structure of at least 1 year.<\/p><p><\/p>",
+            "text_uppercase": false,
+            "text_hide_mob": false,
+            "text_hide_desk": false,
+            "text_color": "#1a1a1a",
+            "text_link_color": "#1a1a1a",
+            "text_size": "custom",
+            "text_size_custom": 18,
+            "text_size_mobile": "custom",
+            "text_size_mobile_custom": 18,
+            "padding_top": 12,
+            "padding_bottom": 0,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_Pc36JW",
+        "text_y4yfTd"
+      ],
+      "settings": {
+        "page_width": "full",
+        "margin_left_right_desktop": 0,
+        "margin_left_right_mob": 0,
+        "banner_transparent": false,
+        "colors_background_1": "#ededed",
+        "gradient_background_1": "",
+        "image_overlay_opacity": 100,
+        "image_height": "small",
+        "height_custom": 300,
+        "height_custom_mob": 180,
+        "link": "",
+        "link_new_tab": false,
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "width": 100,
+        "desktop_content_position_top": 0,
+        "desktop_content_position_bottom": 0,
+        "desktop_content_position_left": 0,
+        "desktop_content_position_right": 0,
+        "banner__box_padding_top": 32,
+        "banner__box_padding_bottom": 32,
+        "banner__box_padding_left": 32,
+        "banner__box_padding_right": 32,
+        "mobile_content_position": "middle-center",
+        "mobile_content_alignment": "center",
+        "width_mob": 100,
+        "mobile_content_position_top": 0,
+        "mobile_content_position_bottom": 0,
+        "mobile_content_position_left": 0,
+        "mobile_content_position_right": 0,
+        "banner__box_padding_top_mob": 32,
+        "banner__box_padding_bottom_mob": 32,
+        "banner__box_padding_left_mob": 32,
+        "banner__box_padding_right_mob": 32,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ds_hero_cEqhX9",
+    "ds_rich_text_NkQ4VU",
+    "ds_html_eWRFAT",
+    "ds_rich_text_KYjU7y"
+  ]
+}

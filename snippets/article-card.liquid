@@ -1,0 +1,76 @@
+{% comment %}
+    Renders an article card for a given blog with settings to either show the image or not.
+
+    Accepts:
+    - blog: {Object} Blog object
+    - article: {Object} Article object
+    - image_height: {String} The setting changes the height of the article image, if shown
+    - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
+    - show_date: {String} The setting either show the article date or not. If it's not included it will not show the image by default
+    - show_author: {String} The setting either show the article author or not. If it's not included it will not show the author by default
+
+    Usage:
+    {% render 'article-card' blog: blog, article: article, show_image: section.settings.show_image %} in sections/main-article.liquid
+{% endcomment %}
+
+<article class="article-card {% if article.image == blank or show_image == false %} article-card--no-image{% endif %}" aria-labelledby="Article-{{ article.id }}">
+	{%- if show_image == true and article.image -%}
+		<div class="article-card__image-wrapper">
+			<a href="{{ article.url }}" >
+				<div class="article-card__image media {% if image_height %}article-card__image--{{ image_height }}{% else %}media--landscape{% endif %}" {% if section.settings.image_height == 'adapt' %} style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;" {% elsif section.settings.image_height == 'square' %} style="padding-bottom: 100%;"{% endif %}>
+					{%- capture article_image_size -%}(min-width: 750px) calc(100vw / 3), (max-width: 749px) calc(100vw / 1){%- endcapture -%}
+					{{ article.image.src | image_url: width: 600 | image_tag:
+					sizes: article_image_size,
+					widths: '300, 600',
+					width: article.image.width,
+					height: article.image.height,
+					loading: 'lazy' }}
+				</div>
+			</a>
+		</div>
+	{%- endif -%}
+	<div class="article-card__info">
+		{%- if show_date -%}
+			<div class="article-card__date article-card__date--desktop">
+				{{- article.published_at | time_tag: format: 'date' -}}
+			</div>
+		{%- endif -%}
+		<div class="article-card__details">
+			<header class="article-card__header">
+				{%- if show_title -%}	
+					<h2 class="article-card__title" id="Article-{{ article.id }}">
+						<a href="{{ article.url }}">
+							{% render 'icon-picker', icon: icon %}  
+							{{ article.title | escape }}
+						</a>
+					</h2>
+				{%- endif -%}
+				{%- if show_date -%}
+					<div class="article-card__date article-card__date--mobile">
+						{{- article.published_at | time_tag: format: 'date' -}}
+					</div>
+				{%- endif -%}
+			</header>
+			{%- if show_author -%}
+				<span class="article-card__author body-md-short">{{ article.author -}}</span>
+			{%- endif -%}
+			{%- if show_excerpt and article.excerpt.size > 0 or article.content.size > 0 -%}
+				<p class="article-card__excerpt">
+					{%- if article.excerpt.size > 0 -%}
+						{{ article.excerpt | strip_html | truncatewords: 30 }}
+					{%- else -%}
+						{{ article.content | strip_html | truncatewords: 30 }}
+					{%- endif -%}
+				</p>
+			{%- endif -%}
+			<div class="article-card__footer">
+				{%- if section.settings.show_readmore -%}
+					<a role="link" href="{{ article.url }}" class="button button--underline button--underline-left uppercase">{{ 'blogs.article.read_more_button' | t }}</a>
+				{%- endif -%}
+				{%- if article.comments_count > 0 and blog.comments_enabled? -%}
+					<span>{{ 'blogs.article.comments' | t: count: article.comments_count }}</span>
+				{%- endif -%}
+			</div>
+		</div>
+	</div>
+</article>

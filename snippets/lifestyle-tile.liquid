@@ -1,0 +1,535 @@
+{% comment %}
+    Renders a lifestyle tile at a defined index within the product grid
+
+    Accepts:
+
+    tile_image_file: {string} Image file from metafield data, converted to image object below,
+    image_ratio: tile_image_ratio,
+    show_text_below: tile_show_text_below,
+    tile_cta: {string} Content for CTA overlaying lifestyle tile,
+    tile_cta_foreground_color: {Colour} Colour for the CTA content to display in,
+    tile_link: {string} Site URL From metafield data,
+    tile_index: {int} Number representing tile index in grid, from metafield data,
+    - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+    Usage:
+    {% render 'lifestyle-tile', in sections/main-collection-product-grid.liquid %}
+{% endcomment %}
+
+{%- assign tile_source = tile_image.src -%}
+
+{% style %}
+    @media screen and (max-width: 749px) {
+        #Banner-{{ section.id }}::before,
+        #Banner-{{ section.id }} .banner__media::before,
+        #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+            padding-bottom: 125%;
+            content: '';
+            display: block;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Banner-{{ section.id }}::before,
+        #Banner-{{ section.id }} .banner__media::before {
+            padding-bottom: 125%;
+            content: '';
+            display: block;
+        }
+    }
+
+    {% if tile_show_text_below_desktop == false %}
+        @media screen and (min-width: 750px) {
+            #Banner-{{ section.id }} {
+                height: 100%;
+            }
+        }
+    {% elsif tile_show_text_below == false %}
+        @media screen and (max-width: 749px) {
+            #Banner-{{ section.id }} {
+                height: 100%;
+            }
+        }
+    {% endif %}
+    
+    #Slide-{{ section.id }}-{{ grid_loop_index  }} .multicolumn-card {
+        --color-base-background-1: {{ tile_card_background.red }}, {{ tile_card_background.green }}, {{ tile_card_background.blue }};
+        --gradient-base-background-1: {% if tile_card_background_gradient != blank %}{{ tile_card_background_gradient }}{% else %}{{ tile_card_background }}{% endif %};
+        padding: {{ tile_card_background_padding | divided_by: 10.0 }}rem;
+        height: 100%;
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__media::after  {
+        --color-base-background-1: {{ tile_overlay.red }}, {{ tile_overlay.green }}, {{ tile_overlay.blue }};
+        --gradient-base-background-1: {% if tile_overlay_gradient != blank %}{{ tile_overlay_gradient }}{% else %}{{ tile_overlay }}{% endif %};
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__media::after {
+        opacity: {{ tile_image_overlay_opacity | divided_by: 100.0 }};
+        background: var(--gradient-base-background-1);
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner--mobile-bottom::after,
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner--mobile-bottom .banner__media::after {
+            opacity: {{ tile_image_overlay_opacity | divided_by: 100.0 }};
+            background: var(--gradient-base-background-1);
+        }
+    }
+
+    @media screen and (min-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner--desktop-bottom::after,
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner--desktop-bottom .banner__media::after {
+            opacity: {{ tile_image_overlay_opacity | divided_by: 100.0 }};
+            background: var(--gradient-base-background-1);
+        }
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__content .banner__box-{{ grid_loop_index }} {
+            --color-base-background-1: {{ tile_banner_background.red }}, {{ tile_banner_background.green }}, {{ tile_banner_background.blue }};
+            --gradient-base-background-1: {% if tile_banner_background_gradient != blank %}{{ tile_banner_background_gradient }}{% else %}{{ tile_banner_background }}{% endif %};
+            background: var(--gradient-base-background-1);
+            background-color: var(--gradient-base-background-1);
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__content .banner__box-{{ grid_loop_index }} {
+            --color-base-background-1: {{ tile_banner_background.red }}, {{ tile_banner_background.green }}, {{ tile_banner_background.blue }};
+            --gradient-base-background-1: {% if tile_banner_background_gradient != blank %}{{ tile_banner_background_gradient }}{% else %}{{ tile_banner_background }}{% endif %};
+            background: var(--gradient-base-background-1);
+            background-color: var(--gradient-base-background-1);
+        }
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__content {
+            --color-base-background-1: {{ tile_mob_below_overlay.red }}, {{ tile_mob_below_overlay.green }}, {{ tile_mob_below_overlay.blue }};
+            --gradient-base-background-1: {% if tile_mob_below_overlay_gradient != blank %}{{ tile_mob_below_overlay_gradient }}{% else %}{{ tile_mob_below_overlay }}{% endif %};
+            opacity: {{ tile_mob_below_image_overlay_opacity | divided_by: 100.0 }};
+            background: var(--gradient-base-background-1);
+            background-color: var(--gradient-base-background-1);
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__heading-{{ grid_loop_index }} {
+            color: {{ tile_heading_below_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__heading-{{ grid_loop_index }} {
+            color: {{ tile_heading_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__text-{{ grid_loop_index }} {
+            color: {{ tile_text_below_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__text-{{ grid_loop_index }} {
+            color:  {{ tile_text_color }};
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__text-{{ grid_loop_index }} a {
+            color: {{ tile_text_link_below_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner.banner--mobile-bottom) .banner__text-{{ grid_loop_index }} a {
+            color:  {{ tile_text_link_color }};
+        }
+        
+        /* mob primary 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--primary {
+            --color-button: {{ tile_button_color.red }}, {{ tile_button_color.green }}, {{ tile_button_color.blue }};
+            --color-button-text: {{ tile_button_text_color.red }}, {{ tile_button_text_color.green }}, {{ tile_button_text_color.blue }};
+        }
+
+        /* mob outline 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--secondary {
+            --color-base-outline-button-labels: {{ tile_button_outline_color.red }}, {{ tile_button_outline_color.green }}, {{ tile_button_outline_color.blue }};
+        }
+
+        /* mob primary below 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--primary {
+            --color-button: {{ tile_button_below_color.red }}, {{ tile_button_below_color.green }}, {{ tile_button_below_color.blue }};
+            --color-button-text: {{ tile_button_below_text_color.red }}, {{ tile_button_below_text_color.green }}, {{ tile_button_below_text_color.blue }};
+        }
+
+        /* mob outline 1 below */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--secondary {
+            --color-base-outline-button-labels: {{ tile_button_below_outline_color.red }}, {{ tile_button_below_outline_color.green }}, {{ tile_button_below_outline_color.blue }};
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ forloop.index }} .banner.banner--desktop-bottom .banner__content {
+            --color-base-background-1: {{ tile_mob_below_overlay.red }}, {{ tile_mob_below_overlay.green }}, {{ tile_mob_below_overlay.blue }};
+            --gradient-base-background-1: {% if tile_mob_below_overlay_gradient != blank %}{{ tile_mob_below_overlay_gradient }}{% else %}{{ tile_mob_below_overlay }}{% endif %};
+            opacity: {{ tile_mob_below_image_overlay_opacity | divided_by: 100.0 }};
+            background: var(--gradient-base-background-1);
+            background-color: var(--gradient-base-background-1);
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__heading-{{ grid_loop_index }} {
+            color: {{ tile_heading_below_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__heading-{{ grid_loop_index }} {
+            color: {{ tile_heading_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__text-{{ grid_loop_index }} {
+            color: {{ tile_text_below_color }};
+        }
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__text-{{ grid_loop_index }} {
+            color:  {{ tile_text_color }};
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__text-{{ grid_loop_index }} a {
+            color:  {{ tile_text_link_color }};
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__text-{{ grid_loop_index }} a {
+            color: {{ tile_text_link_below_color }};
+        }
+        /* desk primary 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--primary {
+            --color-button: {{ tile_button_color.red }}, {{ tile_button_color.green }}, {{ tile_button_color.blue }};
+            --color-button-text: {{ tile_button_text_color.red }}, {{ tile_button_text_color.green }}, {{ tile_button_text_color.blue }};
+        }
+
+        /* desk outline 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--secondary {
+            --color-base-outline-button-labels: {{ tile_button_outline_color.red }}, {{ tile_button_outline_color.green }}, {{ tile_button_outline_color.blue }};
+        }
+
+        /* desk primary below 1 */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--primary {
+            --color-button: {{ tile_button_below_color.red }}, {{ tile_button_below_color.green }}, {{ tile_button_below_color.blue }};
+            --color-button-text: {{ tile_button_below_text_color.red }}, {{ tile_button_below_text_color.green }}, {{ tile_button_below_text_color.blue }};
+        }
+
+        /* desk outline 1 below */
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__buttons-{{ grid_loop_index }} a:first-of-type.button--secondary {
+            --color-base-outline-button-labels: {{ tile_button_below_outline_color.red }}, {{ tile_button_below_outline_color.green }}, {{ tile_button_below_outline_color.blue }};
+        }
+    }
+
+    /* Desktop custom heading - used in promo blocks*/
+    @media only screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__heading-{{ grid_loop_index }}.custom-desktop {
+            font-size: {{ tile_heading_size_custom | divided_by: 10.0 }}rem;
+        }
+    }
+    /* Mobile custom heading - used in promo blocks */
+    @media screen and (max-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__heading-{{ grid_loop_index }}.custom-mobile {
+            font-size: {{ tile_heading_size_mobile_custom | divided_by: 10.0 }}rem;
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_heading-{{ grid_loop_index }}-padding {
+        margin-top: {{ tile_heading_padding_top_mobile }}px!important;
+        margin-bottom: {{ tile_heading_padding_bottom_mobile }}px!important;
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_heading-{{ grid_loop_index }}-padding {
+            margin-top: {{ tile_heading_padding_top }}px!important;
+            margin-bottom: {{ tile_heading_padding_bottom }}px!important;
+        }
+    }
+
+    /* Desktop custom font size */
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__text-{{ grid_loop_index }}.custom-desktop {
+            font-size: {{ tile_text_size_custom | divided_by: 10.0 }}rem;
+        }
+    }
+    /* Mobile custom font size */
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__text-{{ grid_loop_index }}.custom-mobile {
+            font-size: {{ tile_text_size_mobile_custom | divided_by: 10.0 }}rem;
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__text-{{ grid_loop_index }}-padding {
+        margin-top: {{ tile_text_padding_top_mobile }}px!important;
+        margin-bottom: {{ tile_text_padding_bottom_mobile }}px!important;
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__text-{{ grid_loop_index }}-padding {
+            margin-top: {{ tile_text_padding_top }}px!important;
+            margin-bottom: {{ tile_text_padding_bottom }}px!important;
+        }
+    }
+
+    /* Desktop custom font size */
+    @media screen and (min-width: 1024px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__buttons-{{ grid_loop_index }} .button {
+            font-size: {{ tile_button_size | divided_by: 10.0 }}rem;
+        }
+    }
+    /* Mobile custom font size */
+    @media screen and (max-width: 1023px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__buttons-{{ grid_loop_index }} .button {
+            font-size: {{ tile_button_size_mobile | divided_by: 10.0 }}rem;
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_buttons-{{ grid_loop_index }}-padding {
+        margin-top: {{ tile_buttons_padding_top_mobile }}px!important;
+        margin-bottom: {{ tile_buttons_padding_bottom_mobile }}px!important;
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_buttons-{{ grid_loop_index }}-padding {
+            margin-top: {{ tile_buttons_padding_top }}px!important;
+            margin-bottom: {{ tile_buttons_padding_bottom }}px!important;
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__heading-{{ grid_loop_index }} {
+        line-height: 1;
+        font-family: var(--font-heading-family);
+        font-weight: var(--font-heading-weight);
+    }
+
+    /* caption styling */
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption-{{ grid_loop_index }} {
+        color: rgba(var(--color-base-text), 1);
+    }
+
+    @media screen and (max-width: 749px) {
+        :root:root  #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--mobile-bottom) .banner__caption-{{ grid_loop_index }} {
+            --color-base-text: {{ tile_caption_color.red }}, {{ tile_caption_color.green }}, {{ tile_caption_color.blue }};
+        } 
+
+        :root:root  #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--mobile-bottom .banner__caption-{{ grid_loop_index }} {
+            --color-base-text: {{ tile_caption_below_color.red }}, {{ tile_caption_below_color.green }}, {{ tile_caption_below_color.blue }};
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        :root:root  #Slide-{{ section.id }}-{{ grid_loop_index }} .banner:not(.banner--desktop-bottom) .banner__caption-{{ grid_loop_index }} {
+            --color-base-text: {{ tile_caption_color.red }}, {{ tile_caption_color.green }}, {{ tile_caption_color.blue }};
+        }
+
+        :root:root  #Slide-{{ section.id }}-{{ grid_loop_index }} .banner.banner--desktop-bottom .banner__caption-{{ grid_loop_index }} {
+            --color-base-text: {{ tile_caption_below_color.red }}, {{ tile_caption_below_color.green }}, {{ tile_caption_below_color.blue }};
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption p {
+        margin: unset;
+        padding: unset;
+    }
+
+    /* Desktop custom font size */
+    @media screen and (min-width: 1024px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption-{{ grid_loop_index }}.custom-desktop {
+            font-size: {{ tile_caption_size_custom | divided_by: 10.0 }}rem;
+        }
+    }
+    /* Mobile custom font size */
+    @media screen and (max-width: 1023px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption-{{ grid_loop_index }}.custom-mobile {
+            font-size: {{ tile_caption_size_mobile_custom | divided_by: 10.0 }}rem;
+        }
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption-{{ grid_loop_index }} {
+        line-height: 1.1;
+    }
+
+    #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__caption-{{ grid_loop_index }} {
+        font-family: var(--font-caption-family);
+        font-weight: var(--font-caption-weight);
+        font-style: var(--font-caption-style);
+        letter-spacing: var(--font-caption-letter-spacing-wide);
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_caption-{{ grid_loop_index }}-padding {
+            margin-top: {{ tile_caption_padding_top_mobile }}px!important;
+            margin-bottom: {{ tile_caption_padding_bottom_mobile }}px!important;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner_caption-{{ grid_loop_index }}-padding {
+            margin-top: {{ tile_caption_padding_top }}px!important;
+            margin-bottom: {{ tile_caption_padding_bottom }}px!important;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content .banner__box-{{ grid_loop_index }} {
+            padding-top: {{ tile_banner__box_padding_top | divided_by: 10.0 }}rem;
+            padding-bottom: {{ tile_banner__box_padding_bottom | divided_by: 10.0 }}rem;
+            padding-left: {{ tile_banner__box_padding_left | divided_by: 10.0 }}rem;
+            padding-right: {{ tile_banner__box_padding_right | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content .banner__box-{{ grid_loop_index }} {
+            padding-top: {{ tile_banner__box_padding_top_mob | divided_by: 10.0 }}rem;
+            padding-bottom: {{ tile_banner__box_padding_bottom_mob | divided_by: 10.0 }}rem;
+            padding-left: {{ tile_banner__box_padding_left_mob | divided_by: 10.0 }}rem;
+            padding-right: {{ tile_banner__box_padding_right_mob | divided_by: 10.0 }}rem;
+        }
+    }
+
+    /* left */
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-top-left .banner__box {
+            left: {{ tile_mobile_content_position_left | divided_by: 10.0 }}rem;
+            top: {{ tile_mobile_content_position_top | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-middle-left .banner__box  {
+            left: {{ tile_mobile_content_position_left | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-bottom-left .banner__box  {
+            bottom: {{ tile_mobile_content_position_bottom | divided_by: 10.0 }}rem;
+            left: {{ tile_mobile_content_position_left | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--top-left .banner__box {
+            left: {{ tile_desktop_content_position_left | divided_by: 10.0 }}rem;
+            top: {{ tile_desktop_content_position_top | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--middle-left .banner__box  {
+            left: {{ tile_desktop_content_position_left | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--bottom-left .banner__box  {
+            bottom: {{ tile_desktop_content_position_bottom | divided_by: 10.0 }}rem;
+            left: {{ tile_desktop_content_position_left | divided_by: 10.0 }}rem;
+        }
+    }
+
+    /* right */
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-top-right .banner__box {
+            right: {{ tile_mobile_content_position_right | divided_by: 10.0 }}rem;
+            top: {{ tile_mobile_content_position_top | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-middle-right .banner__box  {
+            right: {{ tile_mobile_content_position_right | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-bottom-right .banner__box  {
+            bottom: {{ tile_mobile_content_position_bottom | divided_by: 10.0 }}rem;
+            right: {{ tile_mobile_content_position_right | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--top-right .banner__box {
+            right: {{ tile_desktop_content_position_right | divided_by: 10.0 }}rem;
+            top: {{ tile_desktop_content_position_top | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--middle-right .banner__box {
+            right: {{ tile_desktop_content_position_right | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--bottom-right .banner__box {
+            right: {{ tile_desktop_content_position_right | divided_by: 10.0 }}rem;
+            bottom: {{ tile_desktop_content_position_bottom | divided_by: 10.0 }}rem;
+        }
+    }
+
+    /* center */
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-top-center .banner__box {
+            top: {{ tile_mobile_content_position_top | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-middle-center .banner__box {
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--mobile-bottom-center .banner__box {
+            bottom: {{ tile_mobile_content_position_bottom | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--bottom-center .banner__box {
+            bottom: {{ tile_desktop_content_position_bottom | divided_by: 10.0 }}rem;
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--middle-center .banner__box {
+        }
+
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content-{{ grid_loop_index }}.banner__content--top-center .banner__box {
+            top: {{ tile_desktop_content_position_top | divided_by: 10.0 }}rem;
+        }
+    }
+
+    @media screen and (max-width: 749px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content .banner__box-{{ grid_loop_index }} {
+            max-width: calc({{ tile_width_mob }}% - ({{ tile_mobile_content_position_left  | divided_by: 10.0 }}rem + {{ tile_mobile_content_position_right  | divided_by: 10.0 }}rem));
+        }
+    }
+    @media screen and (min-width: 750px) {
+        #Slide-{{ section.id }}-{{ grid_loop_index }} .banner__content .banner__box-{{ grid_loop_index }} {
+            max-width: calc({{ tile_width }}% - ({{ tile_desktop_content_position_left | divided_by: 10.0 }}rem + {{ tile_desktop_content_position_right | divided_by: 10.0 }}rem));
+        }
+    }
+{% endstyle %}
+
+    <li id="Slide-{{ section.id }}-{{ grid_loop_index }}" class="grid__item"  {{ block.shopify_attributes }}>
+        <div class="multicolumn-card color-background-1 gradient">
+            {% if tile_link.size > 0 %}
+                <a href="{{ tile_link }}" {% if tile_link_new_tab %}target="_blank"{% endif %}><div class="banner__full-link"></div></a>
+            {% endif %}
+            <div id="Banner-{{ section.id }}" class="banner {% if tile_show_text_below %} banner--mobile-bottom{% endif %}{% if tile_show_text_below_desktop %} banner--desktop-bottom{% endif %}  multicolumn-card__image-wrapper multicolumn-card__image-wrapper--full-width banner--content-align-{{ tile_desktop_content_alignment }} banner--content-align-mobile-{{ tile_mobile_content_alignment }} banner--adapt banner--desktop-transparent">
+                {% if tile_source != blank %}
+                    <div class="banner__media media media--transparent media--adapt {% if tile_image == blank %} placeholder{% endif %}">
+                        {% capture image_class %}multicolumn-card__image{% endcapture %}
+                            {%- capture block_image_height -%}{{ 500 | divided_by: tile_source.aspect_ratio | round }}{%- endcapture -%}
+                            {{ tile_source | image_url: width: 500 | image_tag:
+                            loading: 'lazy',
+                            sizes: '(min-width 750px) 500px, 500px',
+                            widths: '375, 500',
+                            width: 500,
+                            height: block_image_height,
+                            class: image_class }}
+                    </div>
+                {%- else -%}
+                    <div class="banner__media media media--transparent placeholder">
+                        {%- if tile_show_placeholder -%}
+                            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+                <div class="banner__content banner__content-{{ grid_loop_index }} banner__content--{{ tile_desktop_content_position }} banner__content--mobile-{{ tile_mobile_content_position }}">
+                    <div class="banner__box banner__box-{{ grid_loop_index }} color-background-1 gradient">
+                        {% if tile_caption.size > 0 %}
+                            <div class="banner__caption banner__caption-{{ grid_loop_index }} custom-desktop custom-mobile{% if tile_caption_uppercase %} uppercase{% endif %} banner_caption-{{ grid_loop_index }}-padding">{{ tile_caption | escape }}</div>
+                        {% endif %}
+                            {% if tile_heading.size > 0 %}
+                                <h3 class="banner__heading banner__heading-{{ grid_loop_index }} custom-desktop custom-mobile {% if tile_heading_uppercase %}uppercase {% endif %} banner_heading-{{ grid_loop_index }}-padding">
+                                    <span>{{- tile_heading | escape -}}</span>
+                                </h3>
+                            {% endif %}
+                            {% if tile_text.size > 0 %}
+                                <div class="banner__text banner__text-{{ grid_loop_index }} custom-desktop custom-mobile {% if tile_text_uppercase %} uppercase{% endif %} banner__text-{{ grid_loop_index }}-padding">
+                                    {{- tile_text -}}
+                                </div>
+                            {%- endif -%}
+                            {% if tile_button.size > 0 %}
+                                <div class="banner__buttons banner__buttons-{{ grid_loop_index }} banner_buttons-{{ grid_loop_index }}-padding block-{{ grid_loop_index }}-padding" {{ block.shopify_attributes }}>
+                                    <a{% if tile_link.size > 0 %} href="{{ tile_link  }}"{% endif %} {% if tile_link_new_tab %}target="_blank"{% endif %} class="{% if tile_button_style_1 != 'arrow' %}button{% endif %}{% if tile_button_style_1 == 'arrow' %} link link-with-icon{% endif %}{% if tile_button_style_1 == 'outline' %} button--secondary{% elsif tile_button_style_1 == 'primary' %} button--primary{% elsif tile_button_style_1 == 'underline' %} button--underline{% endif %}{% if tile_button_uppercase_1 %} uppercase{% endif %} {% if tile_button_wide_1 %} button--wide{% endif %}">{{- tile_button | escape -}}{%- if tile_button_style_1 == 'arrow' -%}{%- render 'icon-arrow-right' -%}{%- endif -%}</a>
+                                </div>
+                            {%- endif -%}
+                            {% if tile_link.size > 0 %}
+                                <a href="{{ tile_link }}" {% if tile_link_new_tab %}target="_blank"{% endif %}><div class="banner__full-link"></div></a>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+

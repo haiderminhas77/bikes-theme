@@ -1,0 +1,25 @@
+{% comment %}
+    Renders popup modal with page of choice in PDP
+
+    Accepts:
+    - block: {Object} Block object
+    
+    Usage:
+    {% render 'product-size-guide', block: block %} within sections/main-product.liquid
+{% endcomment %}
+
+{% if block.settings.page_metafield %}
+    <modal-opener class="product-popup-modal__opener size-guide-modal__opener no-js-hidden" data-modal="#PopupModal-{{ block.id }}" {{ block.shopify_attributes }}>
+        <button id="ProductPopup-{{ block.id }}" class="product-popup-modal__button link" type="button" aria-haspopup="dialog">{{ 'products.product.size_guide' | t }}</button>
+    </modal-opener>
+    <a href="{{ block.settings.page_metafield.url }}" class="product-popup-modal__button link no-js">{{ block.settings.page_metafield.title }}</a>
+
+    <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal product-popup-modal--size-guide" {{ block.shopify_attributes }}>
+        <div role="dialog" aria-label="{{ 'products.product.size_guide' | t }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+            <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+            <div class="product-popup-modal__content-info">
+                {{ block.settings.page_metafield.content }}
+            </div>
+        </div>
+    </modal-dialog>
+{% endif %}

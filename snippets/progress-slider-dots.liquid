@@ -1,0 +1,30 @@
+{% comment %}
+		Renders progress slider dots visual sitewide with arrows, counter in hidden
+
+		Accepts:
+		- item_count {Integer} - this informs percentage width of each slider 'block' and for loop counts
+        - step_count {Integer} - this determines the number of steps a click on next/prev will slide, defaults to 1.
+
+		Usage:
+		{% render 'progress-slider-dots', item_count: .... %} within sections/main-product.liquid
+{% endcomment %}
+
+{% if item_count > 1 %}
+    <div class="progress-slider gallery-buttons slider-buttons no-js-hidden">
+        <div class="progress-slider__wrapper hidden">
+            <div class="gallery-counter slider-counter--dots">
+                <div class="gallery__control-wrapper" data-langstring-load="{{ 'sections.slideshow.load_slide' | t }}" data-langstring-of="{{ 'general.slider.of' | t }}">
+                    {% for item in (1..item_count) %}
+                        <button class="slider-counter__link slider-counter__link--dots link" aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length}}" aria-controls="Slider-{{ section.id }}--progress-slider">
+                            <span class="dot"></span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="progress-slider__arrows">
+            <button type="button" class="slider-button slider-button--prev" data-step="{{ slider_step_count | default: 1 }}" name="previous" aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}" aria-controls="Slider-{{ section.id }}--progress-slider" data-parent="slideshow-component">{% render 'icon-caret' %}</button>
+            <button type="button" class="slider-button slider-button--next" data-step="{{ slider_step_count | default: 1 }}" name="next" aria-label="{{ 'sections.slideshow.next_slideshow' | t }}" aria-controls="Slider-{{ section.id }}--progress-slider" data-parent="slideshow-component">{% render 'icon-caret' %}</button>
+        </div>
+    </div>
+{% endif %}

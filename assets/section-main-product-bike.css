@@ -1,0 +1,131 @@
+.product.product-main.product-main-bike {
+    display: flex;
+    flex-flow: column nowrap;
+    padding-bottom: 0;
+}
+
+.product.product-main.product-main-bike .product__info-container {
+    position: relative;
+}
+
+@media screen and (max-width: 749px) {
+	.product.product-main.product-main-bike .product__info-container {
+		margin-top: 0;
+	}
+}
+
+.product-main-bike info-badges .badge {
+    top: 2%
+}
+
+@media screen and (max-width: 749px) {
+    .product-main-bike info-badges .badge {
+        top: 5%;
+    }
+}
+
+.product__bike-titles {
+    margin-top: 2rem;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    z-index: 1;
+}
+
+.product__bike-titles .product__title {
+    font-size: 4rem;
+}
+
+.product__bike-titles .product__subtitle {
+    font-size: 2rem;
+    letter-spacing: var(--font-caption-letter-spacing);
+}
+
+@media screen and (max-width: 749px) {
+    .gallery-component__bike {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gallery-component__bike .product__media {
+        max-height: 80vh;
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        margin-top: 5rem;
+    }
+    
+    .gallery-component__bike .product__media::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gallery-component__bike .product__media img {
+        margin: auto;
+        width: auto!important;
+        height: 80vh!important;
+        max-width: unset!important;
+        overflow: hidden!important;
+        position: relative!important;
+        cursor: pointer;
+    }
+
+    .gallery-component__bike-detail .banner__media {
+        min-height: 60rem;
+        max-height: 100vh;
+        position: relative;
+    }
+}
+
+.button__wrapper-bike {
+    display: flex;
+    justify-content: center;
+}
+
+.button__wrapper-bike button span {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.button__wrapper-bike .product-form__buttons klaviyo-container .button {
+    margin-bottom: 4rem;
+}
+
+.button__wrapper-bike .price .price-item--sale {
+    color: rgb(var(--color-base-background-1));
+    margin-left: .4rem;
+}
+
+.product-main-bike sibling-selector {
+    align-items: center;
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+    .product-main-bike .bike-pdp__arrow-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .product-main-bike .bike-pdp__arrow {
+        width: 0; 
+        height: 0; 
+        border-left: 150px solid transparent;
+        border-right: 150px solid transparent;
+    }
+}
+
+.product-main-bike .product__text-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.product-main-bike .product__text-wrapper p {
+    margin-top: 0;
+    padding: 1rem 0;
+}

@@ -1,0 +1,17 @@
+{% comment %}
+	Integration snippet for Google and Facebook verification tags - pulls unique ID from relevant theme setting
+
+	Accepts:
+	-
+
+	Usage:
+	{% render 'integration-verification-tags' %} within layout/theme.liquid if required
+{% endcomment %}
+
+{% if settings.enable_facebook_verification_tag %}
+    <meta name="facebook-domain-verification" content="{{ settings.facebook_verification_tag_key }}" />
+{% endif %}
+
+{% if settings.enable_google_verification_tag %}
+    <meta name="google-site-verification" content="{{ settings.google_verification_tag_key }}" />
+{% endif %}

@@ -1,0 +1,41 @@
+{% comment %}
+	Renders 'ds-anchor' in sections everywhere. To be used with 'ds-anchor-button'.
+{% endcomment %}
+{% style %}
+    a.anchor {
+        display: block;
+        position: relative;
+        top: calc(var(--header-height) * -1);
+        visibility: hidden;
+    }
+{% endstyle %}
+
+
+<a class="anchor" id="{{ section.settings.anchor_ID }}"></a>
+
+{% schema %}
+{
+	"name": "DS Anchor",
+	"tag": "section",
+    "disabled_on": {
+        "groups": ["header", "footer"]
+    },
+	"settings": [
+        {
+            "type": "paragraph",
+            "content": "Add #anchor_ID in a section link to anchor to here, this anchor_ID must match this section e.g. #anchor_subscribe on the button and anchor_subscibe for the ID here"
+        },
+		{
+            "type": "text",
+            "id": "anchor_ID",
+            "default": "anchor_ID",
+            "label": "Anchor ID"
+        }
+	],
+	"presets": [
+		{
+			"name": "DS Anchor"
+		}
+	]
+}
+{% endschema %}

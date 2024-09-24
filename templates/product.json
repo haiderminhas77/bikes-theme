@@ -1,0 +1,184 @@
+{
+  "sections": {
+    "breadcrumbs_Bh9bwN": {
+      "type": "breadcrumbs",
+      "settings": {
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title_edCFmR": {
+          "type": "title",
+          "settings": {
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "79cda6e3-fc1c-45d9-80bb-7d98ff6b3e99": {
+          "type": "sibling_selector",
+          "settings": {
+          }
+        },
+        "size_guide": {
+          "type": "size_guide",
+          "settings": {
+            "link_color": "#000000",
+            "modal_heading": "Unisex Fit + Size Chart",
+            "page_metafield": "{{ product.metafields.product_data.reference.value.size_guide.value }}",
+            "size_tip": "{{ product.metafields.product_data.reference.value.size_tip | metafield_tag }}"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+          }
+        },
+        "f800b39b-875b-4f16-8936-9c6763c4a892": {
+          "type": "fsn",
+          "settings": {
+          }
+        },
+        "buy_buttons_quantity_MzURUt": {
+          "type": "buy_buttons_quantity",
+          "settings": {
+            "button_size_desktop": 16,
+            "button_size_mobile": 16,
+            "sticky_atc": true,
+            "sticky_atc_hide_product_details": false,
+            "sticky_atc_hide_product_details_mob": false,
+            "sticky_atc_positioning": "bottom",
+            "sticky_atc_border": "none",
+            "sticky_atc_text_color": "#ffffff",
+            "sticky_atc_background_color": "#4d4d4d",
+            "sticky_atc_border_color": "#878787",
+            "atc_button_text": "Add To Cart",
+            "sticky_atc_button_wide": true,
+            "sticky_atc_button_size": 18,
+            "sticky_atc_button_size_mob": 16,
+            "sticky_atc_button_text_color": "#ffffff",
+            "sticky_atc_button_background_color": "#aba7a7"
+          }
+        },
+        "be8acf99-c4b3-4df1-a06b-7a336f036160": {
+          "type": "delivery_info",
+          "settings": {
+            "modal_heading": "Shipping & Delivery",
+            "delivery_information": "shipping",
+            "delivery_info_string": "Shipping Information",
+            "heading_font": "heading-font",
+            "delivery_color": "#000000",
+            "text_uppercase": true,
+            "button_text_size_desktop": 16,
+            "button_text_size_mobile": 16,
+            "icon": "super73-lightning",
+            "icon_size_desktop": 16,
+            "icon_size_mobile": 16,
+            "icon_color": "#000000",
+            "desktop_alignment": "flex-start",
+            "mobile_alignment": "flex-start",
+            "top_padding_desktop": 10,
+            "bottom_padding_desktop": 30,
+            "top_padding_mobile": 10,
+            "bottom_padding_mobile": 20
+          }
+        },
+        "description_jN9WFV": {
+          "type": "description",
+          "settings": {
+            "open_collapsible_tab": true,
+            "icon": "none",
+            "heading": "Description",
+            "heading_size_desktop": 20,
+            "heading_size_mobile": 18,
+            "heading_text_color": "#000000",
+            "heading_background_color": "#d9d9d9",
+            "heading_text_color_active": "#000000",
+            "heading_background_color_active": "#ffffff",
+            "text_size_desktop": 15,
+            "text_size_mobile": 15,
+            "text_color": "#000000",
+            "text_link_color": "#000000",
+            "background_color": "#d9d9d9",
+            "top_padding_desktop": 5,
+            "bottom_padding_desktop": 5,
+            "top_padding_mobile": 5,
+            "bottom_padding_mobile": 5,
+            "top_margin_desktop": 0,
+            "bottom_margin_desktop": 0,
+            "top_margin_mobile": 0,
+            "bottom_margin_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "title_edCFmR",
+        "price",
+        "79cda6e3-fc1c-45d9-80bb-7d98ff6b3e99",
+        "size_guide",
+        "variant_picker",
+        "f800b39b-875b-4f16-8936-9c6763c4a892",
+        "buy_buttons_quantity_MzURUt",
+        "be8acf99-c4b3-4df1-a06b-7a336f036160",
+        "description_jN9WFV"
+      ],
+      "settings": {
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "transparent_background": false,
+        "desktop_zoom": true
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "title_uppercase": true,
+        "title_color": "#000000",
+        "enable_desktop_slider": false,
+        "slider_step_count": 2,
+        "enable_mobile_slider": true,
+        "quick_add_button_background_color": "#000000",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "add_image_padding": false,
+        "show_image_outline": true,
+        "show_vendor": false,
+        "show_badges": true,
+        "crop_product_title": true,
+        "transparent_background": true,
+        "lazy_load_threshold": 9,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "klaviyo-back-in-stock": {
+      "type": "klaviyo-back-in-stock",
+      "settings": {
+        "bis_button_text": "Notify Me",
+        "bis_modal_body_text": "Sign up to receive back in stock notifications",
+        "bis_modal_button_text": "Sign Me Up",
+        "enable_newsletter_signup": true,
+        "newsletter_subscribe_text": "",
+        "newsletter_success_text": "Thanks! You're in",
+        "modal_background_color": "#ffffff",
+        "modal_text_color": "#222222",
+        "modal_button_text_color": "#ffffff",
+        "modal_button_background_color": "#439fdb",
+        "modal_close_button_color": "#cccccc",
+        "newsletter_success_background_color": "#d3efcd",
+        "newsletter_success_text_color": "#1b9500"
+      }
+    },
+  },
+  "order": [
+    "breadcrumbs_Bh9bwN",
+    "main",
+    "product-recommendations",
+    "klaviyo-back-in-stock"
+  ]
+}
